@@ -7,11 +7,10 @@ require("dotenv").config();
 const cors = require("cors");
 
 const app = express();
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+
+app.use(cors({
+  origin: '*',
+}));
 
 app.use(express.json());
 
@@ -22,6 +21,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
+
 const PORT = 4000;
 app.listen(PORT, async () => {
   try {

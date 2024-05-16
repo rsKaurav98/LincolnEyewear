@@ -8,7 +8,15 @@ import {
   Center,
   VStack,
   useToast,
-  Select
+  Select,
+  FormLabel,
+  InputGroup,
+  InputRightElement,
+  HStack,
+  Spacer,
+  Flex,
+  Grid,
+  GridItem
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
@@ -17,7 +25,8 @@ const ProductPost = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [imageTsrc, setImageTsrc] = useState("");
+  const [imageFiles, setImageFiles] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState([]);
   const [price, setPrice] = useState("");
   const [mPrice, setMPrice] = useState("");
   const [shape, setShape] = useState("");
@@ -28,12 +37,48 @@ const ProductPost = () => {
   const [colors, setColors] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleImageChange = (e) => {
+    const files = e.target.files;
+    const previews = [];
+    const filesArray = Array.from(files);
+
+    if (filesArray.length < 3) {
+      toast({
+        title: "Images can't be less than 3",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom"
+      });
+      return;
+    }
+
+    if (filesArray.length > 7) {
+      toast({
+        title: "Images can't be more than 7",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+        position: "bottom"
+      });
+      return;
+    }
+
+    filesArray.forEach((file) => {
+      const preview = URL.createObjectURL(file);
+      previews.push(preview);
+    });
+
+    setImageFiles(filesArray);
+    setImagePreviews(previews);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       if (
-        imageTsrc !== "" &&
+        imageFiles.length > 0 &&
         price !== "" &&
         mPrice !== "" &&
         name !== "" &&
@@ -44,31 +89,30 @@ const ProductPost = () => {
         productType !== "" &&
         colors !== ""
       ) {
-        const payload = {
-          imageTsrc,
-          productRefLink: name,
-          rating: 0,
-          userRated: 0,
-          price,
-          mPrice,
-          name,
-          shape,
-          gender,
-          style,
-          dimension,
-          productType,
-          productId: Math.round(Math.random() * Date.now() * 10000),
-          colors,
-          quantity: 0,
-          id: Math.round(Math.random() * Date.now() * 10000000)
-        };
+        const formData = new FormData();
+
+        imageFiles.forEach((file) => {
+          formData.append("images", file);
+        });
+
+        formData.append("productRefLink", name);
+        formData.append("rating", 0);
+        formData.append("userRated", 0);
+        formData.append("price", price);
+        formData.append("mPrice", mPrice);
+        formData.append("shape", shape);
+        formData.append("gender", gender);
+        formData.append("style", style);
+        formData.append("dimension", dimension);
+        formData.append("productType", productType);
+        formData.append("colors", colors);
+        formData.append("quantity", 0);
 
         const response = await fetch(
-          "https://harlequin-fawn-tutu.cyclic.app/product",
+          "http://localhost:4000/product",
           {
             method: "POST",
-            body: JSON.stringify(payload),
-            headers: { "Content-Type": "application/json" }
+            body: formData,
           }
         );
 
@@ -144,13 +188,13 @@ const ProductPost = () => {
           <br />
           <FormControl>
             <Input
-              type="text"
+              type="file"
               size="lg"
               fontSize="16px"
               h="40px"
               placeholder="Enter Image Url"
-              onChange={(e) => setImageTsrc(e.target.value)}
-              value={imageTsrc}
+              onChange={handleImageChange}
+              multiple
               bg="whiteAlpha.900"
             />
           </FormControl>
@@ -199,7 +243,7 @@ const ProductPost = () => {
               <option value="Wrapround">Wrap Round</option>
               <option value="Cateye">Cateye</option>
               <option value="Hexagon">Hexagon</option>
-              <option value="Square">Square</option>
+<option value="Square">Square</option>
             </Select>
           </FormControl>
           <br />
@@ -230,7 +274,7 @@ const ProductPost = () => {
               h="40px"
               bg="whiteAlpha.900"
             >
-              <option value="Tinted">Tinted</option>
+<option value="Tinted">Tinted</option>
               <option value="FullFrame">FullFrame</option>
               <option value="Mirror">Mirror</option>
             </Select>
@@ -305,6 +349,29 @@ const ProductPost = () => {
           )}
 
           <br />
+          <br />
+          {imagePreviews.length > 0 && (
+            <Grid
+              templateColumns={{
+                base: "repeat(1, 1fr)",
+                sm: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(4, 1fr)",
+                xl: "repeat(5, 1fr)",
+              }}
+              gap={4}
+            >
+              {imagePreviews.map((preview, index) => (
+                <GridItem key={index}>
+                  <img
+                    src={preview}
+                    alt={`preview-${index}`}
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </GridItem>
+              ))}
+            </Grid>
+          )}
         </VStack>
       </Center>
     </Box>
