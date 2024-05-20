@@ -34,6 +34,7 @@ import { useNavigate } from "react-router-dom";
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
+  const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
 

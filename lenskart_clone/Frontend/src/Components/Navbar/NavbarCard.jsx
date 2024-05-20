@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
 import NavbarCard5 from "./NavbarCard5";
@@ -46,6 +46,7 @@ export const NavbarCard1 = () => {
 
 export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   return (
@@ -126,8 +127,8 @@ export const NavbarCard2 = () => {
               </Popover>
             ) : (
               <Box display={"flex"}>
-                <Login />
-                <Signup />
+                <Login  isSignUpOpen={isOpen}/>
+                <Signup setIsSignUpOpen={setIsOpen}/>
               </Box>
             )}
             <Button

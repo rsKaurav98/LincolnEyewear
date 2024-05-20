@@ -23,28 +23,30 @@ import {
   InputRightElement
 } from "@chakra-ui/react";
 
-const Login = (props) => {
+const Login = ({ isSignUpOpen }) => {
   const [loading, setLoading] = useState(false);
-  const [btn, setbtn] = useState();
+  const [btn, setBtn] = useState();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
-  const [pass, setpass] = useState(false);
+  const [pass, setPass] = useState(false);
   const [show, setShow] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setisAuth, setAuthData } = useContext(AuthContext);
-  const [incorrect, setinCorrect] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
   const navigate = useNavigate();
   let res1 = [];
 
+  useEffect(() => {
+    if (!isSignUpOpen) {
+      onOpen();
+    }
+  }, [isSignUpOpen, onOpen]);
 
- 
-
-
-  const handlechange = (e) => {
-    setinCorrect(false);
+  const handleChange = (e) => {
+    setIncorrect(false);
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
 
-    const buton = (
+    const button = (
       <Box
         fontSize={"14px"}
         mt="5px"
@@ -55,82 +57,80 @@ const Login = (props) => {
         Please enter a valid Email or Mobile Number.
       </Box>
     );
-    setbtn(buton);
+    setBtn(button);
   };
 
   const getData = async () => {
     try {
       setLoading(true);
-      setinCorrect(false);
-      if (loginData.email !== "" && loginData.password !== "") {
-        const res = await fetch(
-          "http://localhost:4000/user/login",
-          {
-            method: "POST",
-            body: JSON.stringify(loginData),
-            headers: {
-              "Content-type": "application/json"
-            }
+      setIncorrect(false);
+      if (loginData.email && loginData.password) {
+        const res = await fetch("http://localhost:8000/token", {
+          method: "POST",
+          body: JSON.stringify(loginData),
+          headers: {
+            "Content-Type": "application/json"
           }
-        );
-        let data = await res.json();
-        if (res) {
-          const credential = await fetch(
-            "http://localhost:4000/user"
-          );
-          let cred = await credential.json();
+        });
+
+        if (res.status !== 200) {
+          throw new Error(`HTTP status ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (data.token) {
+          const credentialRes = await fetch("http://localhost:8000/me?with=permissions", {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${data.token}`
+            }
+          });
+
+          if (credentialRes.status !== 200) {
+            throw new Error(`HTTP status ${credentialRes.status}`);
+          }
+
+          const cred = await credentialRes.json();
 
           localStorage.setItem("token", data.token);
           res1 = cred.filter((el) => el.email === loginData.email);
           localStorage.setItem("res", JSON.stringify(res1));
 
-
           setisAuth(true);
           setAuthData(res1);
-          
-         
-         
-          
+
           if (loginData.email.includes("admin")) {
-            setLoading(false);
-            setinCorrect(false);
-            onClose();
             navigate("/productlist");
           } else {
-            setLoading(false);
-            setinCorrect(false);
-            onClose();
             navigate("/");
           }
+
+          onClose();
+          setLoading(false);
         } else {
           setLoading(false);
-          setinCorrect(true);
+          setIncorrect(true);
         }
       }
     } catch (error) {
       setLoading(false);
-      setinCorrect(true);
-      console.log("An error occurred. Please try again later.");
+      setIncorrect(true);
+      console.error("An error occurred. Please try again later.", error);
     }
   };
 
   const handleClick = () => {
-    loginData.password = "";
-    setpass(false);
+    setLoginData({ ...loginData, password: "" });
+    setPass(false);
   };
 
-  const handlesign = () => {
-    setpass(true);
+  const handleSign = () => {
+    setPass(true);
     if (loginData.password.length >= 6) {
-      getData(loginData);
+      getData();
     }
   };
- 
- 
 
-
-  
-  
   return (
     <div>
       <Center onClick={onOpen} fontWeight={"400"} fontSize="15px" w="80px">
@@ -176,7 +176,7 @@ const Login = (props) => {
                   fontSize="16px"
                   focusBorderColor="rgb(206, 206, 223)"
                   borderColor={"rgb(206, 206, 223)"}
-                  onChange={handlechange}
+                  onChange={handleChange}
                   rounded="2xl"
                 />
               ) : (
@@ -211,10 +211,9 @@ const Login = (props) => {
                       fontSize="16px"
                       focusBorderColor="rgb(206, 206, 223)"
                       borderColor={"rgb(206, 206, 223)"}
-                      onChange={handlechange}
+                      onChange={handleChange}
                       rounded="2xl"
                     />
-                    
 
                     <InputRightElement width="6.5rem" size="lg">
                       <Button
@@ -229,7 +228,7 @@ const Login = (props) => {
                     </InputRightElement>
                   </InputGroup>
 
-                  {incorrect === true ? (
+                  {incorrect && (
                     <Box
                       fontSize={"14px"}
                       m="3px 0px 3px 0px"
@@ -240,8 +239,6 @@ const Login = (props) => {
                     >
                       Wrong email or password
                     </Box>
-                  ) : (
-                    ""
                   )}
                 </Box>
               )}
@@ -259,7 +256,7 @@ const Login = (props) => {
 
               <HStack fontSize="16px">
                 <Checkbox mb={"20px"} mt="20px" size="sm">
-                  Get Update on whatsapp
+                  Get Update on WhatsApp
                 </Checkbox>
                 <Image
                   src="https://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
@@ -267,11 +264,10 @@ const Login = (props) => {
                   h="22px"
                 />
               </HStack>
-              {loginData.email.includes("@") &&
-              loginData.email.includes(".com") ? (
+              {loginData.email.includes("@") && loginData.email.includes(".com") ? (
                 <Button
                   isLoading={loading}
-                  onClick={handlesign}
+                  onClick={handleSign}
                   bgColor={"#11daac"}
                   width="100%"
                   borderRadius={"35px/35px"}

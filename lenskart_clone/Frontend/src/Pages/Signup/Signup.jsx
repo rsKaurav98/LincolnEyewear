@@ -20,28 +20,26 @@ import {
   InputRightElement,
   Text
 } from "@chakra-ui/react";
+import Login from "../Login/Login";
 
-const Signup = () => {
+const Signup = ({setIsSignUpOpen}) => {
   const init = {
-    first_name: "",
-    last_name: "",
-    ph_no: "",
+    Name: "",
     email: "",
     password: ""
   };
 
   const [userData, setUserData] = useState(init);
   const [first, setFirst] = useState();
-  const [last, setLast] = useState();
-  const [ph, setPh] = useState();
   const [mail, setMail] = useState();
   const [pass, setPass] = useState();
+  const [flag , setFlag]=useState(false);
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [Auth, setAuth] = useState();
   const [exist, setExist] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  var flag = false;
+  
 
   const Required = (props) => {
     return (
@@ -63,25 +61,9 @@ const Signup = () => {
     setUserData({ ...userData, [name]: value });
 
     switch (name) {
-      case "first_name":
+      case "Name":
         setFirst(
           value === "" ? <Required info="This is a required feild" /> : ""
-        );
-        break;
-
-      case "last_name":
-        setLast(
-          value === "" ? <Required info="This is a required feild" /> : ""
-        );
-        break;
-
-      case "ph_no":
-        setPh(
-          value === "" ? (
-            <Required info="This is a required feild" />
-          ) : (
-            <Required info="Please enter a valid mobile number (eg. 9987XXXXXX)" />
-          )
         );
         break;
 
@@ -110,48 +92,46 @@ const Signup = () => {
     }
   };
 
-  const getData = (body) => {
-    setLoading(true);
-
-    fetch(`http://localhost:4000/user`)
-      .then((res) => res.json())
-      .then((res) => {
-        res.map((el) => {
-          if (el.email === body.email) {
-            flag = true;
-            setExist(true);
-            return el;
-          }
-          setLoading(false);
-        });
-      })
-      .then(() => {
-        if (flag === false) {
-          fetch(`http://localhost:4000/user/register`, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              setAuth(true);
-              setLoading(false);
-              setExist(false);
-            })
-            .catch((err) => setAuth(false))
-            .finally(() => setLoading(false))
-            .finally(() => setExist(false))
-            .finally(() => onClose());
-        } else {
-          setLoading(false);
-        }
-      });
+  const handleClose = () => {
+    setExist(false);
+    onClose();
   };
-
-  const handleRegister = () => {
-    getData(userData);
+  const handleRegister = async () => {
+    var formdata = new FormData();
+    formdata.append("name", userData.Name);
+    formdata.append("email", userData.email);
+    formdata.append("password", userData.password);
+    
+    var requestOptions = {
+      method: 'POST',
+      body: formdata,
+      redirect: 'follow'
+    };
+    
+    try {
+      var response = await fetch("http://localhost:8000/register", requestOptions);
+      if (response.status === 422) {
+        var resText = await response.text();
+        var resJson = JSON.parse(resText);
+        if (resJson?.email?.[0].includes("taken")) {
+          setExist(true);
+          
+        } 
+      } else if (response.status === 200){
+        setExist(false)
+        setIsSignUpOpen(false);
+        onClose();
+      }
+      else {
+        var resText = await response.text();
+        console.log(resText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    
+    
+    
   };
 
   return (
@@ -160,7 +140,7 @@ const Signup = () => {
         Sign Up
       </Center>
 
-      <Modal isOpen={isOpen} onClose={onClose} isCentered size="md">
+      <Modal isOpen={isOpen} onClose={handleClose} isCentered size="md">
         <ModalOverlay />
         <ModalContent w="lg" pt="5" rounded="3xl">
           <ModalCloseButton />
@@ -182,7 +162,7 @@ const Signup = () => {
                 fontSize="16px"
                 onChange={handleChange}
                 focusBorderColor="rgb(206, 206, 223)"
-                name="first_name"
+                name="Name"
                 placeholder="First Name*"
                 h={"45px"}
                 borderColor={"rgb(206, 206, 223)"}
@@ -194,7 +174,7 @@ const Signup = () => {
                 {first}
               </Text>
 
-              <Input
+              {/* <Input
                 fontSize="16px"
                 onChange={handleChange}
                 name="last_name"
@@ -205,12 +185,12 @@ const Signup = () => {
                 borderColor={"rgb(206, 206, 223)"}
                 m={"8px 0px 25px 0px"}
                 rounded="2xl"
-              />
-              <Text mt="-2%" ml="2%">
+              /> */}
+              {/* <Text mt="-2%" ml="2%">
                 {last}
-              </Text>
+              </Text> */}
 
-              <InputGroup
+              {/* <InputGroup
                 w="100%"
                 h="50px"
                 fontSize="18px"
@@ -240,7 +220,7 @@ const Signup = () => {
               </InputGroup>
               <Text mt="-2%" ml="2%">
                 {userData.ph_no.length === 10 ? "" : ph}
-              </Text>
+              </Text> */}
 
               <Input
                 onChange={handleChange}
@@ -258,6 +238,12 @@ const Signup = () => {
                   ? ""
                   : mail}
               </Text>
+              {exist === true ? (
+                <Required info="Email Id already exists" />
+              ) : (
+                ""
+              )}
+             
 
               <InputGroup mb="15px">
                 <Input
@@ -287,7 +273,7 @@ const Signup = () => {
               </InputGroup>
               {userData.password.length >= 6 ? "" : pass}
 
-              <HStack>
+              {/* <HStack>
                 <Box
                   textDecoration={"underline"}
                   fontFamily={" sans-serif"}
@@ -300,9 +286,9 @@ const Signup = () => {
                 <Box fontFamily={" sans-serif"} color={"#333368"}>
                   (Optional)
                 </Box>
-              </HStack>
+              </HStack> */}
 
-              <HStack>
+              {/* <HStack>
                 <Checkbox
                   mb={"20px"}
                   mt="20px"
@@ -316,12 +302,8 @@ const Signup = () => {
                   w={"22px"}
                   h="22px"
                 />
-              </HStack>
-              {exist === true ? (
-                <Required info="Email Id already exists" />
-              ) : (
-                ""
-              )}
+              </HStack> */}
+              
 
               <HStack spacing={"3px"} mb="10px">
                 <Box
@@ -339,10 +321,9 @@ const Signup = () => {
 
               {userData.email.includes("@") &&
               userData.email.includes(".com") &&
-              userData.first_name.length >= 1 &&
-              userData.last_name.length >= 1 &&
-              userData.password.length >= 6 &&
-              userData.ph_no.length === 10 ? (
+              userData.Name.length >= 1 &&
+              userData.password.length >= 6 ?
+               (
                 <Button
                   isLoading={loading}
                   onClick={handleRegister}
@@ -355,7 +336,7 @@ const Signup = () => {
                   fontWeight="300"
                   fontSize="18px"
                 >
-                  Create an Account
+                  Create an Account and SignIn
                 </Button>
               ) : (
                 <Button
@@ -382,6 +363,7 @@ const Signup = () => {
         </ModalContent>
       </Modal>
     </div>
+    
   );
 };
 
