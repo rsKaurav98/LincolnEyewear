@@ -91,19 +91,16 @@ const Login = ({ isSignUpOpen }) => {
           }
 
           const cred = await credentialRes.json();
+          console.log(cred)
 
           localStorage.setItem("token", data.token);
-          res1 = cred.filter((el) => el.email === loginData.email);
-          localStorage.setItem("res", JSON.stringify(res1));
+            if (cred.email === loginData.email) {
+          res1 = [cred]; // Convert the object to an array with one element
+          localStorage.setItem("res", JSON.stringify(res1));}
 
           setisAuth(true);
           setAuthData(res1);
-
-          if (loginData.email.includes("admin")) {
-            navigate("/productlist");
-          } else {
-            navigate("/");
-          }
+          navigate("/");
 
           onClose();
           setLoading(false);

@@ -36,6 +36,7 @@ function Nav() {
   const firstField = React.useRef();
   const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
+  console.log(Authdata)
   const navigate = useNavigate();
 
   return (
@@ -101,7 +102,8 @@ function Nav() {
                         alignItems="flex-start"
                       >
                         <Text mt="10px" fontSize="20px" color="blackAlpha.900">
-                          {Authdata[0].first_name}
+                          
+                          {Authdata[0].name}
                         </Text>
                         <Text color="gray.500" mt="5%" fontSize="sm">
                           Enjoy Buy 1 Get 1 offer for 365 days

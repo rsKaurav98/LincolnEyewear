@@ -94,7 +94,7 @@ export const NavbarCard2 = () => {
                     w="90px"
                     textAlign="center"
                   >
-                    {Authdata[0].first_name}
+                    {Authdata[0].name}
                     <TriangleDownIcon
                       ml="2px"
                       fontSize={"9px"}

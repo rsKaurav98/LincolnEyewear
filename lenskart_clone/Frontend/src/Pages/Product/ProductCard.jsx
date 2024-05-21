@@ -33,7 +33,7 @@ const ProductCard = ({ type }) => {
                 <Image
                   m="auto"
                   width="80%"
-                  src={ele.imageTsrc}
+                  src={ele?.logo?.orignal}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
                 />

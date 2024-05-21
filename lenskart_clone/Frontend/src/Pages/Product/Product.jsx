@@ -29,10 +29,10 @@ const NewProduct = () => {
     setIsLoaded(true);
     try {
       const response = await fetch(
-        `http://localhost:4000/product?sort=${sort}&productRefLink=${productRef}&productType=${types}&gender=${gender}&page=${page}`
+        `http://localhost:8000/products`
       );
       const postData = await response.json();
-      setProducts(postData);
+      setProducts(postData.data);
       setIsLoaded(false);
     } catch (error) {
       console.log(error);
