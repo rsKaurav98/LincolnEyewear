@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Box, Flex, Grid, GridItem, Text, Image } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
+import ImageTest from "../../Images/logo.png"
 
 const ProductCard = ({ type }) => {
   return (
@@ -16,8 +17,8 @@ const ProductCard = ({ type }) => {
       gap={6}
     >
       {type.map((ele) => (
-        <GridItem>
-          <Link to={`/products/${ele._id}`}>
+        <GridItem key={ele.id}>
+          <Link to={`/products/${ele.id}`}>
             <Box
               position="relative"
               border="1px solid"
@@ -33,10 +34,11 @@ const ProductCard = ({ type }) => {
                 <Image
                   m="auto"
                   width="80%"
-                  src={ele?.logo?.orignal}
+                  src={ ele.image.thumbnail}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
                 />
+               
                 <br />
                 <br />
                 <br />

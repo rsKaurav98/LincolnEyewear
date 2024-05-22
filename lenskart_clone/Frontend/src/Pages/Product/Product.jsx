@@ -178,6 +178,7 @@ const NewProduct = () => {
       </Box>
       <Footer />
     </>
+   
   );
 };
 

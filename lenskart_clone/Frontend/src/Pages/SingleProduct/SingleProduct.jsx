@@ -15,10 +15,11 @@ const SingleProduct = () => {
   const [data, setData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  console.log(data)
   const { cart } = useSelector((state) => state.CartReducer);
 
   const handleAddToCart = () => {
-    const existingItem = cart.findIndex((item) => item._id === data._id);
+    const existingItem = cart.findIndex((item) => item.id === data.id);
     if (existingItem === -1) {
       data.quantity = 1;
       dispatch(addToCart(data));
@@ -38,9 +39,10 @@ const SingleProduct = () => {
   };
 
   const fetchSingleProduct = () => {
-    axios(`https://harlequin-fawn-tutu.cyclic.app/product/${id}`)
-      .then((res) => setData(res.data.product))
+    axios(`http://localhost:8000/products/${id}`)
+      .then((res) => setData(res.data))
       .catch((err) => console.log(err));
+      console.log(data);
   };
   useEffect(() => {
     fetchSingleProduct();
@@ -72,7 +74,7 @@ const SingleProduct = () => {
           display={{ lg: "inherit", base: "none" }}
           _hover={{ transform: "scale(1.1)" }}
         >
-          <Image src={data.imageTsrc} />
+          <Image src={data.image.original} />
         </GridItem>
         <GridItem
           borderRadius={10}
@@ -82,7 +84,7 @@ const SingleProduct = () => {
           w={{ lg: "100%", sm: "80%", base: "80%" }}
           m="auto"
         >
-          <Image _hover={{ transform: "scale(1.1)" }} src={data.imageTsrc} />
+          <Image _hover={{ transform: "scale(1.1)" }} src={data.shop.logo.thumbnail} />
         </GridItem>
         <GridItem
           p={5}
@@ -108,7 +110,7 @@ const SingleProduct = () => {
             borderColor="gray.300"
             key={i}
           >
-            <Image src={ele.src} />
+            <Image src={data.image.original} />
           </GridItem>
         ))}
 
@@ -120,7 +122,7 @@ const SingleProduct = () => {
           border="1px solid"
           borderColor="gray.300"
         >
-          <Image src={data.imageTsrc} />
+          <Image src={data.image.original} />
         </GridItem>
         <GridItem
           _hover={{ transform: "scale(1.1)" }}
@@ -130,7 +132,7 @@ const SingleProduct = () => {
           border="1px solid"
           borderColor="gray.300"
         >
-          <Image src={data.imageTsrc} />
+          <Image src={data.shop.logo.original} />
         </GridItem>
       </Grid>
       <Footer />
