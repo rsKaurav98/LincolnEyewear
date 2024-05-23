@@ -82,7 +82,7 @@ const Signup = ({setIsSignUpOpen}) => {
           value === "" ? (
             <Required info="This is a required feild" />
           ) : (
-            <Required info="Password should be more than 6 characters." />
+            <Required info="Password should be greater than 6 , must include a special character" />
           )
         );
         break;
