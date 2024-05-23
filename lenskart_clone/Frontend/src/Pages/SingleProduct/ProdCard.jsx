@@ -4,13 +4,14 @@ import { ProdImage1 } from "./ProdImage";
 import { Button, Image, Text, Flex, Box } from "@chakra-ui/react";
 
 const ProdCard = ({ type, handleCart, handleWishlist }) => {
+ 
   return (
     <Box>
       <Text
         color="gray.500"
         fontSize="md"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      >
+      >  
         {type.name}
       </Text>
       <Text
@@ -38,7 +39,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         color="teal.500"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        ₹{type.price}{" "}
+        ₹{type.max_price - ((10/100)*type.max_price)}{" "}
         <span
           style={{
             fontSize: "18px",
@@ -48,7 +49,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
             marginRight: "2%"
           }}
         >
-          {"  "}₹{type.mPrice}{" "}
+          {"  "}₹{type.max_price }{" "}
         </span>
         <span
           style={{
@@ -57,14 +58,14 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
             color: "black"
           }}
         >
-          {"  "}(₹{+type.mPrice - +type.price} with GST)
+          {"  "}(₹{type.max_price - ((10/100)*type.max_price)} with GST)
         </span>
       </Text>
       <Text
         mt="-4"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        Frame + Lens
+      
       </Text>
       <br />
 
@@ -77,6 +78,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         onClick={handleCart}
       >
         <Flex
+          flexDir="column"
           flexWrap="wrap"
           justifyContent="center"
           gap="1"
@@ -86,7 +88,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
             textAlign="center"
             fontSize={{ lg: "md", md: "md", base: "sm" }}
           >
-            BUY 1 GET 1 WITH GOLD MEMBERSHIP
+            Click To Choose Lens
           </Text>
 
           <Text fontSize="12px">(with 1 Year Warranty & 14 day Return)</Text>
@@ -112,7 +114,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         borderColor="gray.400"
       >
         <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
-          Try On
+          Purchase without lens
         </Text>
         <Image
           src="https://static.lenskart.com/media/desktop/img/pdp/try_on_model.png"

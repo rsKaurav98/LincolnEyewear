@@ -22,6 +22,7 @@ const NewProduct = () => {
   const [types, setTypes] = useState("");
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState("");
+  console.log(sort);
   const [gender, setGender] = useState("");
   const [productRef, setProductRef] = useState("");
 
@@ -29,7 +30,7 @@ const NewProduct = () => {
     setIsLoaded(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/products`
+        `http://localhost:8000/products?page=${page}&sort=${sort}&gender=${gender}&types=${types}&productRef=${productRef}`
       );
       const postData = await response.json();
       setProducts(postData.data);

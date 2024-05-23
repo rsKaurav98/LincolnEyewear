@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Box, Flex, Grid, GridItem, Text, Image } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
-import ImageTest from "../../Images/logo.png"
+
 
 const ProductCard = ({ type }) => {
   return (

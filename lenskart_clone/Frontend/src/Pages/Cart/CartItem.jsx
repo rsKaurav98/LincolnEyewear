@@ -18,6 +18,7 @@ import {
 const CartItem = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.CartReducer);
+  console.log(cart)
 
   const handleDelete = (item) => {
     dispatch(removeFromCart(item));

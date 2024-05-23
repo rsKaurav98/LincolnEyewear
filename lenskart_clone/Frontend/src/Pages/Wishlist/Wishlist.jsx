@@ -17,11 +17,11 @@ const Wishlist = () => {
   };
 
   const handleAddToCart = (data) => {
-    const existingItem = cart.findIndex((item) => item._id === data._id);
+    const existingItem = cart.findIndex((item) => item.id === data.id);
     if (existingItem === -1) {
       data.quantity = 1;
       dispatch(addToCart(data));
-      dispatch(removeFromWishlist(data._id));
+      dispatch(removeFromWishlist(data.id));
       setTimeout(() => {
         navigate("/cart");
       }, 1000);
@@ -117,7 +117,7 @@ const Wishlist = () => {
                         </Button>
                         <Button
                           colorScheme="red"
-                          onClick={() => handleDelete(item._id)}
+                          onClick={() => handleDelete(item.id)}
                         >
                           Remove
                         </Button>
@@ -137,7 +137,7 @@ const Wishlist = () => {
                       mb="1"
                     >
                       <img
-                        src={item.imageTsrc}
+                        src={item.image.original}
                         alt={item.name}
                         boxSize="180px"
                         m="auto"
