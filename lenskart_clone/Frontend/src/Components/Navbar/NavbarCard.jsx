@@ -27,22 +27,22 @@ import {
   PopoverBody
 } from "@chakra-ui/react";
 
-export const NavbarCard1 = () => {
-  return (
-    <Box cursor="pointer">
-      <Flex gap={2} pl={5} pt={2}>
-        {NavbarDetail1.map((i, index) => (
-          <Box key={index}>
-            <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
-              {i.labels}
-            </Text>
-            <Spacer />
-          </Box>
-        ))}
-      </Flex>
-    </Box>
-  );
-};
+// export const NavbarCard1 = () => {
+//   return (
+//     <Box cursor="pointer">
+//       <Flex gap={2} pl={5} pt={2}>
+//         {NavbarDetail1.map((i, index) => (
+//           <Box key={index}>
+//             <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
+//               {i.labels}
+//             </Text>
+//             <Spacer />
+//           </Box>
+//         ))}
+//       </Flex>
+//     </Box>
+//   );
+// };
 
 export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
@@ -54,25 +54,27 @@ export const NavbarCard2 = () => {
       <HStack m="auto">
         <Box w="20%">
           <Link to="/">
-            <Image src={logo} alt="logo" w="75%" />
+            <Image src={logo} alt="logo"/>
           </Link>
         </Box>
         <HStack w="85%" m="auto">
-          <Box w="15%">
+          {/* <Box w="15%">
             <HStack fontSize="18px" fontWeight="bold">
               <FiPhoneCall />
               <Text>1800-111-111</Text>
             </HStack>
-          </Box>
+          </Box> */}
           <Box w="55%">
             <Input
-              placeholder="What are you looking for"
+              placeholder="Search for Eyeglasses,Sunglasses and more.."
               border="1px solid black"
               w="95%"
+              bg="white"
               fontSize="17px"
               h="45px"
             />
           </Box>
+          <Box w="30%"></Box>
           <HStack w="35%">
             <Button
               size="lg"
@@ -161,10 +163,10 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer" bg="#fbf9f7" p={2.5}>
+    <Box cursor="pointer" p={2.5} marginTop="1rem" bg="#455666">
       <Flex gap={4} pl={5} pt={2} justifyContent="space-between">
         <NavbarCard5 />
-        <HStack w="20%" ml="5%" justifyContent="right">
+        {/* <HStack w="20%" ml="5%" justifyContent="right">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/May22/3dtryon1.png"
             alt="img1"
@@ -183,7 +185,7 @@ export const NavbarCard4 = () => {
             w="70px"
             borderRadius="base"
           />
-        </HStack>
+        </HStack> */}
       </Flex>
     </Box>
   );

@@ -17,14 +17,16 @@ import "../../App.css";
 
 function NavbarCard5() {
   return (
-    <Flex bg="#fbf9f7" cursor="pointer" gap="6">
+    <Flex bg="#455666" cursor="pointer" gap="6">
       <Menu>
         <MenuButton
-          bg="#fbf9f7"
+          bg="#455666"
           fontSize="15px"
           fontWeight="600"
+          fontFamily="sans-serif"
+          color="white"
           _hover={{
-            borderBottom: "4px solid teal"
+            borderBottom: "2px solid white"
           }}
         >
           EYEGLASSES
