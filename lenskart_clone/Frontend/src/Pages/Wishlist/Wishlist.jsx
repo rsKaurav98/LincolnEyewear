@@ -12,8 +12,8 @@ const Wishlist = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDelete = (item) => {
-    dispatch(removeFromWishlist(item));
+  const handleDelete = (itemId) => {
+    dispatch(removeFromWishlist(itemId));
   };
 
   const handleAddToCart = (data) => {

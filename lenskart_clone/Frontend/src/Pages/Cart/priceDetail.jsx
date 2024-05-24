@@ -2,7 +2,8 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 function PriceDetail({ totalPrice, discountPrice }) {
-  const { coupon } = useSelector((state) => state.CartReducer);
+  const { coupon } = useSelector((state) => state.cartManager);
+  console.log(coupon)
   return (
     <Flex
       flexDirection={"column"}

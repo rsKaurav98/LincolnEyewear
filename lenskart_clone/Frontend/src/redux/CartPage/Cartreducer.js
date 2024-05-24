@@ -16,60 +16,59 @@ let initialState = {
 
 export const CartReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case applyCoupon: {
+    case applyCoupon:
       return {
         ...state,
         coupon: payload
       };
-    }
 
-    case ADD_TO_CART: {
+    case ADD_TO_CART:
       const { cart } = state;
       const product = payload;
-      const existingItem = cart.findIndex((item) => item._id === product._id);
+      const existingItem = cart.findIndex((item) => item.id === product.id);
       if (existingItem === -1) {
-        const newItem = {
-          ...product
-        };
+        const newItem = { ...product };
         return {
           ...state,
           cart: [...cart, newItem]
         };
       }
-      return alert("Product Already Add");
-    }
-    case REMOVE_FROM_CART: {
-      return {
-        cart: state.cart.filter((item) => item._id !== payload)
-      };
-    }
+      alert("Product Already Added");
+      return state;
 
-    case INCREMENT: {
+    case REMOVE_FROM_CART:
       return {
-        cart: state.cart.filter((item) => {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== payload)
+      };
+
+    case INCREMENT:
+      return {
+        ...state,
+        cart: state.cart.map((item) => {
           if (item.id === payload) {
-            return (item.quantity = +item.quantity + 1);
+            return { ...item, quantity: item.quantity + 1 };
           }
           return item;
         })
       };
-    }
-    case DECREMENT: {
+
+    case DECREMENT:
       return {
-        cart: state.cart.filter((item) => {
+        ...state,
+        cart: state.cart.map((item) => {
           if (item.id === payload) {
-            return (item.quantity = +item.quantity - 1);
+            return { ...item, quantity: Math.max(item.quantity - 1, 1) };
           }
           return item;
         })
       };
-    }
 
-    case RESET: {
+    case RESET:
       return {
+        ...state,
         cart: []
       };
-    }
 
     default:
       return state;

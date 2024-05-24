@@ -12,7 +12,8 @@ import Footer from "../../Components/Footer/Footer";
 import { Flex, Text, Button } from "@chakra-ui/react";
 
 const CartPage = () => {
-  const { cart } = useSelector((state) => state.CartReducer);
+  const { cart } = useSelector((state) => state.cartManager);
+  console.log(cart)
   const navigate = useNavigate();
 
   const getTotalPrice = () => {

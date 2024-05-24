@@ -23,7 +23,7 @@ export const wishlistReducer = (state = wishlistInitalState, action) => {
     }
     case REMOVE_FROM_WISHLIST: {
       return {
-        wishlist: state.wishlist.filter((item) => item._id !== payload)
+        wishlist: state.wishlist.filter((item) => item.id !== payload)
       };
     }
 

@@ -17,7 +17,7 @@ import {
 
 const CartItem = () => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.CartReducer);
+  const { cart } = useSelector((state) => state.cartManager);
   console.log(cart)
 
   const handleDelete = (item) => {
@@ -72,7 +72,7 @@ const CartItem = () => {
                 xl: "unset",
                 "2xl": "unset"
               }}
-              src={item.imageTsrc}
+              src={item.gallery[0].original}
             />
             <Flex
               flexDirection={"column"}
@@ -113,7 +113,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.mPrice}
+                    ₹{item.price}
                   </Text>
                 </Flex>
               </Flex>
@@ -130,7 +130,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.mPrice}
+                    ₹{item.price}
                   </Text>
                 </Flex>
               </Flex>
