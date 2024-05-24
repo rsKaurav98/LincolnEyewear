@@ -79,8 +79,9 @@ export const NavbarCard2 = () => {
             <Button
               size="lg"
               bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+              fontSize="16px"
+              fontWeight="600"
+              fontStyle="sans-serif"
               onClick={() => navigate("/orderhistory")}
             >
               Track Order
@@ -90,7 +91,7 @@ export const NavbarCard2 = () => {
                 <PopoverTrigger>
                   <Box
                     fontWeight={"600"}
-                    fontSize="15px"
+                    fontSize="16px"
                     m="auto"
                     mt="-2px"
                     w="90px"
@@ -134,22 +135,23 @@ export const NavbarCard2 = () => {
               </Box>
             )}
             <Button
-              leftIcon={<CiHeart />}
+              
+              leftIcon={<CiHeart size={25}/>}
               size="lg"
               bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+              fontSize="16px"
+              fontWeight="600"
               onClick={() => navigate("/wishlist")}
             >
               Wishlist
             </Button>
             <Link to="/cart">
               <Button
-                leftIcon={<CgShoppingCart />}
+                leftIcon={<CgShoppingCart size={25} />}
                 size="lg"
                 bg="whiteAlpha.900"
-                fontSize="14px"
-                fontWeight="400"
+                fontSize="16px"
+                fontWeight="600"
               >
                 Cart
               </Button>
@@ -163,8 +165,8 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer" p={2.5} marginTop="1rem" bg="#455666">
-      <Flex gap={4} pl={5} pt={2} justifyContent="space-between">
+    <Box cursor="pointer"  marginTop="1rem" bg="#455666" borderRadius="8" display="flex" justifyContent="center">
+      <Flex py={2} px={5}>
         <NavbarCard5 />
         {/* <HStack w="20%" ml="5%" justifyContent="right">
           <Image

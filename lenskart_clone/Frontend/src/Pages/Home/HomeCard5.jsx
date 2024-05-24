@@ -103,37 +103,37 @@ export const HomeCard5b = ({ type, heading }) => {
   );
 };
 
-export const HomeCard5c = ({ type, heading }) => {
-  return (
-    <Box bgColor="#fff092" pb="5%" pt="2%">
-      <Box w="90%" m="auto">
-        <Text
-          fontSize="30px"
-          pb="7"
-          fontWeight="500"
-          textAlign="center"
-          font-family="futurastd-medium"
-        >
-          {heading}
-        </Text>
-        <Grid
-          templateColumns={{
-            base: "repeat(1,1fr)",
-            md: "repeat(1,1fr)",
-            lg: "repeat(2,1fr)",
-            xl: "repeat(3,1fr)",
-            "2xl": "repeat(3,1fr)"
-          }}
-          gap={6}
-          w="100%"
-        >
-          {type.map((i) => (
-            <Box key={i}>
-              <ReactPlayer url={i.img} width="100%" height="300px" />
-            </Box>
-          ))}
-        </Grid>
-      </Box>
-    </Box>
-  );
-};
+// export const HomeCard5c = ({ type, heading }) => {
+//   return (
+//     <Box bgColor="#fff092" pb="5%" pt="2%">
+//       <Box w="90%" m="auto">
+//         <Text
+//           fontSize="30px"
+//           pb="7"
+//           fontWeight="500"
+//           textAlign="center"
+//           font-family="futurastd-medium"
+//         >
+//           {heading}
+//         </Text>
+//         <Grid
+//           templateColumns={{
+//             base: "repeat(1,1fr)",
+//             md: "repeat(1,1fr)",
+//             lg: "repeat(2,1fr)",
+//             xl: "repeat(3,1fr)",
+//             "2xl": "repeat(3,1fr)"
+//           }}
+//           gap={6}
+//           w="100%"
+//         >
+//           {type.map((i) => (
+//             <Box key={i}>
+//               <ReactPlayer url={i.img} width="100%" height="300px" />
+//             </Box>
+//           ))}
+//         </Grid>
+//       </Box>
+//     </Box>
+//   );
+// };

@@ -6,32 +6,22 @@ const HomeCard7 = () => {
     <Box
       w="100%"
       m="auto"
-      bgColor="#000042"
+      bgColor="#455666"
       color="whiteAlpha.900"
       pt={9}
       pl={9}
     >
       <Box fontSize="35px" w="97%" margin="auto">
-        Buy The Best Eyewear From Lenskart
+        Buy The Best Eyewear From Lincoln
       </Box>
       <br />
       <Box fontSize="15px" w="97%" margin="auto" pb="5" textAlign="justify">
         <Box w="95%">
-          Lenskart Is The Leading E-Commerce Portal For Eyewear In India. It Has
-          Revolutionised The Eyewear Industry In The Country With Its
-          Omni-Channel Approach. From An Ever-Growing Number Of Offline Stores
-          Across Major Cities In The Country To Innovative Integration Of
-          Technology While Purchasing Online, Lenskart Caters To Every Customer
-          With Several Deals And Offers.
+        At Lincoln Eyewear, we believe in providing exceptional quality and style without compromise. Whether you're looking for the latest trends or timeless classics, our curated selection ensures there's something for everyone. Elevate your look and protect your eyes with eyewear that reflects your unique personality and lifestyle. Shop confidently with our commitment to superior customer service and satisfaction.
         </Box>
         <br />
         <Box w="95%" textAlign="justify">
-          A One-Stop Online Solution For Purchasing Eyewear And Its Accessories,
-          Lenskart Delivers Them Right At Your Doorstep With Convenient Methods
-          Of Payment. Sunglasses As Well As Eyeglasses Are Available For Men And
-          Women In A Diverse Array Of Styles And Trendy Colours. If You Want To
-          Try Out Contact Lenses, Pick The Ones Of Your Choice From The
-          Extensive Variety Of Coloured Contact Lenses From Our Online Store.
+        Discover your perfect pair at Lincoln Eyewear. From stylish eyeglasses to protective sunglasses and computer glasses, find your ideal blend of fashion and function. Explore our collection today!
         </Box>
       </Box>
     </Box>

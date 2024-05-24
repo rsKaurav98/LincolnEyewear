@@ -15,16 +15,10 @@ export const services = [
 
 export const about = [
   {
-    labels: "We Are Hiring",
-  },
-  {
-    labels: "Refer & Earn",
-  },
-  {
     labels: "About Us",
   },
   {
-    labels: "Lenskart Coupons",
+    labels: "Coupons",
   },
 ];
 

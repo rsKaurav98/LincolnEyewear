@@ -130,7 +130,7 @@ const Login = ({ isSignUpOpen }) => {
 
   return (
     <div>
-      <Center onClick={onOpen} fontWeight={"400"} fontSize="15px" w="80px">
+      <Center onClick={onOpen} fontWeight={"600"} fontSize="16px" w="60px">
         Sign In
       </Center>
 
@@ -150,7 +150,7 @@ const Login = ({ isSignUpOpen }) => {
 
           <ModalBody p={"0px 0px "} borderRadius={"15px 15px 15px 15px "}>
             <Image
-              src="https://static1.lenskart.com/media/desktop/img/DesignStudioIcons/DesktopLoginImage.svg"
+              src="https://images.unsplash.com/photo-1581239125393-67d48d3dd429?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="pic"
               borderRadius={"10px 10px 0px 0px "}
             />
