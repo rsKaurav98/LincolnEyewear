@@ -43,23 +43,24 @@ function Nav() {
     <Box
       display={{ lg: "inherit", xl: "none" }}
       cursor="pointer"
-      bg="#fbf9f7"
+      bg="aliceblue"
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">
-        <Box w={{ lg: "20%", md: "20%", sm: "22%", base: "30%" }}>
+        <Box w="20%">
           <Link to="/">
             <Image
               src={logo}
               alt="logo"
-              w={{ lg: "75%", md: "100%", sm: "100%", base: "100%" }}
+              // w={{ lg: "75%", md: "75%", sm: "75%", base: "75%" }}
             />
           </Link>
         </Box>
         <Box w="70%" display={{ sm: "inherit", base: "none" }}>
           <Input
-            placeholder="What are you looking for"
+            placeholder="Search for Eyeglasses,Sunglasses and more.."
             border="1px solid black"
+            bg="white"
             w="90%"
             fontSize="16px"
             h="35px"
@@ -244,7 +245,7 @@ function Nav() {
                           <Box>
                             <Text pb="2">EYEGLASSES</Text>
                             <Text pb="2">COMPUTER GLASSES</Text>
-                            <Text pb="2">CONTACT LENSES</Text>
+                            {/* <Text pb="2">CONTACT LENSES</Text> */}
                             <Text pb="2">SUN GLASSES</Text>
                           </Box>
                         </Link>
@@ -269,7 +270,7 @@ function Nav() {
                           <Box>
                             <Text pb="2">EYEGLASSES</Text>
                             <Text pb="2">COMPUTER GLASSES</Text>
-                            <Text pb="2">CONTACT LENSES</Text>
+                            {/* <Text pb="2">CONTACT LENSES</Text> */}
                             <Text pb="2">SUN GLASSES</Text>
                           </Box>
                         </Link>
@@ -294,7 +295,7 @@ function Nav() {
                           <Box>
                             <Text pb="2">EYEGLASSES</Text>
                             <Text pb="2">COMPUTER GLASSES</Text>
-                            <Text pb="2">CONTACT LENSES</Text>
+                            {/* <Text pb="2">CONTACT LENSES</Text> */}
                             <Text pb="2">SUN GLASSES</Text>
                           </Box>
                         </Link>

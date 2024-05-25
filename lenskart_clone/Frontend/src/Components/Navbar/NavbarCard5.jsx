@@ -11,20 +11,23 @@ import {
   Grid,
   Menu,
   MenuButton,
-  MenuList
+  MenuList,
+  Divider
 } from "@chakra-ui/react";
 import "../../App.css";
 
 function NavbarCard5() {
   return (
-    <Flex bg="#fbf9f7" cursor="pointer" gap="6">
+    <Flex bg="#455666" cursor="pointer" gap="36" h="7" display="flex">
       <Menu>
         <MenuButton
-          bg="#fbf9f7"
+          bg="#455666"
           fontSize="15px"
           fontWeight="600"
+          fontFamily="sans-serif"
+          color="white"
           _hover={{
-            borderBottom: "4px solid teal"
+            borderBottom: "2px solid white",
           }}
         >
           EYEGLASSES
@@ -32,24 +35,35 @@ function NavbarCard5() {
 
         <MenuList
           color="blackAlpha.900"
-          h="400px"
-          bg="whiteAlpha.800"
-          w="100%"
-          p="5"
+          bg="whiteAlpha.900"
+          w="400px"
+          p="4"
+          borderRadius="md"
+          boxShadow="lg"
+          maxH="700"
+          overflowY="auto"
+          css={{
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            '-ms-overflow-style': 'none',
+            scrollbarWidth: 'none',
+          }}
         >
           <Link to="/products">
             <Box>
-              <Grid gridTemplateColumns="repeat(5, 1fr)" w="100%">
-                <Flex direction="column" justifyContent="space-evenly" mt="20">
-                  <Flex gap="5" fontSize="15px">
+              <Grid templateColumns="repeat(2, 1fr)" gap="4">
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
+                  <Flex alignItems="center" gap="3">
                     <Avatar
                       name="Dan Abrahmov"
-                      src="https://static.lenskart.com/media/desktop/img/men_pic.png"
+                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="men"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      fontSize="lg"
+                      fontSize="md"
                       fontWeight="bold"
                       _hover={{ textDecoration: "underline" }}
                     >
@@ -57,15 +71,15 @@ function NavbarCard5() {
                     </Box>
                   </Flex>
 
-                  <Flex gap="5">
+                  <Flex alignItems="center" gap="3" mt="2">
                     <Avatar
                       name="Kola Tioluwani"
-                      src="https://static.lenskart.com/media/desktop/img/women_pic.png"
+                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="women"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      fontSize="lg"
+                      fontSize="md"
                       fontWeight="bold"
                       _hover={{ textDecoration: "underline" }}
                     >
@@ -73,119 +87,85 @@ function NavbarCard5() {
                     </Box>
                   </Flex>
 
-                  <Flex gap="5">
+                  <Flex alignItems="center" gap="3" mt="2">
                     <Avatar
                       name="Kent Dodds"
-                      src="https://static.lenskart.com/media/desktop/img/kid_pic.png"
+                      src="https://images.unsplash.com/photo-1631424542224-54dc0ddb69b4?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="kid"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      fontSize="lg"
+                      fontSize="md"
                       fontWeight="bold"
                       _hover={{ textDecoration: "underline" }}
                     >
                       Kids
                     </Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    SELECT CATEGORY
-                  </Box>
-                  <Box fontSize="md" _hover={{ bg: "blackAlpha.200" }}>
+                {/* <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
                     CLASSIC EYE-GLASSES
-                    <p>
-                      Starting From ₹ <span>1199</span>
-                    </p>
+                    <p>Starting From ₹ <span>1199</span></p>
                   </Box>
-                  <Box fontSize="md" _hover={{ bg: "blackAlpha.200" }}>
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
                     PREMIUM EYE-GLASSES
-                    <p>
-                      Starting From ₹ <span>3000</span>
-                    </p>
+                    <p>Starting From ₹ <span>3000</span></p>
                   </Box>
-                  <Box fontSize="md" _hover={{ bg: "blackAlpha.200" }} p="2">
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
                     COMPUTER EYE-GLASSES
-                    <p>
-                      Starting From ₹ <span>1299</span>
-                    </p>
+                    <p>Starting From ₹ <span>1299</span></p>
                   </Box>
-                </Flex>
-
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Our Top Picks
-                  </Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
-                      Lenskart BLU lenses
-                    </Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Trending</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Tinted Eyeglasses</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
-                      Computer Eyeglasses
-                    </Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
-                      Progressive Eyeglasses
-                    </Box>
-                  </Flex>
-                </Flex>
-
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Frame Type
-                  </Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Rectangle Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Wayfarer Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Round Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Aviator Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Cat-Eye Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Rimless Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Half Rim Frames</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Geometric Frames </Box>
-                  </Flex>
-                </Flex>
-
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Brands
-                  </Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Lenskart Air</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>OJOS</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>New Balance</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Carrera</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Fossil</Box>
-                  </Flex>
-                </Flex>
+                </Box> */}
               </Grid>
+
+              <Divider my="2" />
+
+              <Box>
+                <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
+                <Flex direction="column" fontSize="md" gap="2">
+                  <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Lenskart BLU lenses</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Trending</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Tinted Eyeglasses</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Computer Eyeglasses</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Progressive Eyeglasses</Box>
+                </Flex>
+              </Box>
+
+              <Divider my="2" />
+
+              <Box>
+                <Box fontSize="lg" fontWeight="bold" mb="2">Frame Type</Box>
+                <Flex direction="column" fontSize="md" gap="2">
+                  <Box _hover={{ fontWeight: "bold" }}>Rectangle Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Wayfarer Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Round Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Aviator Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Cat-Eye Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Rimless Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Half Rim Frames</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Geometric Frames</Box>
+                </Flex>
+              </Box>
+
+              <Divider my="2" />
+
+              <Box>
+                <Box fontSize="lg" fontWeight="bold" mb="2">Brands</Box>
+                <Flex direction="column" fontSize="md" gap="2">
+                  <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Lenskart Air</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>OJOS</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>New Balance</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Carrera</Box>
+                  <Box _hover={{ fontWeight: "bold" }}>Fossil</Box>
+                </Flex>
+              </Box>
             </Box>
           </Link>
         </MenuList>
@@ -193,11 +173,13 @@ function NavbarCard5() {
 
       <Menu>
         <MenuButton
-          bg="#fbf9f7"
+          bg="#455666"
           fontSize="15px"
           fontWeight="600"
+          fontFamily="sans-serif"
+          color="white"
           _hover={{
-            borderBottom: "4px solid teal"
+            borderBottom: "2px solid white",
           }}
         >
           COMPUTER GLASSES
@@ -205,99 +187,134 @@ function NavbarCard5() {
 
         <MenuList
           color="blackAlpha.900"
-          h="400px"
-          bg="whiteAlpha.800"
-          w="100%"
-          p="5"
+          bg="whiteAlpha.900"
+          w="300px"
+          p="4"
+          borderRadius="md"
+          boxShadow="lg"
+          maxH="700px"
+          overflowY="auto"
+          css={{
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            '-ms-overflow-style': 'none',
+            scrollbarWidth: 'none',
+          }}
         >
           <Link to="/products">
             <Box>
-              <Grid gridTemplateColumns="repeat(5, 1fr)" w="100%">
-                <Flex
-                  direction="column"
-                  gap="4"
-                  justifyContent="space-evenly"
-                  mt="20"
-                >
-                  <Flex gap="5">
+              <Grid templateColumns="repeat(1, 1fr)" gap="4">
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
+                  <Flex alignItems="center" gap="3">
                     <Avatar
                       name="Dan Abrahmov"
-                      src="https://static.lenskart.com/media/desktop/img/men_pic.png"
+                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="men"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      _hover={{ textDecoration: "underline" }}
                       fontSize="md"
                       fontWeight="bold"
+                      _hover={{ textDecoration: "underline" }}
                     >
                       Men
                     </Box>
                   </Flex>
 
-                  <Flex gap="5">
+                  <Flex alignItems="center" gap="3" mt="2">
                     <Avatar
                       name="Kola Tioluwani"
-                      src="https://static.lenskart.com/media/desktop/img/women_pic.png"
+                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="women"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      _hover={{ textDecoration: "underline" }}
                       fontSize="md"
                       fontWeight="bold"
+                      _hover={{ textDecoration: "underline" }}
                     >
                       Women
                     </Box>
                   </Flex>
 
-                  <Flex gap="5">
+                  <Flex alignItems="center" gap="3" mt="2">
                     <Avatar
                       name="Kent Dodds"
-                      src="https://static.lenskart.com/media/desktop/img/kid_pic.png"
+                      src="https://images.unsplash.com/photo-1631424542224-54dc0ddb69b4?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="kid"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      _hover={{ textDecoration: "underline" }}
                       fontSize="md"
                       fontWeight="bold"
+                      _hover={{ textDecoration: "underline" }}
                     >
                       Kids
                     </Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    SELECT CATEGORY
-                  </Box>
+                <Divider my="2" />
 
-                  <Box _hover={{ bg: "blackAlpha.200" }} fontSize="md">
+                {/* <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
                     Blu 0 Computer Glasses
-                    <p>
-                      Starting From ₹ <span>1299</span>
-                    </p>
+                    <p>Starting From ₹ <span>1299</span></p>
                   </Box>
-                  <Box _hover={{ bg: "blackAlpha.200" }} fontSize="md">
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
                     PREMIUM RANGE
-                    <p>
-                      Starting From ₹ <span>3000</span>
-                    </p>
+                    <p>Starting From ₹ <span>3000</span></p>
                   </Box>
-                </Flex>
+                </Box> */}
+<Box>
+  <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
+  <Flex direction="column" fontSize="md" gap="2">
+    <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Lenskart BLU lenses</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Trending</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Tinted Eyeglasses</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Computer Eyeglasses</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Progressive Eyeglasses</Box>
+  </Flex>
+</Box>
+
+<Divider my="2" />
+
+<Box>
+  <Box fontSize="lg" fontWeight="bold" mb="2">Frame Type</Box>
+  <Flex direction="column" fontSize="md" gap="2">
+    <Box _hover={{ fontWeight: "bold" }}>Rectangle Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Wayfarer Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Round Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Aviator Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Cat-Eye Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Rimless Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Half Rim Frames</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Geometric Frames</Box>
+  </Flex>
+</Box>
+
+<Divider my="2" />
+
+<Box>
+  <Box fontSize="lg" fontWeight="bold" mb="2">Brands</Box>
+  <Flex direction="column" fontSize="md" gap="2">
+    <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
+    <Box _hover={{ fontWeight: "bold" }}>Lenskart Air</Box>
+    <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
+    </Flex>
+    </Box>
               </Grid>
             </Box>
           </Link>
         </MenuList>
       </Menu>
 
-      <Menu>
+      {/* <Menu>
         <MenuButton
           bg="#fbf9f7"
           fontSize="15px"
@@ -357,9 +374,9 @@ function NavbarCard5() {
             </Box>
           </Link>
         </MenuList>
-      </Menu>
+      </Menu> */}
 
-      <Menu>
+      {/* <Menu>
         <MenuButton
           bg="#fbf9f7"
           fontSize="15px"
@@ -476,15 +493,17 @@ function NavbarCard5() {
             </Box>
           </Link>
         </MenuList>
-      </Menu>
+      </Menu> */}
 
       <Menu>
         <MenuButton
-          bg="#fbf9f7"
+          bg="#455666"
           fontSize="15px"
           fontWeight="600"
+          fontFamily="sans-serif"
+          color="white"
           _hover={{
-            borderBottom: "4px solid teal"
+            borderBottom: "2px solid white",
           }}
         >
           SUN GLASSES
@@ -492,100 +511,87 @@ function NavbarCard5() {
 
         <MenuList
           color="blackAlpha.900"
-          h="400px"
-          bg="whiteAlpha.800"
+          bg="whiteAlpha.900"
           w="100%"
-          p="5"
+          p="4"
+          borderRadius="md"
+          boxShadow="lg"
+          maxH="700px"
+          overflowY="auto"
+          css={{
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+            '-ms-overflow-style': 'none',
+            scrollbarWidth: 'none',
+          }}
         >
           <Link to="/products">
             <Box>
-              <Grid gridTemplateColumns="repeat(6, 1fr)">
-                <Flex direction="column" justifyContent="space-evenly">
-                  <Flex gap="5">
+              <Grid templateColumns="repeat(1, 1fr)" gap="4">
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
+                  <Flex alignItems="center" gap="3">
                     <Avatar
                       name="Dan Abrahmov"
-                      src="https://static.lenskart.com/media/desktop/img/men_pic.png"
+                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="men"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      _hover={{ textDecoration: "underline" }}
                       fontSize="md"
                       fontWeight="bold"
+                      _hover={{ textDecoration: "underline" }}
                     >
                       Men
                     </Box>
                   </Flex>
 
-                  <Flex gap="5" mt="-40%">
+                  <Flex alignItems="center" gap="3" mt="2">
                     <Avatar
                       name="Kola Tioluwani"
-                      src="https://static.lenskart.com/media/desktop/img/women_pic.png"
+                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="women"
-                      size="md"
+                      size="sm"
                     />
                     <Box
-                      _hover={{ textDecoration: "underline" }}
                       fontSize="md"
                       fontWeight="bold"
+                      _hover={{ textDecoration: "underline" }}
                     >
                       Women
                     </Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    SELECT CATEGORY
-                  </Box>
-                  <Box _hover={{ bg: "blackAlpha.200" }} fontSize="md">
+                <Divider my="2" />
+                {/* <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
                     CLASSIC SUNGLASSES
-                    <p>
-                      Starting From ₹ <span>1299</span>
-                    </p>
+                    <p>Starting From ₹ <span>1299</span></p>
                   </Box>
-                  <Box _hover={{ bg: "blackAlpha.200" }} fontSize="md" p="2">
+                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
                     PREMIUM SUNGLASSES
-                    <p>
-                      Starting From ₹ <span>2500</span>
-                    </p>
+                    <p>Starting From ₹ <span>2500</span></p>
                   </Box>
-                </Flex>
+                </Box> */}
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Our Top Picks
-                  </Box>
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
                   <Flex direction="column" fontSize="md" gap="2">
                     <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Pilot Style</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Power Sunglasses</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
-                      Polarized Sunglasses
-                    </Box>
+                    <Box _hover={{ fontWeight: "bold" }}>Polarized Sunglasses</Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Shape
-                  </Box>
+                <Divider my="2" />
+
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Shape</Box>
                   <Flex direction="column" fontSize="md" gap="2">
                     <Box _hover={{ fontWeight: "bold" }}>Aviator</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Rounders</Box>
@@ -595,50 +601,38 @@ function NavbarCard5() {
                     <Box _hover={{ fontWeight: "bold" }}>Cat-Eye</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Clubmaster</Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Colections
-                  </Box>
+                <Divider my="2" />
+
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Collections</Box>
                   <Flex direction="column" fontSize="md" gap="2">
                     <Box _hover={{ fontWeight: "bold" }}>Glam Slam</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Havana</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Polarized</Box>
                     <Box _hover={{ fontWeight: "bold" }}>Power Sunglasses</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
-                      Designer Sunglasses
-                    </Box>
+                    <Box _hover={{ fontWeight: "bold" }}>Designer Sunglasses</Box>
                   </Flex>
-                </Flex>
+                </Box>
 
-                <Flex direction="column" gap="6">
-                  <Box
-                    fontSize="md"
-                    fontWeight="bold"
-                    borderBottom="1px solid black"
-                    p="1"
-                  >
-                    Brand
-                  </Box>
+                <Divider my="2" />
+
+                <Box>
+                  <Box fontSize="lg" fontWeight="bold" mb="2">Brand</Box>
                   <Flex direction="column" fontSize="md" gap="2">
                     <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
                     <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
                     <Box _hover={{ fontWeight: "bold" }}>OJOS</Box>
                   </Flex>
-                </Flex>
+                </Box>
               </Grid>
             </Box>
           </Link>
         </MenuList>
       </Menu>
 
-      <Menu>
+      {/* <Menu>
         <MenuButton
           bg="#fbf9f7"
           fontSize="15px"
@@ -709,9 +703,9 @@ function NavbarCard5() {
             </Grid>
           </Box>
         </MenuList>
-      </Menu>
+      </Menu> */}
 
-      <Menu>
+      {/* <Menu>
         <MenuButton
           bg="#fbf9f7"
           fontSize="15px"
@@ -843,7 +837,7 @@ function NavbarCard5() {
             </Flex>
           </Grid>
         </MenuList>
-      </Menu>
+      </Menu> */}
     </Flex>
   );
 }

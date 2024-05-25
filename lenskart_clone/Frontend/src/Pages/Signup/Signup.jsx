@@ -136,7 +136,7 @@ const Signup = ({setIsSignUpOpen}) => {
 
   return (
     <div>
-      <Center onClick={onOpen} fontWeight={"400"} fontSize="15px" w="60px">
+      <Center onClick={onOpen} fontWeight={"600"} fontSize="16px" w="60px">
         Sign Up
       </Center>
 

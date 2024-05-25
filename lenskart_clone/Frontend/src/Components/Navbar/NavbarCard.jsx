@@ -27,22 +27,22 @@ import {
   PopoverBody
 } from "@chakra-ui/react";
 
-export const NavbarCard1 = () => {
-  return (
-    <Box cursor="pointer">
-      <Flex gap={2} pl={5} pt={2}>
-        {NavbarDetail1.map((i, index) => (
-          <Box key={index}>
-            <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
-              {i.labels}
-            </Text>
-            <Spacer />
-          </Box>
-        ))}
-      </Flex>
-    </Box>
-  );
-};
+// export const NavbarCard1 = () => {
+//   return (
+//     <Box cursor="pointer">
+//       <Flex gap={2} pl={5} pt={2}>
+//         {NavbarDetail1.map((i, index) => (
+//           <Box key={index}>
+//             <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
+//               {i.labels}
+//             </Text>
+//             <Spacer />
+//           </Box>
+//         ))}
+//       </Flex>
+//     </Box>
+//   );
+// };
 
 export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
@@ -54,31 +54,34 @@ export const NavbarCard2 = () => {
       <HStack m="auto">
         <Box w="20%">
           <Link to="/">
-            <Image src={logo} alt="logo" w="75%" />
+            <Image src={logo} alt="logo"/>
           </Link>
         </Box>
         <HStack w="85%" m="auto">
-          <Box w="15%">
+          {/* <Box w="15%">
             <HStack fontSize="18px" fontWeight="bold">
               <FiPhoneCall />
               <Text>1800-111-111</Text>
             </HStack>
-          </Box>
+          </Box> */}
           <Box w="55%">
             <Input
-              placeholder="What are you looking for"
+              placeholder="Search for Eyeglasses,Sunglasses and more.."
               border="1px solid black"
               w="95%"
+              bg="white"
               fontSize="17px"
               h="45px"
             />
           </Box>
+          <Box w="30%"></Box>
           <HStack w="35%">
             <Button
               size="lg"
               bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+              fontSize="16px"
+              fontWeight="600"
+              fontStyle="sans-serif"
               onClick={() => navigate("/orderhistory")}
             >
               Track Order
@@ -88,7 +91,7 @@ export const NavbarCard2 = () => {
                 <PopoverTrigger>
                   <Box
                     fontWeight={"600"}
-                    fontSize="15px"
+                    fontSize="16px"
                     m="auto"
                     mt="-2px"
                     w="90px"
@@ -132,22 +135,23 @@ export const NavbarCard2 = () => {
               </Box>
             )}
             <Button
-              leftIcon={<CiHeart />}
+              
+              leftIcon={<CiHeart size={25}/>}
               size="lg"
               bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+              fontSize="16px"
+              fontWeight="600"
               onClick={() => navigate("/wishlist")}
             >
               Wishlist
             </Button>
             <Link to="/cart">
               <Button
-                leftIcon={<CgShoppingCart />}
+                leftIcon={<CgShoppingCart size={25} />}
                 size="lg"
                 bg="whiteAlpha.900"
-                fontSize="14px"
-                fontWeight="400"
+                fontSize="16px"
+                fontWeight="600"
               >
                 Cart
               </Button>
@@ -161,10 +165,10 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer" bg="#fbf9f7" p={2.5}>
-      <Flex gap={4} pl={5} pt={2} justifyContent="space-between">
+    <Box cursor="pointer"  marginTop="1rem" bg="#455666" borderRadius="8" display="flex" justifyContent="center">
+      <Flex py={2} px={5}>
         <NavbarCard5 />
-        <HStack w="20%" ml="5%" justifyContent="right">
+        {/* <HStack w="20%" ml="5%" justifyContent="right">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/May22/3dtryon1.png"
             alt="img1"
@@ -183,7 +187,7 @@ export const NavbarCard4 = () => {
             w="70px"
             borderRadius="base"
           />
-        </HStack>
+        </HStack> */}
       </Flex>
     </Box>
   );

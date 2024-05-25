@@ -6,7 +6,7 @@ import { services, about, helps } from "./FooterDetails";
 const Footer = () => {
   return (
     <Box
-      bgColor="#000042"
+      bgColor="#455666"
       color="whiteAlpha.900"
       p={{ lg: "0", md: "5", base: "5" }}
     >
@@ -21,6 +21,7 @@ const Footer = () => {
         textAlign="left"
         ml="2%"
       >
+        
         <Box w="60%" pl="5">
           <Grid
             templateColumns={{
@@ -36,9 +37,6 @@ const Footer = () => {
             <FooterCard1 type={helps} heading="Help" />
           </Grid>
         </Box>
-        <Center>
-          <FooterCard2 />
-        </Center>
       </Grid>
       <hr />
       <FooterCard />

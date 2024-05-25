@@ -25,46 +25,46 @@ export const FooterCard1 = ({ type, heading }) => {
   );
 };
 
-export const FooterCard2 = () => {
-  return (
-    <Box cursor="pointer" textAlign="center" m="auto">
-      <Center>
-        <Grid
-          gap="2"
-          templateColumns={{
-            base: "repeat(1,1fr)",
-            md: "repeat(2,1fr)",
-            lg: "repeat(2,1fr)",
-            xl: "repeat(2,1fr)",
-            "2xl": "repeat(2,1fr)"
-          }}
-        >
-          <Image
-            src="https://static.lenskart.com/media/desktop/img/play-store.svg"
-            alt="img"
-          />
-          <Image
-            src="https://static.lenskart.com/media/desktop/img/app-store.svg"
-            alt="img"
-          />
-        </Grid>
-      </Center>
-      <br />
-      <Center w="60%" m="auto" fontSize="14px">
-        <Text>
-          Download Lenskart App to buy Eyeglasses, Sunglasses and Contact Lenses
-        </Text>
-      </Center>
-    </Box>
-  );
-};
+// export const FooterCard2 = () => {
+//   return (
+//     <Box cursor="pointer" textAlign="center" m="auto">
+//       <Center>
+//         <Grid
+//           gap="2"
+//           templateColumns={{
+//             base: "repeat(1,1fr)",
+//             md: "repeat(2,1fr)",
+//             lg: "repeat(2,1fr)",
+//             xl: "repeat(2,1fr)",
+//             "2xl": "repeat(2,1fr)"
+//           }}
+//         >
+//           <Image
+//             src="https://static.lenskart.com/media/desktop/img/play-store.svg"
+//             alt="img"
+//           />
+//           <Image
+//             src="https://static.lenskart.com/media/desktop/img/app-store.svg"
+//             alt="img"
+//           />
+//         </Grid>
+//       </Center>
+//       <br />
+//       <Center w="60%" m="auto" fontSize="14px">
+//         <Text>
+//           Download Lenskart App to buy Eyeglasses, Sunglasses and Contact Lenses
+//         </Text>
+//       </Center>
+//     </Box>
+//   );
+// };
 
 export const FooterCard = () => {
   return (
     <Grid
       templateColumns="repeat(2,1fr)"
-      justifyContent="space-between"
       m="auto"
+      gap="30%"
     >
       <Grid
         templateColumns={{
@@ -82,9 +82,9 @@ export const FooterCard = () => {
         gap="10%"
         pb={{ lg: "2%", sm: "4%", base: "10%" }}
       >
-        <Text fontSize="14px">T&C</Text>
-        <Text fontSize="14px">Privacy</Text>
-        <Text fontSize="14px">Disclaimer</Text>
+        <Text fontSize="20px">T&C</Text>
+        <Text fontSize="20px">Privacy</Text>
+        <Text fontSize="20px">Disclaimer</Text>
       </Grid>
       <Grid
         templateColumns={{
@@ -97,13 +97,13 @@ export const FooterCard = () => {
         gap="2"
         textAlign="left"
       >
-        <Text fontSize="16px" fontWeight="500">
+        <Text fontSize="20px" fontWeight="500">
           FOLLOWS US AT
         </Text>
         <Flex gap="2">
-          <AiFillFacebook size="30px" />
-          <AiOutlineInstagram size="30px" />
-          <TfiTwitter size="30px" />
+          <AiFillFacebook size="35px" />
+          <AiOutlineInstagram size="35px" />
+          <TfiTwitter size="35px" />
         </Flex>
       </Grid>
     </Grid>
