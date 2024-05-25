@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Wishlist = () => {
   const wishlistItems = useSelector((store) => store.wishlistManager.wishlist);
-  const { cart } = useSelector((state) => state.CartReducer);
+  const { cart } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

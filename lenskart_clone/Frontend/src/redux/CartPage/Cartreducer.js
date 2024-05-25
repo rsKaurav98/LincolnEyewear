@@ -27,7 +27,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
       const product = payload;
       const existingItem = cart.findIndex((item) => item.id === product.id);
       if (existingItem === -1) {
-        const newItem = { ...product };
+        const newItem = { ...product, quantity: 1 };
         return {
           ...state,
           cart: [...cart, newItem]
@@ -58,10 +58,11 @@ export const CartReducer = (state = initialState, { type, payload }) => {
         ...state,
         cart: state.cart.map((item) => {
           if (item.id === payload) {
-            return { ...item, quantity: Math.max(item.quantity - 1, 1) };
+            const newQuantity = item.quantity - 1;
+            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
           }
           return item;
-        })
+        }).filter(item => item !== null)
       };
 
     case RESET:
