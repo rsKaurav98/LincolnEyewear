@@ -37,7 +37,7 @@ const Login = ({ isSignUpOpen }) => {
 
   useEffect(() => {
     if (!isSignUpOpen) {
-      onOpen();
+     // onOpen();
     }
   }, [isSignUpOpen, onOpen]);
 

@@ -34,9 +34,8 @@ import { useNavigate } from "react-router-dom";
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
-  const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
+ // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
-  console.log(Authdata)
   const navigate = useNavigate();
 
   return (
@@ -441,6 +440,7 @@ function Nav() {
                     _hover={{ bg: "blue.200" }}
                     onClick={() => {
                       setisAuth(false);
+                      localStorage.removeItem("res")
                       return <Navigate to="/" />;
                     }}
                   >

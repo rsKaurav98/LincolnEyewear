@@ -1,17 +1,19 @@
 import React from "react";
 import ProdDetails from "./ProdDetails";
 import { ProdImage1 } from "./ProdImage";
-import { Button, Image, Text, Flex, Box } from "@chakra-ui/react";
+import { Button, Image, Text, Flex, Box, useDisclosure } from "@chakra-ui/react";
+import SelectLens from "../Lenses/SelectLens"; // Import the SelectLens component
 
 const ProdCard = ({ type, handleCart, handleWishlist }) => {
- 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box>
       <Text
         color="gray.500"
         fontSize="md"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      >  
+      >
         {type.name}
       </Text>
       <Text
@@ -75,7 +77,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         w={{ lg: "90%", base: "100%" }}
         color="white"
         bgColor="#00bac6"
-        onClick={handleCart}
+        onClick={onOpen} // Open modal on button click
       >
         <Flex
           flexDir="column"
@@ -112,6 +114,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         bg="whiteAlpha.900"
         border="1px"
         borderColor="gray.400"
+        onClick={handleCart}
       >
         <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
           Purchase without lens
@@ -130,6 +133,9 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
       {ProdImage1.map((ele, i) => (
         <Image src={ele.src} key={i} />
       ))}
+
+      {/* Modal Integration */}
+      <SelectLens isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
