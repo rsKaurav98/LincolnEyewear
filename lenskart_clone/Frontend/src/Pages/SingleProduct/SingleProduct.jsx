@@ -78,7 +78,8 @@ const SingleProduct = () => {
               border="1px solid"
               borderColor="gray.300"
               display={{ lg: 'inherit', base: 'none' }}
-              _hover={{ transform: 'scale(1.1)' }}
+              _hover={{ transform: 'scale(1.05)' }}
+              transition="0.3s"
             >
               <Image src={data.gallery[0].original} />
             </GridItem>
@@ -89,10 +90,12 @@ const SingleProduct = () => {
               borderColor="gray.300"
               w={{ lg: '100%', sm: '80%', base: '80%' }}
               m="auto"
+              _hover={{ transform: 'scale(1.05)' }}
+              transition="0.3s"
             >
-              <Image _hover={{ transform: 'scale(1.1)' }} src={data.gallery[1].original} />
+              <Image src={data.gallery[1].original} />
             </GridItem>
-            <GridItem p={5} colSpan={1} rowSpan={10} m="auto" justifyContent="center">
+            <GridItem p={5} colSpan={1} rowSpan={10} mt="0" mb="auto" pos="sticky" top="0">
               <ProdCard
                 type={data}
                 handleCart={handleAddToCart}
@@ -101,7 +104,8 @@ const SingleProduct = () => {
             </GridItem>
             {ProdImage.map((ele, i) => (
               <GridItem
-                _hover={{ transform: 'scale(1.1)' }}
+                _hover={{ transform: 'scale(1.05)' }}
+                transition="0.3s"
                 display={{ lg: 'inherit', base: 'none' }}
                 borderRadius={10}
                 p="80px 5px"
@@ -113,7 +117,8 @@ const SingleProduct = () => {
               </GridItem>
             ))}
             <GridItem
-              _hover={{ transform: 'scale(1.1)' }}
+              _hover={{ transform: 'scale(1.05)' }}
+              transition="0.3s"
               display={{ lg: 'inherit', base: 'none' }}
               borderRadius={10}
               p="80px 5px"
@@ -123,7 +128,8 @@ const SingleProduct = () => {
               <Image src={data.gallery[3].original} />
             </GridItem>
             <GridItem
-              _hover={{ transform: 'scale(1.1)' }}
+              _hover={{ transform: 'scale(1.05)' }}
+              transition="0.3s"
               display={{ lg: 'inherit', base: 'none' }}
               borderRadius={10}
               p="80px 5px"

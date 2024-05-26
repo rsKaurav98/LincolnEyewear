@@ -28,6 +28,7 @@ const ProductCard = ({ type }) => {
               _hover={{
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
               }}
+              transition= "0.3s"
               mb="7"
             >
               <Box>
@@ -38,6 +39,8 @@ const ProductCard = ({ type }) => {
                   src={ ele.image.thumbnail}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
+                  transition= "0.25s"
+                  borderRadius="3%"
                 />
                
                 <br />

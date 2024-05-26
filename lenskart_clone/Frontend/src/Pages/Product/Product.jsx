@@ -5,9 +5,11 @@ import Footer from "../../Components/Footer/Footer";
 import Pagination from "../../Components/Pagination";
 import ProductCard from "./ProductCard";
 import ProdFilter from "./ProdFilter";
-import ProdFrame from "./ProdFrame";
 import { TbArrowsUpDown } from "react-icons/tb";
-import { Box, Flex, Select, Switch, Text, Image } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { ChevronDownIcon } from "@chakra-ui/icons";
+import { FaFilter } from "react-icons/fa";
 import {
   Gender,
   ProductTypes,
@@ -22,9 +24,12 @@ const NewProduct = () => {
   const [types, setTypes] = useState("");
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState("");
-  console.log(sort);
+  const [frame, setFrame] = useState("");
+  const [shape, setShape] = useState("");
   const [gender, setGender] = useState("");
   const [productRef, setProductRef] = useState("");
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchproduct = async () => {
     setIsLoaded(true);
@@ -45,24 +50,10 @@ const NewProduct = () => {
     fetchproduct();
   }, [page, sort, gender, types, productRef]);
 
-  const handleClick = (value) => {
-    setProductRef(value);
-  };
-
-  const handleClick2 = (value) => {
-    setProductRef(value);
-  };
-
   return (
     <>
       <Navbar />
       <Box>
-        {/* <Image
-          src="https://static1.lenskart.com/media/desktop/img/Mar23/spring/home/PLP%20Camapaign%20-%20WEB_1.jpg"
-          alt="img"
-          w="96%"
-          m="auto"
-        /> */}
         <Flex m="0" px="2%" gap="4" cursor="pointer">
           <Flex
             w="17%"
@@ -70,19 +61,15 @@ const NewProduct = () => {
             display={{ base: "none", xl: "inherit" }}
             flexDirection="column"
           >
-            <ProdFrame
-              heading={"FRAME TYPE"}
-              type={Frame1}
-              filter={handleClick}
-            />
-
-            <ProdFrame
-              heading={"FRAME SHAPE"}
-              type={Frame2}
-              filter={handleClick2}
-            />
-
             <ProdFilter
+              frameheading={"FRAME TYPE"}
+              frametype={Frame1}
+              handleframe={setFrame}
+              valframe={frame}
+              shapeheading={"FRAME SHAPE"}
+              shapetype={Frame2}
+              handleshape={setShape}
+              valshape={shape}
               type={Gender}
               heading={"GENDER"}
               handlechange={setGender}
@@ -96,13 +83,51 @@ const NewProduct = () => {
               handlechange2={setProductRef}
               val2={productRef}
             />
-
             <hr />
           </Flex>
+          
+          <IconButton
+            aria-label="Open filter menu"
+            icon={<FaFilter />}
+            display={{ base: "inherit", xl: "none" }}
+            onClick={onOpen}
+          />
+          
+          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+            <DrawerOverlay>
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Filter Options</DrawerHeader>
+                <DrawerBody>
+                  <ProdFilter
+                    frameheading={"FRAME TYPE"}
+                    frametype={Frame1}
+                    handleframe={setFrame}
+                    valframe={frame}
+                    shapeheading={"FRAME SHAPE"}
+                    shapetype={Frame2}
+                    handleshape={setShape}
+                    valshape={shape}
+                    type={Gender}
+                    heading={"GENDER"}
+                    handlechange={setGender}
+                    val={gender}
+                    type1={ProductTypes}
+                    heading1={"PRODUCT TYPE"}
+                    handlechange1={setTypes}
+                    val1={types}
+                    type2={FrameColor}
+                    heading2={"FRAME COLOR"}
+                    handlechange2={setProductRef}
+                    val2={productRef}
+                  />
+                </DrawerBody>
+              </DrawerContent>
+            </DrawerOverlay>
+          </Drawer>
 
           <Box
             overflowY="scroll"
-
             w={{ xl: "82%", base: "100%" }}
             borderLeft="1px solid"
             borderColor="gray.300"
@@ -114,44 +139,40 @@ const NewProduct = () => {
               p="7px"
               bg="#e2e8f0"
               borderColor="#ededed"
+              flexWrap="wrap"
             >
               <Text fontSize="15px" color="gray.600" fontWeight="500">
                 EYEGLASSES & SUNGLASSES
               </Text>
-              <Flex
-                alignItems="center"
-                display={{ md: "inherit", base: "none" }}
-              >
-                {/* <Text fontWeight="bold" mr="5px" color="green" fontSize="15px">
-                  VIEW FRAMES
-                </Text>
-                <Switch colorScheme="green" isChecked size="lg" />
-                <Text ml="5px" fontSize="15px">
-                  VIEW 3D TRY ON
-                </Text> */}
+              <Flex alignItems="center" display={{ md: "inherit", base: "none" }}>
               </Flex>
               <Flex>
-                <Flex alignItems="center">
+                <Flex alignItems="center" mr={{ base: "8px", md: "0" }}>
                   <TbArrowsUpDown color="green" fontWeight="bold" />
-                  <Text fontWeight="bold" color="green" fontSize="15px">
+                  <Text fontWeight="bold" color="green" fontSize="15px" mr="2%">
                     SortBy
                   </Text>
                 </Flex>
-                <Select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value)}
-                  border="0.1px"
-                  borderRadius="3px"
-                  borderColor="black"
-                  ml="4px"
-                  p="0px"
-                  fontSize="16px"
-                  bg="whiteAlpha.900"
-                >
-                  <option value="">Select</option>
-                  <option value="lowtohigh">Price : low to high</option>
-                  <option value="hightolow">Price : high to low</option>
-                </Select>
+
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rightIcon={<ChevronDownIcon />}
+                    ml={{ base: "2px", md: "4px" }}
+                    mt={{ base: "8px", md: "0" }}
+                    p="0px"
+                    fontSize="16px"
+                    bg="whiteAlpha.900"
+                    w={{ base: "100%", sm: "auto" }}
+                  >
+                    {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
+                  </MenuButton>
+                  <MenuList placement="bottom" zIndex="10" w={{ base: "100%", sm: "auto" }}>
+                    <MenuItem onClick={() => setSort("")}>Select</MenuItem>
+                    <MenuItem onClick={() => setSort("lowtohigh")}>Price: low to high</MenuItem>
+                    <MenuItem onClick={() => setSort("hightolow")}>Price: high to low</MenuItem>
+                  </MenuList>
+                </Menu>
               </Flex>
             </Flex>
             {products.length !== 0 && (
@@ -180,7 +201,6 @@ const NewProduct = () => {
       </Box>
       <Footer />
     </>
-   
   );
 };
 

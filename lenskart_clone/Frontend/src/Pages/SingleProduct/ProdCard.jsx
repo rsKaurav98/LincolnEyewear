@@ -76,6 +76,8 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         color="white"
         bgColor="#00bac6"
         onClick={handleCart}
+        _hover= {{ bg: "#455666"}}
+        transition= "0.3s"
       >
         <Flex
           flexDir="column"
@@ -102,6 +104,8 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         bgColor="#00bac6"
         onClick={handleWishlist}
         fontSize={{ lg: "md", md: "md", base: "sm" }}
+        _hover= {{ bg: "#455666"}}
+        transition= "0.3s"
       >
         Add to Wishlist
       </Button>
@@ -112,6 +116,8 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         bg="whiteAlpha.900"
         border="1px"
         borderColor="gray.400"
+        _hover= {{ bg: "gray.400"}}
+        transition= "0.3s"
       >
         <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
           Purchase without lens
