@@ -2,7 +2,7 @@ import { Box, Flex, Text, Image, Divider, Grid } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 export default function CartItem() {
-  const { cart, coupon } = useSelector((state) => state.CartReducer);
+  const { cart, coupon } = useSelector((state) => state.cartManager);
 
   const getTotalPrice = () => {
     const totalPrice = cart.reduce(
@@ -63,7 +63,7 @@ export default function CartItem() {
                       xl: "100%",
                       "2xl": "100%"
                     }}
-                    src={el.imageTsrc}
+                    src={el.image.thumbnail}
                     m="auto"
                   />
                 </Box>
@@ -97,7 +97,7 @@ export default function CartItem() {
                       textAlign={{ lg: "left", sm: "center", base: "center" }}
                     >
                       <Text color="#9999b3" fontWeight="500" fontSize="16px">
-                        <s>{"₹" + el.mPrice}</s>
+                        <s>{"₹" + el.price}</s>
                       </Text>
                       <Text color="#000042" fontWeight="700">
                         {"₹" + el.price}

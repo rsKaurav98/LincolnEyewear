@@ -13,12 +13,11 @@ import { Flex, Text, Button } from "@chakra-ui/react";
 
 const CartPage = () => {
   const { cart } = useSelector((state) => state.cartManager);
-  console.log(cart)
   const navigate = useNavigate();
 
   const getTotalPrice = () => {
     const totalPrice = cart.reduce(
-      (acc, item) => acc + item.mPrice * item.quantity,
+      (acc, item) => acc + item.price * item.quantity,
       0
     );
     return totalPrice;

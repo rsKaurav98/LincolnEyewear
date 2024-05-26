@@ -19,7 +19,7 @@ import {
 
 const Orders = () => {
   const navigate = useNavigate();
-  const { cart, coupon } = useSelector((state) => state.CartReducer);
+  const { cart, coupon } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
 
   const getTotalPrice = () => {
@@ -291,7 +291,7 @@ const Orders = () => {
                 textAlign={{ md: "left", sm: "center", base: "center" }}
               >
                 <Image
-                  src={el.imageTsrc}
+                  src={el.image.thumbnail}
                   w={"200px"}
                   h="100px"
                   m={{

@@ -1,9 +1,16 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-function PriceDetail({ totalPrice, discountPrice }) {
+function PriceDetail({ totalPrice = 0, discountPrice = 0 }) {
+  console.log(`Total price and discount price `, totalPrice, discountPrice);
+  
   const { coupon } = useSelector((state) => state.cartManager);
-  console.log(coupon)
+
+  const totalDiscount = totalPrice - discountPrice;
+  const tax = (totalPrice * 0.18).toFixed(2);
+  const totalAfterTax = (totalPrice + parseFloat(tax)).toFixed(2);
+  const totalPayable = (totalAfterTax - (coupon || 0)).toFixed(2);
+
   return (
     <Flex
       flexDirection={"column"}
@@ -40,11 +47,11 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ {totalPrice}
+            ₹ {totalPrice.toFixed(2)}
           </Heading>
         </Flex>
         <Box border={"1px dashed #CECEDF"}></Box>
-        <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
+        {/* <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
           <Heading
             as="p"
             fontSize={"16px"}
@@ -60,10 +67,10 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            - ₹ {totalPrice - discountPrice}
+            - ₹ {totalDiscount.toFixed(2)}
           </Heading>
-        </Flex>
-        <Box border={"1px dashed #CECEDF"}></Box>
+        </Flex> */}
+        {/* <Box border={"1px dashed #CECEDF"}></Box> */}
         <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
           <Heading
             as="p"
@@ -83,7 +90,7 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ {discountPrice}
+            ₹ {discountPrice.toFixed(2)}
           </Heading>
         </Flex>
         <Box border={"1px dashed #CECEDF"}></Box>
@@ -106,7 +113,7 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            + ₹ {Math.round(discountPrice * 0.18)}
+            + ₹ {tax}
           </Heading>
         </Flex>
         <Box border={"1px dashed #CECEDF"}></Box>
@@ -129,7 +136,7 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ {discountPrice + Math.round(discountPrice * 0.18)}
+            ₹ {totalAfterTax}
           </Heading>
         </Flex>
         <Box border={"1px dashed #CECEDF"}></Box>
@@ -154,7 +161,7 @@ function PriceDetail({ totalPrice, discountPrice }) {
             justifyContent="flex-end"
             color="green.900"
           >
-            ₹{coupon || 0}
+            ₹{(coupon || 0).toFixed(2)}
           </Heading>
         </Flex>
         <Box border={"1px dashed #CECEDF"}></Box>
@@ -203,7 +210,7 @@ function PriceDetail({ totalPrice, discountPrice }) {
             fontFamily={"Inter"}
             justifyContent="flex-end"
           >
-            ₹ {discountPrice + Math.round(discountPrice * 0.18) - (coupon || 0)}
+            ₹ {totalPayable}
           </Heading>
         </Flex>
       </Flex>
