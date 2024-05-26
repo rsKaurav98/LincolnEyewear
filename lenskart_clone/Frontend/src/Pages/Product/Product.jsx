@@ -57,12 +57,12 @@ const NewProduct = () => {
     <>
       <Navbar />
       <Box>
-        <Image
+        {/* <Image
           src="https://static1.lenskart.com/media/desktop/img/Mar23/spring/home/PLP%20Camapaign%20-%20WEB_1.jpg"
           alt="img"
           w="96%"
           m="auto"
-        />
+        /> */}
         <Flex m="0" px="2%" gap="4" cursor="pointer">
           <Flex
             w="17%"
@@ -101,7 +101,8 @@ const NewProduct = () => {
           </Flex>
 
           <Box
-            overflow="scroll"
+            overflowY="scroll"
+
             w={{ xl: "82%", base: "100%" }}
             borderLeft="1px solid"
             borderColor="gray.300"
@@ -121,13 +122,13 @@ const NewProduct = () => {
                 alignItems="center"
                 display={{ md: "inherit", base: "none" }}
               >
-                <Text fontWeight="bold" mr="5px" color="green" fontSize="15px">
+                {/* <Text fontWeight="bold" mr="5px" color="green" fontSize="15px">
                   VIEW FRAMES
                 </Text>
                 <Switch colorScheme="green" isChecked size="lg" />
                 <Text ml="5px" fontSize="15px">
                   VIEW 3D TRY ON
-                </Text>
+                </Text> */}
               </Flex>
               <Flex>
                 <Flex alignItems="center">
@@ -155,7 +156,7 @@ const NewProduct = () => {
             </Flex>
             {products.length !== 0 && (
               <Text mt="5px" textAlign="center" fontSize="15px">
-                Showing {products.length} of 50 Results
+                Showing {products.length} Results of all available frames
               </Text>
             )}
             {isLoaded ? (

@@ -68,7 +68,7 @@ function Nav() {
         </Box>
 
         <Box>
-          <Button colorScheme="blue" p="0" onClick={onOpen}>
+          <Button bg="#455666" color="white" p="0" onClick={onOpen}>
             <HamburgerIcon fontSize="20px" />
           </Button>
           <Drawer
@@ -106,12 +106,12 @@ function Nav() {
                           
                           {Authdata[0].name}
                         </Text>
-                        <Text color="gray.500" mt="5%" fontSize="sm">
+                        {/* <Text color="gray.500" mt="5%" fontSize="sm">
                           Enjoy Buy 1 Get 1 offer for 365 days
-                        </Text>
+                        </Text> */}
                       </Flex>
                     </Flex>
-                    <Button
+                    {/* <Button
                       w="100%"
                       h="35px"
                       mt="5%"
@@ -120,7 +120,7 @@ function Nav() {
                       _hover={{ bg: "blue.400" }}
                     >
                       GET GOLD MEMBERSHIP
-                    </Button>
+                    </Button> */}
                   </Flex>
                 ) : (
                   <Box
@@ -435,10 +435,11 @@ function Nav() {
                   <Button
                     mt="5%"
                     fontSize="18px"
-                    colorScheme="blue"
+                    bg="#455666"
+                    color={"white"}
                     borderBottom="1px solid #526171"
                     p="6% 15%"
-                    _hover={{ bg: "blue.200" }}
+                    _hover={{ bg: "#455680" }}
                     onClick={() => {
                       setisAuth(false);
                       return <Navigate to="/" />;

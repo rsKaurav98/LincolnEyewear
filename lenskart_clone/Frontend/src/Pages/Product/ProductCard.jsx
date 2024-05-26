@@ -32,7 +32,8 @@ const ProductCard = ({ type }) => {
             >
               <Box>
                 <Image
-                  m="auto"
+                  mx="2rem"
+                  mt="2rem"
                   width="80%"
                   src={ ele.image.thumbnail}
                   alt="image"
@@ -40,8 +41,7 @@ const ProductCard = ({ type }) => {
                 />
                
                 <br />
-                <br />
-                <br />
+              
 
                 <Box p="10px">
                   <Flex justifyContent="space-between" alignItems="center">

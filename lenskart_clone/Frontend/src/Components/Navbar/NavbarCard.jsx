@@ -82,7 +82,10 @@ export const NavbarCard2 = () => {
               fontSize="16px"
               fontWeight="600"
               fontStyle="sans-serif"
+              border="1px solid #455666"
               onClick={() => navigate("/orderhistory")}
+              _hover={{bg:"#455666", color:"white"}}
+              transition={"0.3s"}
             >
               Track Order
             </Button>
@@ -94,7 +97,7 @@ export const NavbarCard2 = () => {
                     fontSize="16px"
                     m="auto"
                     mt="-2px"
-                    w="90px"
+                    w="auto"
                     textAlign="center"
                   >
                     {Authdata[0].name}
@@ -122,6 +125,8 @@ export const NavbarCard2 = () => {
                         localStorage.removeItem("res")
                         return <Navigate to="/" />;
                       }}
+                      _hover={{fontWeight:"bold"}}
+              transition={"0.3s"}
                     >
                       Sign Out
                     </Box>
@@ -141,7 +146,10 @@ export const NavbarCard2 = () => {
               bg="whiteAlpha.900"
               fontSize="16px"
               fontWeight="600"
+              border="1px solid #455666"
               onClick={() => navigate("/wishlist")}
+              _hover={{bg:"#455666", color:"white"}}
+              transition={"0.3s"}
             >
               Wishlist
             </Button>
@@ -152,6 +160,9 @@ export const NavbarCard2 = () => {
                 bg="whiteAlpha.900"
                 fontSize="16px"
                 fontWeight="600"
+                border="1px solid #455666"
+                _hover={{bg:"#455666", color:"white"}}
+              transition={"0.3s"}
               >
                 Cart
               </Button>
