@@ -68,6 +68,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
     case RESET:
       return {
         ...state,
+        coupon:0,
         cart: []
       };
 

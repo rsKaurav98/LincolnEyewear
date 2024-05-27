@@ -17,7 +17,7 @@ const OrderHistory = () => {
   
 
   const handleDeleteOrder = (orders) => {
-    
+    console.log(orders)
     dispatch(removeFromOrders(orders));
   };
 
@@ -137,7 +137,7 @@ const OrderHistory = () => {
                 </Link>
                 <Button
                   colorScheme="red"
-                  onClick={() => handleDeleteOrder(order.id)}
+                  onClick={() => handleDeleteOrder(order[0].id)}
                   alignSelf="center"
                 >
                   Delete Order

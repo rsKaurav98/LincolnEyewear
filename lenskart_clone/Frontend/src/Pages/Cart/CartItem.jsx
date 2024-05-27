@@ -145,7 +145,7 @@ const CartItem = () => {
                   textDecoration="underline"
                   fontSize={"18"}
                   ml="-1.5"
-                  onClick={() => handleDelete(item._id)}
+                  onClick={() => handleDelete(item.id)}
                 >
                   Remove
                 </Button>
