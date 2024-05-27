@@ -19,21 +19,20 @@ const SelectLens = ({ isOpen, onClose }) => {
   const renderLensContent = (category) => (
     <Box mt="10px">
       {lensData[category].map((item, idx) => (
-        <Box key={idx} mb="20px" display="flex" bg="#455666" color="white" pl={{ base: "10px", md: "20px" }} borderRadius="10px">
+        <Box key={idx} mb="20px" display="flex" justifyContent="space-between" bg="#455666" color="white" pl={{ base: "10px", md: "20px" }} borderRadius="10px" _hover={{ transform: "scale(1.02)" }} transition="0.3s">
           <div>
-          <Text fontWeight="bold" fontSize={{ base: "4vw", md: "30px" }}>{item.name}</Text>
-          <Box pl={{ base: "10px", md: "20px" }}>
-            {item.features.map((feature, fidx) => (
-              <Text key={fidx} fontSize={{ base: "3.5vw", md: "25px" }}>• {feature}</Text>
-            ))}
-          </Box>
-          <Text mt="10px" fontWeight="bold" fontSize={{ base: "4vw", md: "30px" }}>{item.price}</Text>
+            <Text fontWeight="bold" fontSize={{ base: "4vw", md: "30px" }}>{item.name}</Text>
+            <Box pl={{ base: "10px", md: "20px" }}>
+              {item.features.map((feature, fidx) => (
+                <Text key={fidx} fontSize={{ base: "3.5vw", md: "25px" }}>• {feature}</Text>
+              ))}
+            </Box>
+            <Text mt="10px" fontWeight="bold" fontSize={{ base: "4vw", md: "30px" }}>{item.price}</Text>
           </div>
           <div>
-            <img src={`${item.src}`}/>
-            </div>
+            <img width="200px" height="auto" src={item.src}/>
+          </div>
         </Box>
-
       ))}
     </Box>
   );
@@ -44,7 +43,8 @@ const SelectLens = ({ isOpen, onClose }) => {
       <ModalContent
         rounded="3xl"
         maxWidth={{ base: "95%", md: "80%" }}
-        minHeight={{ base: "95%", md: "80%" }}
+        maxHeight={{ base: "95vh", md: "80vh" }}
+        overflowY={{ base: "auto", md: "hidden" }}
         mt={{ base: "5%", md: "0" }}
       >
         <Flex justify="center" fontWeight="bold" fontSize={{ base: "6vw", md: "2.7vw" }} color="#455666" m="10px">
@@ -78,15 +78,14 @@ const SelectLens = ({ isOpen, onClose }) => {
                       mt={index > 0 ? "20px" : "0"}
                       onClick={() => setSelectedCategory(category)}
                       transform={selectedCategory === category ? "scale(1.05)" : "scale(1)"}
+                      ml="10px"
                     >
-                      
                       {category}
                       <ArrowForwardIcon />
                     </Box>
                     {selectedCategory === category && (
                       <Box display={{ base: "block", md: "none" }}>
                         {renderLensContent(category)}
-                        
                       </Box>
                     )}
                     {index < Object.keys(lensData).length - 1 && (

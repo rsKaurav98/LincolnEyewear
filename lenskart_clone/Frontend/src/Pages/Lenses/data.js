@@ -103,7 +103,7 @@ export const lensData = {
           "Non Anti-Glare",
         ],
         price: "₹1100",
-        src:"./images/0.jpg"
+        src:"/images/0.jpg"
       },
       {
         name: "Circular Bi-Focal KT",
@@ -117,7 +117,7 @@ export const lensData = {
           "Power Range: SPH (+/-3 to +/-6) & CYL (+/-4) * For any other combination, opt either Bifocal-D or Progressives"
         ],
         price: "₹2100",
-        src:"./images/1.jpg"
+        src:"/images/1.jpg"
       },
       {
         name: "Standard Progressive",
@@ -127,7 +127,7 @@ export const lensData = {
           "Non Anti-Glare",
         ],
         price: "₹1899",
-        src:"./images/2.jpg"
+        src:"/images/2.jpg"
       },
       {
         name: "Normal Corridor Progressive: MAXIMUM EYE PROTECTION",
@@ -142,7 +142,7 @@ export const lensData = {
           "Green anti glare coating"
         ],
         price: "₹2499",
-        src:"./images/3.jpg"
+        src:"/images/3.jpg"
       },
       {
         name: "Normal Corridor BLU Progressive: MAXIMUM EYE PROTECTION",
@@ -157,7 +157,7 @@ export const lensData = {
           "UV Protection",
         ],
         price: "₹3500",
-        src:"./images/4.jpg"
+        src:"/images/4.jpg"
       },
       {
         name: "Digital Owndays Wide Corridor Progressive: DESIGNED IN KOREA",
@@ -170,7 +170,7 @@ export const lensData = {
           "UV 400 Protection",
         ],
         price: "₹5999",
-        src:"./images/5.jpg"
+        src:"/images/5.jpg"
       },
     ],
     "ZERO POWER": [
@@ -229,7 +229,7 @@ export const lensData = {
           "Index is auto-adjusted",
         ],
         price: "₹1299",
-        
+        src:""
       },
       {
         name: "Gorgeous Grey Sun block",
@@ -241,7 +241,7 @@ export const lensData = {
           "Index is auto-adjusted",
         ],
         price: "₹1299",
-        src:"./images/10.jpg"
+        src:"/images/10.jpg"
       },
       {
         name: "Glorious Green Sun block",
@@ -253,7 +253,7 @@ export const lensData = {
           "Index is auto-adjusted",
         ],
         price: "₹1299",
-        src:"./images/11.jpg"
+        src:"/images/11.jpg"
       },
       {
         name: "Cool Blue Sun block",
@@ -265,7 +265,7 @@ export const lensData = {
           "Index is auto-adjusted",
         ],
         price: "₹1299",
-        src:"./images/12.jpg"
+        src:"/images/12.jpg"
       },
     ],
   };
