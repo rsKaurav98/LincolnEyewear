@@ -179,7 +179,7 @@ const NewProduct = () => {
       </Box>
       <Footer />
     </>
-   
+
   );
 };
 
