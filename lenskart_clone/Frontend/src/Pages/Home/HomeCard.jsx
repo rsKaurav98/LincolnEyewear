@@ -28,6 +28,8 @@ const HomeCard = ({ type }) => {
             bgColor="white"
             p="1"
             pb="2.5"
+            _hover={{bg:"#455666", color:"white"}}
+            transition={"0.3s"}
           >
             <Center>
             <a href="/products">
@@ -35,7 +37,7 @@ const HomeCard = ({ type }) => {
               </a>
             </Center>
             <Center>
-              <Text color="gray" fontSize="16px" fontWeight="500" p="1">
+              <Text fontSize="16px" fontWeight="500" p="1">
                 {i.title}
               </Text>
             </Center>

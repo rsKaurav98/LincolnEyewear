@@ -28,20 +28,23 @@ const ProductCard = ({ type }) => {
               _hover={{
                 boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"
               }}
+              transition= "0.3s"
               mb="7"
             >
               <Box>
                 <Image
-                  m="auto"
+                  mx="2rem"
+                  mt="2rem"
                   width="80%"
                   src={ ele.image.original}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
+                  transition= "0.25s"
+                  borderRadius="3%"
                 />
                
                 <br />
-                <br />
-                <br />
+              
 
                 <Box p="10px">
                   <Flex justifyContent="space-between" alignItems="center">
