@@ -201,6 +201,7 @@ const NewProduct = () => {
       </Box>
       <Footer />
     </>
+   
   );
 };
 
