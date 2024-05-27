@@ -77,7 +77,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         w={{ lg: "90%", base: "100%" }}
         color="white"
         bgColor="#00bac6"
-        onClick={handleCart}
+        onClick={onOpen}
       >
         <Flex
           flexDir="column"
@@ -116,6 +116,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         bg="whiteAlpha.900"
         border="1px"
         borderColor="gray.400"
+        onClick={handleCart}
       >
         <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
           Purchase without lens
