@@ -1,29 +1,37 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Button } from "@chakra-ui/react";
 
 function Pagination({ current, onChange }) {
-  const style = {
-    background: "gray",
+  const buttonStyle = {
+    background: "grey",
     color: "white",
     fontWeight: "bold",
     borderRadius: "8px",
     padding: "10px 18px",
-    margin: "auto"
+    margin: "auto",
+    _hover: { bg: "#455666"},
+    transition: "0.3s",
   };
+
   const prev = (
-    <button
+    <Button
       disabled={current === 0}
       onClick={() => onChange(current - 1)}
-      style={style}
+      {...buttonStyle}
     >
       PREV
-    </button>
+    </Button>
   );
-  const currentPage = <button style={style}>{current + 1}</button>;
+
+  const currentPage = (
+    <Button {...buttonStyle}>
+      {current + 1}
+    </Button>
+  );
 
   const next = (
-    <button onClick={() => onChange(current + 1)} style={style}>
+    <Button onClick={() => onChange(current + 1)} {...buttonStyle}>
       NEXT
-    </button>
+    </Button>
   );
 
   return (

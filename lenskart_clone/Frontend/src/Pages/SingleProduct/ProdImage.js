@@ -31,36 +31,36 @@ export const ProdImage = [
 ];
 
 export const ProdImage1 = [
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/1.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/3.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/4.gif"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/6.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/7.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/8.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/9.jpg"
-  },
-  {
-    src:
-      "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/10.jpg"
-  }
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/1.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/3.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/4.gif"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/6.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/7.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/8.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/9.jpg"
+  // },
+  // {
+  //   src:
+  //     "https://static1.lenskart.com/media/desktop/img/23mar/crystal_clear/10.jpg"
+  // }
 ];
