@@ -34,7 +34,7 @@ const ProductCard = ({ type }) => {
                 <Image
                   m="auto"
                   width="80%"
-                  src={ ele.image.thumbnail}
+                  src={ ele.image.original}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
                 />
@@ -108,7 +108,7 @@ const ProductCard = ({ type }) => {
                         textDecoration: "line-through"
                       }}
                     >
-                      {"  "}₹{ele.mPrice}
+                      {"  "}₹{ele.price}
                     </span>
                     <span
                       style={{
