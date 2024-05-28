@@ -119,7 +119,7 @@ const Signup = ({setIsSignUpOpen}) => {
         } 
       } else if (response.status === 200){
         setExist(false)
-        setIsSignUpOpen(false);
+        // setIsSignUpOpen(false);
         onClose();
       }
       else {

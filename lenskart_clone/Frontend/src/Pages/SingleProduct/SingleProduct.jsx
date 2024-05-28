@@ -7,8 +7,9 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import ProdCard from "./ProdCard";
 import axios from "axios";
-import { Grid, Box, Image, IconButton } from "@chakra-ui/react";
+import { Grid, Box, Image, IconButton, SimpleGrid } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { transform } from "framer-motion";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -65,46 +66,76 @@ const SingleProduct = () => {
     <>
       <Navbar />
       <Box p={5}>
-        <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "2fr 1fr" }} gap={5}>
+        <Grid templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} gap={5}>
           {isDataLoaded && (
             <Box position="relative" maxW="100%">
-              <Box
-                width={{ base: "100%", md: "100%", lg: "100%" }}
-                height="auto"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-              >
+              {data.gallery.length > 1 ? (
+                <>
+                  {/* For large screens, use grid layout with two columns */}
+                  <SimpleGrid
+                    columns={{ base: 1, md: 1, lg: 2 }}
+                    spacing={5}
+                    display={{ base: "none", md:"grid" }}
+                    pos="sticky"
+                    top="0"
+                  >
+                    {data.gallery.map((image, index) => (
+                      <Image
+                        key={index}
+                        src={image.original}
+                        maxW="100%"
+                        maxH={{ base: "100%", md: "500px", lg: "600px" }}
+                        objectFit="cover"
+                        _hover={{transform:"scale(1.05)"}}
+                      />
+                    ))}
+                  </SimpleGrid>
+
+                  {/* For small screens, use the current image carousel */}
+                  <Box
+                    display={{ base: "block", md: "none" }}
+                    width="100%"
+                    height="auto"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Image
+                      src={data.gallery[currentImage].original}
+                      maxW="100%"
+                      maxH={{ base: "100%", md: "500px", lg: "600px" }}
+                      objectFit="cover"
+                    />
+                    <IconButton
+                      icon={<ArrowBackIcon />}
+                      position="absolute"
+                      left="10px"
+                      top="50%"
+                      transform="translateY(-50%)"
+                      onClick={handlePrevImage}
+                      display={{ base: "block", md: "none" }}
+                    />
+                    <IconButton
+                      icon={<ArrowForwardIcon />}
+                      position="absolute"
+                      right="10px"
+                      top="50%"
+                      transform="translateY(-50%)"
+                      onClick={handleNextImage}
+                      display={{ base: "block", md: "none" }}
+                    />
+                  </Box>
+                </>
+              ) : (
                 <Image
-                  src={data.gallery[currentImage].original}
-                  maxW={{ base: "100%", md: "100%", lg: "100%" }}
+                  src={data.gallery[0].original}
+                  maxW="100%"
                   maxH={{ base: "100%", md: "500px", lg: "600px" }}
                   objectFit="cover"
                 />
-              </Box>
-              {isDataLoaded && data.gallery.length > 1 && (
-                <>
-                  <IconButton
-                    icon={<ArrowBackIcon />}
-                    position="absolute"
-                    left="10px"
-                    top={{base:"50%", md:"30%", lg:"30%"}}
-                    transform="translateY(-50%)"
-                    onClick={handlePrevImage}
-                  />
-                  <IconButton
-                    icon={<ArrowForwardIcon />}
-                    position="absolute"
-                    right="10px"
-                    top={{base:"50%", md:"30%", lg:"30%"}}
-                    transform="translateY(-50%)"
-                    onClick={handleNextImage}
-                  />
-                </>
               )}
             </Box>
           )}
-          <Box pos="sticky" top="0">
+          <Box pos={{ lg: "sticky" }} top="0">
             <ProdCard
               type={data}
               handleCart={handleAddToCart}
