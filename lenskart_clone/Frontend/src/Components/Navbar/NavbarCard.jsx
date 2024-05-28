@@ -135,8 +135,8 @@ export const NavbarCard2 = () => {
               </Popover>
             ) : (
               <Box display={"flex"}>
-                <Login  isSignUpOpen={isOpen}/>
-                <Signup setIsSignUpOpen={setIsOpen}/>
+                <Login />
+                <Signup />
               </Box>
             )}
             <Button

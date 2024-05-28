@@ -64,64 +64,6 @@ const SingleProduct = () => {
   return (
     <>
       <Navbar />
-<<<<<<< HEAD
-      <br />
-      <br />
-      <Grid
-        gap={5}
-        m="auto"
-        w="95%"
-        justifyContent="space-around"
-        templateColumns={{
-          base: 'repeat(1, 1fr)',
-          sm: 'repeat(1, 1fr)',
-          md: 'repeat(2, 1fr)',
-          lg: 'repeat(3, 1fr)',
-        }}
-      >
-        {isDataLoaded && (
-          <>
-            <GridItem
-              borderRadius={10}
-              p="80px 5px"
-              border="1px solid"
-              borderColor="gray.300"
-              display={{ lg: 'inherit', base: 'none' }}
-              _hover={{ transform: 'scale(1.05)' }}
-              transition="0.3s"
-            >
-              <Image src={data.image.original} />
-            </GridItem>
-            <GridItem
-              borderRadius={10}
-              p="80px 5px"
-              border="1px solid"
-              borderColor="gray.300"
-              w={{ lg: '100%', sm: '80%', base: '80%' }}
-              m="auto"
-              _hover={{ transform: 'scale(1.05)' }}
-              transition="0.3s"
-            >
-              <Image src={data.image.original} />
-            </GridItem>
-            <GridItem p={5} colSpan={1} rowSpan={10} mt="0" mb="auto" pos="sticky" top="0">
-              <ProdCard
-                type={data}
-                handleCart={handleAddToCart}
-                handleWishlist={handleAddToWishlist}
-              />
-            </GridItem>
-            {ProdImage.map((ele, i) => (
-              <GridItem
-                _hover={{ transform: 'scale(1.05)' }}
-                transition="0.3s"
-                display={{ lg: 'inherit', base: 'none' }}
-                borderRadius={10}
-                p="80px 5px"
-                border="1px solid"
-                borderColor="gray.300"
-                key={i}
-=======
       <Box p={5}>
         <Grid templateColumns={{ base: "1fr", md: "1fr", lg: "2fr 1fr" }} gap={5}>
           {isDataLoaded && (
@@ -132,7 +74,6 @@ const SingleProduct = () => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
->>>>>>> e23b8361923b433820d0a6e334668a56f37fb89d
               >
                 <Image
                   src={data.gallery[currentImage].original}

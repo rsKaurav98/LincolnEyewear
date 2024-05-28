@@ -23,7 +23,7 @@ import {
   InputRightElement
 } from "@chakra-ui/react";
 
-const Login = ({ isSignUpOpen }) => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
   const [btn, setBtn] = useState();
   const [loginData, setLoginData] = useState({ email: "", password: "" });
@@ -35,11 +35,7 @@ const Login = ({ isSignUpOpen }) => {
   const navigate = useNavigate();
   let res1 = [];
 
-  useEffect(() => {
-    if (!isSignUpOpen) {
-     // onOpen();
-    }
-  }, [isSignUpOpen, onOpen]);
+  
 
   const handleChange = (e) => {
     setIncorrect(false);

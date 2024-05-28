@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import Login from "../Login/Login";
 
-const Signup = ({setIsSignUpOpen}) => {
+const Signup = () => {
   const init = {
     Name: "",
     email: "",
@@ -119,7 +119,7 @@ const Signup = ({setIsSignUpOpen}) => {
         } 
       } else if (response.status === 200){
         setExist(false)
-        setIsSignUpOpen(false);
+        
         onClose();
       }
       else {
@@ -336,7 +336,7 @@ const Signup = ({setIsSignUpOpen}) => {
                   fontWeight="300"
                   fontSize="18px"
                 >
-                  Create an Account and SignIn
+                  Create an Account 
                 </Button>
               ) : (
                 <Button

@@ -77,13 +77,10 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         w={{ lg: "90%", base: "100%" }}
         color="white"
         bgColor="#00bac6"
-<<<<<<< HEAD
         onClick={onOpen}
-=======
-        onClick={onOpen} 
+        
         _hover= {{ bg: "#455666"}}
         transition= "0.3s"
->>>>>>> e23b8361923b433820d0a6e334668a56f37fb89d
       >
         <Flex
           flexDir="column"
