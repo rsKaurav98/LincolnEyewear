@@ -77,14 +77,7 @@ const CartItem = () => {
               flexDirection={"column"}
               border={"0px solid blue"}
               gap="4"
-              width={{
-                base: "90%",
-                sm: "90%",
-                md: "90%",
-                lg: "90%",
-                xl: "90%",
-                "2xl": "90%"
-              }}
+              width="90%"
               margin={{
                 base: "auto",
                 sm: "auto",

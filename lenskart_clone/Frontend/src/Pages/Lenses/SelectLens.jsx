@@ -28,7 +28,7 @@ const SelectLens = ({ isOpen, onClose }) => {
           alignItems="center"
           bg="white"
           color="#333"
-          pl={{ base: "10px", md: "20px" }}
+          pl="20px"
           borderRadius="10px"
           // _hover={{ transform: "scale(1.02)", boxShadow: "lg" }}
           transition="0.3s"
@@ -93,7 +93,7 @@ const SelectLens = ({ isOpen, onClose }) => {
                   <Box key={index}>
 
                     <Button
-                      w="90%"
+                      w={{base:"98%" ,md:"90%"}}
                       p="10px"
                       h="100px"
                       color={selectedCategory === category ? "black" : "white"}
@@ -118,8 +118,10 @@ const SelectLens = ({ isOpen, onClose }) => {
                       
                     </Button>
 
+                    <br/>
+
                     {selectedCategory === category && (
-                      <Box display={{ base: "block", md: "none" }}>
+                      <Box display={{ base: "block", md: "none" }} >
                         {renderLensContent(category)}
                       </Box>
                     )}
@@ -138,7 +140,7 @@ const SelectLens = ({ isOpen, onClose }) => {
               <Flex
                 width={{ base: "100%", md: "77%" }}
                 p={{ base: "0", md: "10px" }}
-                maxH={{ base: "55vh", lg: "55vh", md: "55vh", sm: "35vh" }}
+                maxH={{ base: "63vh", lg: "63vh", md: "55vh", sm: "43vh" }}
                 flexDirection="column"
                 overflowY="auto"
                 sx={{ "&::-webkit-scrollbar": { display: "none" }, msOverflowStyle: "none", scrollbarWidth: "none" }}
