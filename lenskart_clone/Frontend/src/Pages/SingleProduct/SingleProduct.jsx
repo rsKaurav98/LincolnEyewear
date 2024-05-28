@@ -81,7 +81,7 @@ const SingleProduct = () => {
               _hover={{ transform: 'scale(1.05)' }}
               transition="0.3s"
             >
-              <Image src={data.gallery[0].original} />
+              <Image src={data.image.original} />
             </GridItem>
             <GridItem
               borderRadius={10}
@@ -93,7 +93,7 @@ const SingleProduct = () => {
               _hover={{ transform: 'scale(1.05)' }}
               transition="0.3s"
             >
-              <Image src={data.gallery[1].original} />
+              <Image src={data.image.original} />
             </GridItem>
             <GridItem p={5} colSpan={1} rowSpan={10} mt="0" mb="auto" pos="sticky" top="0">
               <ProdCard
