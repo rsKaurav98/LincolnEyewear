@@ -1,5 +1,5 @@
 export const lensData = {
-    "SINGLE VISION": [
+    "Single Vision": [
       {
         name: "Anti-Glare Regular",
         features: [
@@ -94,7 +94,7 @@ export const lensData = {
         src: ""
       },
     ],
-    "BIFOCAL/ PROGRESSIVE": [
+    "Bifocal/ Progressive": [
       {
         name: "Standard Bifocal",
         features: [
@@ -173,7 +173,7 @@ export const lensData = {
         src:"/images/5.jpg"
       },
     ],
-    "ZERO POWER": [
+    "Zero Power": [
       {
         name: "BLU Thin Zero Power",
         features: [
@@ -218,7 +218,7 @@ export const lensData = {
         src:""
       },
     ],
-    "SUNGLASSES POLARISED": [
+    "Sunglasses Polarised": [
       {
         name: "Brilliant Brown Sun block",
         features: [
