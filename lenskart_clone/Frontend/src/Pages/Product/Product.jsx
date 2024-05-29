@@ -86,13 +86,6 @@ const NewProduct = () => {
             <hr />
           </Flex>
           
-          <IconButton
-            aria-label="Open filter menu"
-            icon={<FaFilter />}
-            display={{ base: "inherit", xl: "none" }}
-            onClick={onOpen}
-          />
-          
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay>
               <DrawerContent>
@@ -162,7 +155,7 @@ const NewProduct = () => {
                     mt={{ base: "8px", md: "0" }}
                     p="0px"
                     fontSize="16px"
-                    bg="whiteAlpha.900"
+                    bg=""
                     w={{ base: "100%", sm: "auto" }}
                   >
                     {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
@@ -173,6 +166,17 @@ const NewProduct = () => {
                     <MenuItem onClick={() => setSort("hightolow")}>Price: high to low</MenuItem>
                   </MenuList>
                 </Menu>
+                <IconButton
+                aria-label="Open filter menu"
+                icon={<FaFilter />}
+                display={{ base: "inherit", xl: "none" }}
+                onClick={onOpen}
+                ml={{ base: "7px", md: "8px" }}
+                mt={{ base: "8px", md: "0" }}
+                fontSize="16px"
+                bg=""
+                w={{ base: "100%", sm: "auto" }}
+          />
               </Flex>
             </Flex>
             {products.length !== 0 && (

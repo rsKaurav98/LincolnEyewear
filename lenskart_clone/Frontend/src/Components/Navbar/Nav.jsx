@@ -46,7 +46,7 @@ function Nav() {
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">
-        <Box w="20%" display="none">
+        <Box w="20%">
           <Link to="/">
             <Image
               src={logo}

@@ -9,7 +9,6 @@ import ProdCard from "./ProdCard";
 import axios from "axios";
 import { Grid, Box, Image, IconButton, SimpleGrid } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { transform } from "framer-motion";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -86,7 +85,7 @@ const SingleProduct = () => {
                         maxW="100%"
                         maxH={{ base: "100%", md: "500px", lg: "600px" }}
                         objectFit="cover"
-                        _hover={{transform:"scale(1.05)"}}
+                        _hover={{ transform: "scale(1.05)" }}
                       />
                     ))}
                   </SimpleGrid>
@@ -98,6 +97,7 @@ const SingleProduct = () => {
                     height="auto"
                     justifyContent="center"
                     alignItems="center"
+                    position="relative"
                   >
                     <Image
                       src={data.gallery[currentImage].original}
