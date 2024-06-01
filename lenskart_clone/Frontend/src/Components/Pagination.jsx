@@ -10,6 +10,7 @@ function Pagination({ current, onChange }) {
     margin: "auto",
     _hover: { bg: "#455666"},
     transition: "0.3s",
+    fontSize:{base:"11px",md:"15px",lg:"20px"}
   };
 
   const prev = (

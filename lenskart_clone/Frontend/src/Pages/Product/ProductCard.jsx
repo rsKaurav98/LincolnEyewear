@@ -36,7 +36,7 @@ const ProductCard = ({ type }) => {
                   mx="2rem"
                   mt="2rem"
                   width="80%"
-                  src={ ele.image.original}
+                  src={ ele.images[0].src}
                   alt="image"
                   _hover={{ transform: "scale(1.1)" }}
                   transition= "0.25s"

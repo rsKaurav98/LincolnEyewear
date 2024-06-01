@@ -46,7 +46,7 @@ function Nav() {
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">
-        <Box w="20%" display="none">
+        <Box w="20%">
           <Link to="/">
             <Image
               src={logo}
@@ -144,6 +144,7 @@ function Nav() {
                         bg="blue.500"
                         p="10px 15px"
                         rounded="lg"
+                        color="white"
                         _hover={{ bg: "blue.200" }}
                       >
                         <Login />
@@ -152,6 +153,7 @@ function Nav() {
                         bg="blue.500"
                         p="10px 15px"
                         rounded="lg"
+                        color="white"
                         _hover={{ bg: "blue.200" }}
                       >
                         <Signup />

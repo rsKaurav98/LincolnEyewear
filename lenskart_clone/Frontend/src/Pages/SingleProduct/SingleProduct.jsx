@@ -9,7 +9,6 @@ import ProdCard from "./ProdCard";
 import axios from "axios";
 import { Grid, Box, Image, IconButton, SimpleGrid } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { transform } from "framer-motion";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -41,7 +40,7 @@ const SingleProduct = () => {
 
   const fetchSingleProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/products/${id}`);
+      const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/${id}?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`);
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -86,7 +85,7 @@ const SingleProduct = () => {
                         maxW="100%"
                         maxH={{ base: "100%", md: "500px", lg: "600px" }}
                         objectFit="cover"
-                        _hover={{transform:"scale(1.05)"}}
+                        _hover={{ transform: "scale(1.05)" }}
                       />
                     ))}
                   </SimpleGrid>
@@ -98,6 +97,7 @@ const SingleProduct = () => {
                     height="auto"
                     justifyContent="center"
                     alignItems="center"
+                    position="relative"
                   >
                     <Image
                       src={data.gallery[currentImage].original}

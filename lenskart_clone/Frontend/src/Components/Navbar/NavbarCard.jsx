@@ -3,10 +3,10 @@ import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
 import NavbarCard5 from "./NavbarCard5";
 import { NavbarDetail1 } from "./NavbarDetail";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, Route, } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { FiPhoneCall } from "react-icons/fi";
 import { CiHeart } from "react-icons/ci";
 import { CgShoppingCart } from "react-icons/cg";
@@ -44,17 +44,26 @@ import {
 //   );
 // };
 
+
+
 export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/products?search=${searchValue}`);
+    }
+  }
 
   return (
     <Box cursor="pointer">
       <HStack m="auto">
         <Box w="20%">
           <Link to="/">
-            <Image src={logo} alt="logo"/>
+            <Image src={logo} alt="logo" />
           </Link>
         </Box>
         <HStack w="85%" m="auto">
@@ -65,27 +74,37 @@ export const NavbarCard2 = () => {
             </HStack>
           </Box> */}
           <Box w="55%">
-            <Input
-              placeholder="Search for Eyeglasses,Sunglasses and more.."
-              border="1px solid black"
-              w="95%"
-              bg="white"
-              fontSize="17px"
-              h="45px"
+            <input
+              type="text"
+              placeholder="Search for Eyeglasses, Sunglasses and more.."
+              style={{
+                border: "1px solid black",
+                width: "95%",
+                backgroundColor: "white",
+                fontSize: "17px",
+                height: "45px",
+                paddingLeft:"4px",
+                borderRadius:"7px"
+              }}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </Box>
           <Box w="30%"></Box>
           <HStack w="35%">
             <Button
-              size="lg"
+              width="fit-content"
+              h="45px"
+              px="10px"
               bg="whiteAlpha.900"
               fontSize="16px"
               fontWeight="600"
-              fontStyle="sans-serif"
               border="1px solid #455666"
-              onClick={() => navigate("/orderhistory")}
-              _hover={{bg:"#455666", color:"white"}}
+              _hover={{ bg: "#455666", color: "white" }}
               transition={"0.3s"}
+              onClick={() => navigate("/orderhistory")}
+
             >
               Track Order
             </Button>
@@ -125,8 +144,8 @@ export const NavbarCard2 = () => {
                         localStorage.removeItem("res")
                         return <Navigate to="/" />;
                       }}
-                      _hover={{fontWeight:"bold"}}
-              transition={"0.3s"}
+                      _hover={{ fontWeight: "bold" }}
+                      transition={"0.3s"}
                     >
                       Sign Out
                     </Box>
@@ -140,15 +159,17 @@ export const NavbarCard2 = () => {
               </Box>
             )}
             <Button
-              
-              leftIcon={<CiHeart size={25}/>}
-              size="lg"
+
+              leftIcon={<CiHeart size={25} />}
+              width="fit-content"
+              px="10px"
+              h="45px"
               bg="whiteAlpha.900"
               fontSize="16px"
               fontWeight="600"
               border="1px solid #455666"
               onClick={() => navigate("/wishlist")}
-              _hover={{bg:"#455666", color:"white"}}
+              _hover={{ bg: "#455666", color: "white" }}
               transition={"0.3s"}
             >
               Wishlist
@@ -156,13 +177,15 @@ export const NavbarCard2 = () => {
             <Link to="/cart">
               <Button
                 leftIcon={<CgShoppingCart size={25} />}
-                size="lg"
+                width="fit-content"
+                px="10px"
+                h="45px"
                 bg="whiteAlpha.900"
                 fontSize="16px"
                 fontWeight="600"
                 border="1px solid #455666"
-                _hover={{bg:"#455666", color:"white"}}
-              transition={"0.3s"}
+                _hover={{ bg: "#455666", color: "white" }}
+                transition={"0.3s"}
               >
                 Cart
               </Button>
@@ -176,7 +199,7 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer"  marginTop="1rem" bg="#455666" borderRadius="8" display="flex" justifyContent="center">
+    <Box cursor="pointer" marginTop="1rem" bg="#455666" borderRadius="8" display="flex" justifyContent="center">
       <Flex py={2} px={5}>
         <NavbarCard5 />
         {/* <HStack w="20%" ml="5%" justifyContent="right">
