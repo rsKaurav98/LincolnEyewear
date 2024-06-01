@@ -37,7 +37,7 @@ const Navbar = () => {
         padding="1rem"
         bg="aliceblue"
       >
-        <NavbarCard2 />
+        <NavbarCard2  />
         <NavbarCard4 />
       </Box>
       <Nav />
