@@ -152,11 +152,13 @@ function Shipping() {
           <Box id="addres">
             <Text
               id="ships"
-              bg="teal.400"
+              textAlign="center"
               p="2"
+              bg="#455666"
               fontWeight="bold"
               color="whiteAlpha.900"
               fontSize="22px"
+              borderRadius="8px"
             >
               Shipping Address
             </Text>
@@ -384,7 +386,7 @@ function Shipping() {
               userData.state.length >= 1 ? (
                 <Button
                   onClick={() => navigate("/checkout")}
-                  bg="#00b9c6"
+                  bg="455666"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"
@@ -397,7 +399,7 @@ function Shipping() {
                 </Button>
               ) : (
                 <Button
-                  bg="#cccccc"
+                  bg="teal"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"

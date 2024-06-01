@@ -19,11 +19,11 @@ export const HomeDetails = [
   //   caption: "Slide 4",
   //   title: "Contact lenses"
   // },
-  {
-    img: "https://static1.lenskart.com/media/desktop/img/Apr22/e2.png",
-    caption: "Slide 4",
-    title: "Power Sunglases"
-  },
+  // {
+  //   img: "https://static1.lenskart.com/media/desktop/img/Apr22/e2.png",
+  //   caption: "Slide 4",
+  //   title: "Power Sunglases"
+  // },
   {
     img: "https://static1.lenskart.com/media/desktop/img/June22/prog11.jpg",
     caption: "Slide 4",

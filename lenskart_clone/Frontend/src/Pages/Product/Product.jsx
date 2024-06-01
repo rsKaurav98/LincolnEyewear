@@ -35,10 +35,10 @@ const NewProduct = () => {
     setIsLoaded(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/products?page=${page}&sort=${sort}&gender=${gender}&types=${types}&productRef=${productRef}`
-      );
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`)
       const postData = await response.json();
-      setProducts(postData.data);
+      setProducts(postData);
+      console.log(postData);
       setIsLoaded(false);
     } catch (error) {
       console.log(error);

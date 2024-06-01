@@ -1,17 +1,16 @@
 import React from "react";
 import { Box, Grid, Text, Image, Center } from "@chakra-ui/react";
-import "./home.css"
 
 const HomeCard = ({ type }) => {
   return (
     <Box mb="2" cursor="pointer" bgColor="aliceblue" p="4" w="100%" className="glasses">
       <Grid 
         templateColumns={{
-          base: "none",
-          md: "none",
-          lg: "repeat(5,1fr)",
-          xl: "repeat(5,1fr)",
-          "2xl": "repeat(5,1fr)"
+          base: "repeat(2,1fr)",
+          md: "repeat(2,1fr)",
+          lg: "repeat(4,1fr)",
+          xl: "repeat(4,1fr)",
+          "2xl": "repeat(4,1fr)"
         }}
         gap={6}
         w="99%"

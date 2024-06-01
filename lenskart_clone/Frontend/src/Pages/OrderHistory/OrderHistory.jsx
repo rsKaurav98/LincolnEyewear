@@ -34,13 +34,15 @@ const OrderHistory = () => {
         <Heading
           fontSize="25px"
           mt="1%"
-          textAlign="left"
+          textAlign="center"
           p="2"
-          bg="teal.400"
+          bg="#455666"
           color="whiteAlpha.900"
+          borderRadius="8px"
         >
           Order History
         </Heading>
+        <br/>
         {orders.length === 0 ? (
           <Text
             textAlign="center"

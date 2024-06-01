@@ -42,15 +42,17 @@ const Wishlist = () => {
       >
         <Heading
           fontSize="25px"
-          textAlign="left"
+          textAlign="center"
           p="2"
-          bg="teal.400"
+          bg="#455666"
           color="whiteAlpha.900"
           w={{ lg: "80%", md: "90%", sm: "90%", base: "95%" }}
           m="auto"
+          borderRadius="8px"
         >
           Wishlist
         </Heading>
+        <br/>
         {wishlistItems.length === 0 ? (
           <Text
             textAlign="center"
@@ -75,6 +77,8 @@ const Wishlist = () => {
                     my="4"
                     w={{ lg: "80%", md: "90%", sm: "90%", base: "95%" }}
                     m="auto"
+                    bg="whiteAlpha.900"
+                    borderRadius="8px"
                   >
                     <Grid
                       m="auto"
@@ -110,7 +114,7 @@ const Wishlist = () => {
                         mb="2"
                       >
                         <Button
-                          colorScheme="red"
+                          colorScheme="teal"
                           onClick={() => handleAddToCart(item)}
                         >
                           Add to Cart
@@ -194,6 +198,7 @@ const Wishlist = () => {
           </Box>
         )}
       </Box>
+      <br/>
       <Footer />
     </Box>
   );

@@ -144,6 +144,7 @@ function Nav() {
                         bg="blue.500"
                         p="10px 15px"
                         rounded="lg"
+                        color="white"
                         _hover={{ bg: "blue.200" }}
                       >
                         <Login />
@@ -152,6 +153,7 @@ function Nav() {
                         bg="blue.500"
                         p="10px 15px"
                         rounded="lg"
+                        color="white"
                         _hover={{ bg: "blue.200" }}
                       >
                         <Signup />
