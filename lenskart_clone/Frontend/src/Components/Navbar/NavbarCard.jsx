@@ -33,7 +33,7 @@ import {
 //       <Flex gap={2} pl={5} pt={2}>
 //         {NavbarDetail1.map((i, index) => (
 //           <Box key={index}>
-//             <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
+//             <Text fontSize="20px" _hover={{ textDecoration: "underline" }}>
 //               {i.labels}
 //             </Text>
 //             <Spacer />
@@ -66,7 +66,7 @@ export const NavbarCard2 = () => {
             <Image src={logo} alt="logo" />
           </Link>
         </Box>
-        <HStack w="85%" m="auto">
+        <HStack w="85%" m="auto" display="flex" justify="space-between">
           {/* <Box w="15%">
             <HStack fontSize="18px" fontWeight="bold">
               <FiPhoneCall />
@@ -92,13 +92,13 @@ export const NavbarCard2 = () => {
             />
           </Box>
           <Box w="30%"></Box>
-          <HStack w="35%">
+          <HStack w="45%">
             <Button
               width="fit-content"
               h="45px"
-              px="10px"
+              px="20px"
               bg="whiteAlpha.900"
-              fontSize="16px"
+              fontSize="15px"
               fontWeight="600"
               border="1px solid #455666"
               _hover={{ bg: "#455666", color: "white" }}
@@ -159,13 +159,12 @@ export const NavbarCard2 = () => {
               </Box>
             )}
             <Button
-
               leftIcon={<CiHeart size={25} />}
               width="fit-content"
-              px="10px"
+              px="20px"
               h="45px"
               bg="whiteAlpha.900"
-              fontSize="16px"
+              fontSize="15px"
               fontWeight="600"
               border="1px solid #455666"
               onClick={() => navigate("/wishlist")}
@@ -178,10 +177,10 @@ export const NavbarCard2 = () => {
               <Button
                 leftIcon={<CgShoppingCart size={25} />}
                 width="fit-content"
-                px="10px"
+                px="20px"
                 h="45px"
                 bg="whiteAlpha.900"
-                fontSize="16px"
+                fontSize="15px"
                 fontWeight="600"
                 border="1px solid #455666"
                 _hover={{ bg: "#455666", color: "white" }}

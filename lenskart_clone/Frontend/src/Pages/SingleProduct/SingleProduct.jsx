@@ -9,6 +9,8 @@ import ProdCard from "./ProdCard";
 import axios from "axios";
 import { Grid, Box, Image, IconButton, SimpleGrid } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import Loading from "./loadingimg"
+
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -17,6 +19,7 @@ const SingleProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const handleAddToCart = () => {
     const existingItem = cart.findIndex((item) => item.id === data.id);
@@ -39,11 +42,14 @@ const SingleProduct = () => {
   };
 
   const fetchSingleProduct = async () => {
+    setIsLoaded(true);
     try {
       const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/${id}?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`);
       setData(response.data);
+      setIsLoaded(false);
     } catch (error) {
       console.log(error);
+      setIsLoaded(false);
     }
   };
 
@@ -51,99 +57,105 @@ const SingleProduct = () => {
     fetchSingleProduct();
   }, [id]);
 
-  const isDataLoaded = data && data.gallery && data.gallery.length > 0;
+  const isDataLoaded = data && data?.images && data?.images?.length > 0;
 
   const handlePrevImage = () => {
-    setCurrentImage((prev) => (prev === 0 ? data.gallery.length - 1 : prev - 1));
+    setCurrentImage((prev) => (prev === 0 ? data?.images?.length - 1 : prev - 1));
   };
 
   const handleNextImage = () => {
-    setCurrentImage((prev) => (prev === data.gallery.length - 1 ? 0 : prev + 1));
+    setCurrentImage((prev) => (prev === data?.images?.length - 1 ? 0 : prev + 1));
   };
 
   return (
     <>
       <Navbar />
-      <Box p={5}>
-        <Grid templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} gap={5}>
-          {isDataLoaded && (
-            <Box position="relative" maxW="100%">
-              {data.gallery.length > 1 ? (
-                <>
-                  {/* For large screens, use grid layout with two columns */}
-                  <SimpleGrid
-                    columns={{ base: 1, md: 1, lg: 2 }}
-                    spacing={5}
-                    display={{ base: "none", md:"grid" }}
-                    pos="sticky"
-                    top="0"
-                  >
-                    {data.gallery.map((image, index) => (
+      {isLoaded ? (
+        <Loading />
+      ) : (
+        <Box p={5}>
+          <Grid templateColumns={{ base: "1fr", md: "1fr 1fr", lg: "2fr 1fr" }} gap={5}>
+            {isDataLoaded && (
+              <Box position="relative" maxW="100%">
+                {data?.images?.length > 1 ? (
+                  <>
+                    {/* For large screens, use grid layout with two columns */}
+                    <SimpleGrid
+                      columns={{ base: 1, md: 1, lg: 2 }}
+                      spacing={5}
+                      display={{ base: "none", md: "grid" }}
+                      pos="sticky"
+                      top="0"
+                    >
+                      {data?.images.map((image, index) => (
+                        <Image
+                          key={index}
+                          src={image.src}
+                          maxW="100%"
+                          maxH={{ base: "100%", md: "500px", lg: "600px" }}
+                          objectFit="cover"
+                          _hover={{ transform: "scale(1.05)" }}
+                          boxShadow="md"
+                          bg="white"
+                        />
+                      ))}
+                    </SimpleGrid>
+
+                    {/* For small screens, use the current image carousel */}
+                    <Box
+                      display={{ base: "block", md: "none" }}
+                      width="100%"
+                      height="auto"
+                      justifyContent="center"
+                      alignItems="center"
+                      position="relative"
+                    >
                       <Image
-                        key={index}
-                        src={image.original}
+                        src={data.images[currentImage].src}
                         maxW="100%"
                         maxH={{ base: "100%", md: "500px", lg: "600px" }}
                         objectFit="cover"
-                        _hover={{ transform: "scale(1.05)" }}
                       />
-                    ))}
-                  </SimpleGrid>
-
-                  {/* For small screens, use the current image carousel */}
-                  <Box
-                    display={{ base: "block", md: "none" }}
-                    width="100%"
-                    height="auto"
-                    justifyContent="center"
-                    alignItems="center"
-                    position="relative"
-                  >
-                    <Image
-                      src={data.gallery[currentImage].original}
-                      maxW="100%"
-                      maxH={{ base: "100%", md: "500px", lg: "600px" }}
-                      objectFit="cover"
-                    />
-                    <IconButton
-                      icon={<ArrowBackIcon />}
-                      position="absolute"
-                      left="10px"
-                      top="50%"
-                      transform="translateY(-50%)"
-                      onClick={handlePrevImage}
-                      display={{ base: "block", md: "none" }}
-                    />
-                    <IconButton
-                      icon={<ArrowForwardIcon />}
-                      position="absolute"
-                      right="10px"
-                      top="50%"
-                      transform="translateY(-50%)"
-                      onClick={handleNextImage}
-                      display={{ base: "block", md: "none" }}
-                    />
-                  </Box>
-                </>
-              ) : (
-                <Image
-                  src={data.gallery[0].original}
-                  maxW="100%"
-                  maxH={{ base: "100%", md: "500px", lg: "600px" }}
-                  objectFit="cover"
-                />
-              )}
+                      <IconButton
+                        icon={<ArrowBackIcon />}
+                        position="absolute"
+                        left="10px"
+                        top="50%"
+                        transform="translateY(-50%)"
+                        onClick={handlePrevImage}
+                        display={{ base: "block", md: "none" }}
+                      />
+                      <IconButton
+                        icon={<ArrowForwardIcon />}
+                        position="absolute"
+                        right="10px"
+                        top="50%"
+                        transform="translateY(-50%)"
+                        onClick={handleNextImage}
+                        display={{ base: "block", md: "none" }}
+                      />
+                    </Box>
+                  </>
+                ) : (
+                  <Image
+                    src={data.images[0].src}
+                    maxW="100%"
+                    maxH={{ base: "100%", md: "500px", lg: "600px" }}
+                    objectFit="cover"
+                  />
+                )}
+              </Box>
+            )}
+            <Box pos="sticky" top="0" alignSelf="start" >
+              <ProdCard
+                type={data}
+                handleCart={handleAddToCart}
+                handleWishlist={handleAddToWishlist}
+              />
             </Box>
-          )}
-          <Box pos={{ lg: "sticky" }} top="0">
-            <ProdCard
-              type={data}
-              handleCart={handleAddToCart}
-              handleWishlist={handleAddToWishlist}
-            />
-          </Box>
-        </Grid>
-      </Box>
+          </Grid>
+        </Box>
+      )}
       <Footer />
     </>
   );
