@@ -68,7 +68,7 @@ function Pagination({ current, totalPages, onChange }) {
   };
 
   return (
-    <Flex w={{base}} my={8} justifyContent="center" alignItems="center">
+    <Flex w="100%" my={8} justifyContent="center" alignItems="center">
       <Button
         disabled={current === 1}
         onClick={() => handlePageChange(current - 1)}
