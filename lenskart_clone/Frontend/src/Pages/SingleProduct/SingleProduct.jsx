@@ -21,19 +21,33 @@ const SingleProduct = () => {
   const { cart } = useSelector((state) => state.cartManager);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const handleAddToCart = () => {
-    const existingItem = cart.findIndex((item) => item.id === data.id);
-    if (existingItem === -1) {
-      const newData = { ...data, quantity: 1 };
-      dispatch(addToCart(newData));
-      setTimeout(() => {
-        navigate('/cart');
-      }, 1000);
+  const handleAddToCart = (item) => {
+    if (item.isLens) {
+      // Handling the addition of a lens to the cart
+      const existingLens = cart.findIndex(
+        (cartItem) => cartItem.id === item.id && cartItem.isLens && cartItem.productId === item.productId
+      );
+      if (existingLens === -1) {
+        const newLensData = { ...item, quantity: 1 };
+        dispatch(addToCart(newLensData));
+      } else {
+        alert('Lens Already Added in Cart');
+      }
     } else {
-      alert('Product Already Added in Cart');
+      // Handling the addition of a product to the cart
+      const existingProduct = cart.findIndex((cartItem) => cartItem.id === item.id);
+      if (existingProduct === -1) {
+        const newProductData = { ...item, quantity: 1 };
+        dispatch(addToCart(newProductData));
+        setTimeout(() => {
+          navigate('/cart');
+        }, 1000);
+      } else {
+        alert('Product Already Added in Cart');
+      }
     }
   };
-
+  
   const handleAddToWishlist = () => {
     dispatch(addToWishlist(data));
     setTimeout(() => {

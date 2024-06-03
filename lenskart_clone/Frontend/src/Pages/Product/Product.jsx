@@ -31,12 +31,13 @@ const NewProduct = () => {
     setIsLoaded(true);
     try {
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products_page=15&page=${page}`,
-        {
-          headers: {
-            Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpbmNvbG5leWV3ZWFyLmNvbSIsImlhdCI6MTcxNzMyNzQwNiwibmJmIjoxNzE3MzI3NDA2LCJleHAiOjE3MTc5MzIyMDYsImRhdGEiOnsidXNlciI6eyJpZCI6IjMifX19.N7umzxQpgKAmD7eMTXiuNf4lnf3OS2JQ492Ho_7ztLs`,
-            'Content-Type': 'application/json',
-          },        }
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=15&page=${page}`,
+        // {
+        //   headers: {
+        //     Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpbmNvbG5leWV3ZWFyLmNvbSIsImlhdCI6MTcxNzMyNzQwNiwibmJmIjoxNzE3MzI3NDA2LCJleHAiOjE3MTc5MzIyMDYsImRhdGEiOnsidXNlciI6eyJpZCI6IjMifX19.N7umzxQpgKAmD7eMTXiuNf4lnf3OS2JQ492Ho_7ztLs`,
+        //     'Content-Type': 'application/json',
+        //   },
+        // }
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -44,7 +45,7 @@ const NewProduct = () => {
       const postData = await response.json();
       const totalProducts = response.headers.get('X-WP-Total');
       setTotalPages(Math.ceil(totalProducts / 15));
-      totalprod=totalProducts;
+      totalprod = totalProducts;
       setProducts(postData);
       setIsLoaded(false);
     } catch (error) {
@@ -52,7 +53,7 @@ const NewProduct = () => {
       setIsLoaded(false);
     }
   };
-  
+
 
   useEffect(() => {
     fetchProduct();
@@ -93,7 +94,7 @@ const NewProduct = () => {
             />
             <hr />
           </Flex>
-          
+
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay>
               <DrawerContent>
@@ -175,16 +176,16 @@ const NewProduct = () => {
                   </MenuList>
                 </Menu>
                 <IconButton
-                aria-label="Open filter menu"
-                icon={<FaFilter />}
-                display={{ base: "inherit", xl: "none" }}
-                onClick={onOpen}
-                ml={{ base: "7px", md: "8px" }}
-                mt={{ base: "8px", md: "0" }}
-                fontSize="16px"
-                bg=""
-                w={{ base: "100%", sm: "auto" }}
-          />
+                  aria-label="Open filter menu"
+                  icon={<FaFilter />}
+                  display={{ base: "inherit", xl: "none" }}
+                  onClick={onOpen}
+                  ml={{ base: "7px", md: "8px" }}
+                  mt={{ base: "8px", md: "0" }}
+                  fontSize="16px"
+                  bg=""
+                  w={{ base: "100%", sm: "auto" }}
+                />
               </Flex>
             </Flex>
             {products.length !== 0 && (

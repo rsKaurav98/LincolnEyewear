@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -25,43 +25,26 @@ import {
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [btn, setBtn] = useState();
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [pass, setPass] = useState(false);
   const [show, setShow] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setisAuth, setAuthData } = useContext(AuthContext);
   const [incorrect, setIncorrect] = useState(false);
   const navigate = useNavigate();
-  let res1 = [];
-
-  
 
   const handleChange = (e) => {
     setIncorrect(false);
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
-
-    const button = (
-      <Box
-        fontSize={"14px"}
-        mt="5px"
-        color={"#ff1f1f"}
-        fontWeight="500"
-        letterSpacing={"-0.4px"}
-      >
-        Please enter a valid Email or Mobile Number.
-      </Box>
-    );
-    setBtn(button);
   };
 
   const getData = async () => {
     try {
       setLoading(true);
       setIncorrect(false);
-      if (loginData.email && loginData.password) {
-        const res = await fetch("http://localhost:8000/token", {
+      if (loginData.username && loginData.password) {
+        const res = await fetch("https://lincolneyewear.com/wp-json/jwt-auth/v1/token", {
           method: "POST",
           body: JSON.stringify(loginData),
           headers: {
@@ -75,27 +58,12 @@ const Login = () => {
 
         const data = await res.json();
         if (data.token) {
-          const credentialRes = await fetch("http://localhost:8000/me?with=permissions", {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${data.token}`
-            }
-          });
-
-          if (credentialRes.status !== 200) {
-            throw new Error(`HTTP status ${credentialRes.status}`);
-          }
-
-          const cred = await credentialRes.json();
-          console.log(cred)
-
+          console.log(`login response`,data)
+          console.log(data.token)
           localStorage.setItem("token", data.token);
-            if (cred.email === loginData.email) {
-          res1 = [cred]; // Convert the object to an array with one element
-          localStorage.setItem("res", JSON.stringify(res1));}
-
+          localStorage.setItem("user", JSON.stringify(data));
           setisAuth(true);
-          setAuthData(res1);
+          setAuthData(data.user_display_name);
           navigate("/");
 
           onClose();
@@ -162,16 +130,30 @@ const Login = () => {
               </Heading>
 
               {pass === false ? (
-                <Input
-                  name="email"
-                  placeholder="Email"
-                  h={"50px"}
-                  fontSize="16px"
-                  focusBorderColor="rgb(206, 206, 223)"
-                  borderColor={"rgb(206, 206, 223)"}
-                  onChange={handleChange}
-                  rounded="2xl"
-                />
+                <Box>
+                  <Input
+                    name="username"
+                    placeholder="Username"
+                    h={"50px"}
+                    fontSize="16px"
+                    focusBorderColor="rgb(206, 206, 223)"
+                    borderColor={"rgb(206, 206, 223)"}
+                    onChange={handleChange}
+                    rounded="2xl"
+                  />
+                  <Button
+                    mt="20px"
+                    onClick={() => setPass(true)}
+                    bgColor={"#11daac"}
+                    width="100%"
+                    borderRadius={"35px/35px"}
+                    h="50px"
+                    fontSize="18px"
+                    _hover={{ backgroundColor: "#11daac" }}
+                  >
+                    Next
+                  </Button>
+                </Box>
               ) : (
                 <Box>
                   <Box fontSize={"17px"} color="#66668e">
@@ -184,7 +166,7 @@ const Login = () => {
                     mb="22px"
                     color={"#000042"}
                   >
-                    <Box fontSize="18px">{loginData.email}</Box>
+                    <Box fontSize="18px">{loginData.username}</Box>
                     <Box
                       fontSize={"14px"}
                       textDecoration="underline"
@@ -230,9 +212,23 @@ const Login = () => {
                       ml="2"
                       letterSpacing={"-0.4px"}
                     >
-                      Wrong email or password
+                      Wrong username or password
                     </Box>
                   )}
+
+                  <Button
+                    mt="20px"
+                    isLoading={loading}
+                    onClick={handleSign}
+                    bgColor={"#11daac"}
+                    width="100%"
+                    borderRadius={"35px/35px"}
+                    h="50px"
+                    fontSize="18px"
+                    _hover={{ backgroundColor: "#11daac" }}
+                  >
+                    Sign In
+                  </Button>
                 </Box>
               )}
               <Box
@@ -243,9 +239,6 @@ const Login = () => {
               >
                 Forget Password
               </Box>
-              {loginData.email.includes("@") && loginData.email.includes(".com")
-                ? ""
-                : btn}
 
               <HStack fontSize="16px">
                 <Checkbox mb={"20px"} mt="20px" size="sm">
@@ -257,31 +250,6 @@ const Login = () => {
                   h="22px"
                 />
               </HStack>
-              {loginData.email.includes("@") && loginData.email.includes(".com") ? (
-                <Button
-                  isLoading={loading}
-                  onClick={handleSign}
-                  bgColor={"#11daac"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  h="50px"
-                  fontSize="18px"
-                  _hover={{ backgroundColor: "#11daac" }}
-                >
-                  Sign In
-                </Button>
-              ) : (
-                <Button
-                  bgColor={"#cccccc"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  fontSize="18px"
-                  h="50px"
-                  _hover={{ backgroundColor: "#cccccc" }}
-                >
-                  Sign In
-                </Button>
-              )}
 
               <HStack spacing={"0px"} mt="19px" gap="2">
                 <Box fontSize={"14px"}> New member?</Box>

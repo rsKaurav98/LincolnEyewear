@@ -23,7 +23,7 @@ const ProdDetails = ({ type }) => {
             </Box>
             <AccordionIcon />
           </AccordionButton>
-        </h2>
+        </h2>F
         <AccordionPanel pb={4}>
           <Box>
             <Flex gap="4">
