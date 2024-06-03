@@ -30,6 +30,7 @@ import {
   Flex
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,6 +38,13 @@ function Nav() {
  // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/products?search=${searchValue}`);
+    }
+  }
 
   return (
     <Box
@@ -55,7 +63,7 @@ function Nav() {
             />
           </Link>
         </Box>
-        <Box w="70%" display={{ sm: "inherit", base: "none" }}>
+        <Box w="70%" display="inherit">
           <Input
             placeholder="Search for Eyeglasses,Sunglasses and more.."
             border="1px solid black"
@@ -63,6 +71,10 @@ function Nav() {
             w="90%"
             fontSize="16px"
             h="35px"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onKeyDown={handleKeyDown}
+            textOverflow="ellipsis"
           />
         </Box>
 

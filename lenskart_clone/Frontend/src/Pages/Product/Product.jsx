@@ -10,44 +10,53 @@ import { Box, Flex, Text, Button, IconButton, Drawer, DrawerBody, DrawerHeader, 
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
-import {
-  Gender,
-  ProductTypes,
-  FrameColor,
-  Frame1,
-  Frame2
-} from "./FilterDetails";
+import { Gender, ProductTypes, FrameColor, Frame1, Frame2 } from "./FilterDetails";
+let totalprod = 0;
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [types, setTypes] = useState("");
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState("");
   const [frame, setFrame] = useState("");
   const [shape, setShape] = useState("");
   const [gender, setGender] = useState("");
   const [productRef, setProductRef] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const fetchproduct = async () => {
+  const fetchProduct = async (bearerToken) => {
     setIsLoaded(true);
     try {
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`)
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=15&page=${page}`,
+        // {
+        //   headers: {
+        //     Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpbmNvbG5leWV3ZWFyLmNvbSIsImlhdCI6MTcxNzMyNzQwNiwibmJmIjoxNzE3MzI3NDA2LCJleHAiOjE3MTc5MzIyMDYsImRhdGEiOnsidXNlciI6eyJpZCI6IjMifX19.N7umzxQpgKAmD7eMTXiuNf4lnf3OS2JQ492Ho_7ztLs`,
+        //     'Content-Type': 'application/json',
+        //   },
+        // }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
       const postData = await response.json();
+      const totalProducts = response.headers.get('X-WP-Total');
+      setTotalPages(Math.ceil(totalProducts / 15));
+      totalprod=totalProducts;
       setProducts(postData);
-      console.log(postData);
       setIsLoaded(false);
     } catch (error) {
-      console.log(error);
+      console.error('Fetch Error:', error);
       setIsLoaded(false);
     }
   };
+  
 
   useEffect(() => {
-    fetchproduct();
+    fetchProduct();
   }, [page, sort, gender, types, productRef]);
 
   return (
@@ -181,7 +190,7 @@ const NewProduct = () => {
             </Flex>
             {products.length !== 0 && (
               <Text mt="5px" textAlign="center" fontSize="15px">
-                Showing {products.length} Results of all available frames
+                Showing {products.length} Results of {totalprod} Products
               </Text>
             )}
             {isLoaded ? (
@@ -201,11 +210,10 @@ const NewProduct = () => {
             )}
           </Box>
         </Flex>
-        <Pagination current={page} onChange={(value) => setPage(value)} />
+        <Pagination current={page} totalPages={totalPages} onChange={(value) => setPage(value)} />
       </Box>
       <Footer />
     </>
-   
   );
 };
 

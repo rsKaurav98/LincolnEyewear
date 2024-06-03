@@ -88,15 +88,9 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
           justifyContent="center"
           gap="1"
           w={{ lg: "100%", sm: "50%", base: "50%" }}
+          textAlign="center"
         >
-          <Text
-            textAlign="center"
-            fontSize={{ lg: "md", md: "md", base: "sm" }}
-          >
             Click To Choose Lens
-          </Text>
-
-          <Text fontSize="12px">(with 1 Year Warranty & 14 day Return)</Text>
         </Flex>
       </Button>
       <Button
@@ -120,15 +114,9 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         border="1px"
         borderColor="gray.400"
         onClick={handleCart}
+        textAlign="center"
       >
-        <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
           Purchase without lens
-        </Text>
-        <Image
-          src="https://static.lenskart.com/media/desktop/img/pdp/try_on_model.png"
-          alt="img"
-          ml="20"
-        />
       </Button>
       <br />
       <br />
