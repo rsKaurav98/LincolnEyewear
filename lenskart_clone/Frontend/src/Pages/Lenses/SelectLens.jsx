@@ -7,15 +7,17 @@ import {
   ModalCloseButton,
   Box,
   Flex,
-  Divider,
   Text,
   Button,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { lensData } from "./data";
 
-const SelectLens = ({ isOpen, onClose }) => {
+const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
   const [selectedCategory, setSelectedCategory] = useState("Single Vision");
+
+  const handleLensClick = (lens) => {
+    handleLensCart(lens);
+  };
 
   const renderLensContent = (category) => (
     <Box mt="10px">
@@ -31,22 +33,27 @@ const SelectLens = ({ isOpen, onClose }) => {
           pl="40px"
           py="20px"
           borderRadius="8px"
-          // _hover={{ transform: "scale(1.02)", boxShadow: "lg" }}
           transition="0.3s"
           boxShadow="md"
           cursor="pointer"
-          _hover={{bg:"#455666", color:"white"}}
-          
+          _hover={{ bg: "#455666", color: "white" }}
+          onClick={() => handleLensClick(item)} // Add onClick to handle lens selection
         >
           <Box w="80%">
-            <Text fontWeight="400" fontSize={{ base: "17px", md: "24px" }}>{item.name}</Text>
-            <br/>
+            <Text fontWeight="400" fontSize={{ base: "17px", md: "24px" }}>
+              {item.name}
+            </Text>
+            <br />
             <Box pl={{ base: "10px", md: "20px" }}>
               {item.features.map((feature, fidx) => (
-                <Text key={fidx} fontSize={{ base: "10px", md: "15px" }}>• {feature}</Text>
+                <Text key={fidx} fontSize={{ base: "10px", md: "15px" }}>
+                  • {feature}
+                </Text>
               ))}
             </Box>
-            <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.price=="Free"?"#90EE90":""}>{item.price}</Text>
+            <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.price === "Free" ? "#90EE90" : ""}>
+              {item.price}
+            </Text>
           </Box>
           <Box width="20%">
             <img width="200px" height="auto" src={item.src} style={{ borderRadius: "10px" }} />
@@ -71,13 +78,7 @@ const SelectLens = ({ isOpen, onClose }) => {
         <Flex justify="center" fontWeight="400" fontSize={{ base: "6vw", md: "2.2vw" }} color="#333" m="10px">
           Choose Lens Package
         </Flex>
-        <ModalCloseButton
-          borderRadius="50%"
-          bg="white"
-          m="10px 10px 0px 0px"
-          color="#333"
-          boxShadow="md"
-        />
+        <ModalCloseButton borderRadius="50%" bg="white" m="10px 10px 0px 0px" color="#333" boxShadow="md" />
         <ModalBody p="0px 0px" borderRadius="15px">
           <Box m={{ base: "20px", md: "34px 45px 50px 45px" }}>
             <Flex flexDirection={{ base: "column", md: "row" }} width="100%">
@@ -95,7 +96,6 @@ const SelectLens = ({ isOpen, onClose }) => {
                 h="63vh"
               >
                 {Object.keys(lensData).map((category, index) => (
-                  <Box>
                   <Box key={index} gap="20px">
                     <Button
                       w={{ base: "98%", md: "90%" }}
@@ -107,53 +107,23 @@ const SelectLens = ({ isOpen, onClose }) => {
                       fontSize={{ base: "4vw", md: "1.3vw" }}
                       textAlign="left"
                       _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
-                      
                       onClick={() => setSelectedCategory(category)}
-                      transform={selectedCategory === category ? "scale(1.02)" : "scale(1)"}
-                      ml="10px"
-                      display="flex"
-                      alignItems="center"
-                      transition="all 0.3s ease"
-                      borderRadius="5px"
-                      boxShadow={selectedCategory === category ? "0 4px 8px 0 rgba(0, 0, 0, 0.4)" : "0 4px 8px 0 rgba(0, 0, 0, 0.2)"}
+                      transform={selectedCategory === category ? "scale(1.02)" : "scale(1.0)"}
                     >
                       {category}
                     </Button>
-                    </Box>
-                    <br />
-                  <Box>
-                    {selectedCategory === category && (
-                      <Box display={{ base: "block", md: "none" }}>
-                        {renderLensContent(category)}
-                      </Box>
-                    )}
-                    </Box>
                   </Box>
                 ))}
               </Flex>
-              <Flex
-                width={{ base: "100%", md: "77%" }}
-                p={{ base: "0", md: "10px" }}
-                maxH="60vh"
-                flexDirection="column"
-                overflowY="auto"
-                sx={{
-                  "&::-webkit-scrollbar": { display: "none" },
-                  msOverflowStyle: "none",
-                  scrollbarWidth: "none",
-                }}
-              >
-                <Box display={{ base: "none", md: "block" }}>
-                  {renderLensContent(selectedCategory)}
-                </Box>
-              </Flex>
+              <Box w={{ base: "100%", md: "77%" }} h="62vh" overflowY={{ base: "visible", md: "auto" }}>
+                {renderLensContent(selectedCategory)}
+              </Box>
             </Flex>
           </Box>
         </ModalBody>
       </ModalContent>
     </Modal>
   );
-  
 };
 
 export default SelectLens;

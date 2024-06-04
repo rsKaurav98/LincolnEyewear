@@ -71,7 +71,7 @@ const CartItem = () => {
                 xl: "unset",
                 "2xl": "unset"
               }}
-              src={item.image.original}
+              src={item?.images?.[0]?.src }
             />
             <Flex
               flexDirection={"column"}

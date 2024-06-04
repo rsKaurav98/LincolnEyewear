@@ -38,7 +38,7 @@ const Productlist = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:4000/product?sort=${sort}&productRefLink=${productref}&gender=${gender}&productType=${filter}&shape=${shape}&style=${style}&page=${page}`
+        `http://localhost:8000/product?sort=${sort}&productRefLink=${productref}&gender=${gender}&productType=${filter}&shape=${shape}&style=${style}&page=${page}`
       );
       const postData = await response.json();
       setData(postData);

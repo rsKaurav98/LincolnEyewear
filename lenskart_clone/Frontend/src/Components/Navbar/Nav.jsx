@@ -115,7 +115,7 @@ function Nav() {
                       >
                         <Text mt="10px" fontSize="20px" color="blackAlpha.900">
                           
-                          {Authdata[0].name}
+                          {Authdata.user_display_name}
                         </Text>
                         {/* <Text color="gray.500" mt="5%" fontSize="sm">
                           Enjoy Buy 1 Get 1 offer for 365 days
@@ -455,7 +455,7 @@ function Nav() {
                     _hover={{ bg: "#455680" }}
                     onClick={() => {
                       setisAuth(false);
-                      localStorage.removeItem("res")
+                      localStorage.removeItem("user")
                       return <Navigate to="/" />;
                     }}
                   >

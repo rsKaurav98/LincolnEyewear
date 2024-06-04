@@ -45,7 +45,7 @@ const NewProduct = () => {
       const postData = await response.json();
       const totalProducts = response.headers.get('X-WP-Total');
       setTotalPages(Math.ceil(totalProducts / 15));
-      totalprod=totalProducts;
+      totalprod = totalProducts;
       setProducts(postData);
       setIsLoaded(false);
     } catch (error) {
@@ -53,7 +53,7 @@ const NewProduct = () => {
       setIsLoaded(false);
     }
   };
-  
+
 
   useEffect(() => {
     fetchProduct();
@@ -94,7 +94,7 @@ const NewProduct = () => {
             />
             <hr />
           </Flex>
-          
+
           <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
             <DrawerOverlay>
               <DrawerContent>
@@ -176,16 +176,16 @@ const NewProduct = () => {
                   </MenuList>
                 </Menu>
                 <IconButton
-                aria-label="Open filter menu"
-                icon={<FaFilter />}
-                display={{ base: "inherit", xl: "none" }}
-                onClick={onOpen}
-                ml={{ base: "7px", md: "8px" }}
-                mt={{ base: "8px", md: "0" }}
-                fontSize="16px"
-                bg=""
-                w={{ base: "100%", sm: "auto" }}
-          />
+                  aria-label="Open filter menu"
+                  icon={<FaFilter />}
+                  display={{ base: "inherit", xl: "none" }}
+                  onClick={onOpen}
+                  ml={{ base: "7px", md: "8px" }}
+                  mt={{ base: "8px", md: "0" }}
+                  fontSize="16px"
+                  bg=""
+                  w={{ base: "100%", sm: "auto" }}
+                />
               </Flex>
             </Flex>
             {products.length !== 0 && (
