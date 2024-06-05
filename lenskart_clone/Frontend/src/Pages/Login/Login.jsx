@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,8 @@ import {
   Flex,
   Center,
   InputGroup,
-  InputRightElement
+  InputRightElement,
+  useToast // Import useToast hook
 } from "@chakra-ui/react";
 
 const Login = () => {
@@ -29,15 +30,24 @@ const Login = () => {
   const [pass, setPass] = useState(false);
   const [show, setShow] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setisAuth, setAuthData } = useContext(AuthContext);
+  const { isAuth,setisAuth, setAuthData ,} = useContext(AuthContext);
+  
   const [incorrect, setIncorrect] = useState(false);
   const navigate = useNavigate();
+  const toast = useToast(); // Initialize useToast hook
 
   const handleChange = (e) => {
     setIncorrect(false);
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      // Navigate only if isAuth is true
+      navigate("/");
+    }
+  }, [isAuth]);
 
   const getData = async () => {
     try {
@@ -64,10 +74,18 @@ const Login = () => {
           localStorage.setItem("user", JSON.stringify(data));
           setisAuth(true);
           setAuthData(data.user_display_name);
-          navigate("/");
+          
 
           onClose();
           setLoading(false);
+          // Display toast for successful login
+          toast({
+            title: "Login Successful",
+            description: "You have been successfully logged in.",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
         } else {
           setLoading(false);
           setIncorrect(true);
