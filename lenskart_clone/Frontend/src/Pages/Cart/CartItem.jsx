@@ -110,7 +110,7 @@ const CartItem = () => {
                   </Text>
                 </Flex>
               </Flex>
-              <Box border={"1px dashed #CECEDF"}></Box>
+              <Box border={"1px dashed #CECEDF"} display={item.selectedLens?"inherit":"none"}></Box>
               {item.selectedLens && (
                 <Flex justifyContent={"space-between"}>
                   <Heading

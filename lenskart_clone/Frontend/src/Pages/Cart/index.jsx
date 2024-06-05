@@ -16,18 +16,25 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
+  
 
   const getdiscountPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 

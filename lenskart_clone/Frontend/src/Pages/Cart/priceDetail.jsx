@@ -2,8 +2,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 function PriceDetail({ totalPrice = 0, discountPrice = 0 }) {
-  console.log(`Total price and discount price `, totalPrice, discountPrice);
-  
+    
   const { coupon } = useSelector((state) => state.cartManager);
 
   const totalDiscount = totalPrice - discountPrice;

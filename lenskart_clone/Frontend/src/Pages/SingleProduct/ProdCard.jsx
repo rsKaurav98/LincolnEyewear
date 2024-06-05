@@ -9,7 +9,7 @@ const ProdCard = ({
   handleWishlist,
   handleLensCart,
   selectedLens,
-  totalPrice, // added totalPrice prop
+  totalPrice,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
@@ -108,9 +108,9 @@ const ProdCard = ({
         </Button>
       )}
 
-      <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor= "#00bac6">
+      {!selectedLens &&(<Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor= "#00bac6">
         Purchase without Lenses
-      </Button>
+      </Button>)}
 
       <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor= "#00bac6">
         Add to Wishlist

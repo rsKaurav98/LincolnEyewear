@@ -31,14 +31,14 @@ const SingleProduct = () => {
     };
 
     if(selectedLens){
-      const existingProduct = cart.findIndex((cartItem) => cartItem.id === item.id);
+      const existingProduct = cart.findIndex((cartItem) => cartItem.id === item.id && cartItem.selectedLens==selectedLens);
       if (existingProduct === -1) {
         dispatch(addToCart(productToAdd));
         setTimeout(() => {
           navigate('/cart');
         }, 1000);
       } else {
-        alert('Product Already Added in Cart');
+        alert('Product With This Lens Already Added in Cart');
       }
     }
     else{
