@@ -291,7 +291,7 @@ const Orders = () => {
                 textAlign={{ md: "left", sm: "center", base: "center" }}
               >
                 <Image
-                  src={el.image.thumbnail}
+                  src={el.image?.thumbnail}
                   w={"200px"}
                   h="100px"
                   m={{

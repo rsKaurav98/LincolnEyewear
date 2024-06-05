@@ -63,7 +63,7 @@ export default function CartItem() {
                       xl: "100%",
                       "2xl": "100%"
                     }}
-                    src={el.image.thumbnail}
+                    src={el?.images?.[0]?.src}
                     m="auto"
                   />
                 </Box>
