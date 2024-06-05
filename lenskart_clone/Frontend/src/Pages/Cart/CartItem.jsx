@@ -18,6 +18,7 @@ import {
 const CartItem = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
+  console.log(`to see what is there in cart`,cart)
 
   const handleDelete = (id, selectedLens) => {
     dispatch(removeFromCart({ id, selectedLens }));

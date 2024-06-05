@@ -23,6 +23,7 @@ const CartPage = () => {
       }
       return acc + itemPrice;
     }, 0);
+    console.log(totalPrice)
     return totalPrice;
   };
   

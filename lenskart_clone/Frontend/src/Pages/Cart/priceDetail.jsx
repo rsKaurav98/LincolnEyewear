@@ -7,8 +7,11 @@ function PriceDetail({ totalPrice = 0, discountPrice = 0 }) {
 
   const totalDiscount = totalPrice - discountPrice;
   const tax = (totalPrice * 0.18).toFixed(2);
+  console.log(totalPrice)
+  
   const totalAfterTax = (totalPrice + parseFloat(tax)).toFixed(2);
   const totalPayable = (totalAfterTax - (coupon || 0)).toFixed(2);
+  console.log(totalPayable)
 
   return (
     <Flex

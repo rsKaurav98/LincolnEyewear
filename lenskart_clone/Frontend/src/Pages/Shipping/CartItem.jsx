@@ -1,14 +1,17 @@
 import { Box, Flex, Text, Image, Divider, Grid } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-export default function CartItem() {
+export default function ShippingPage() {
   const { cart, coupon } = useSelector((state) => state.cartManager);
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 
@@ -31,7 +34,7 @@ export default function CartItem() {
         </Box>
         <Box border="1px solid #ccc">
           {cart.map((el) => (
-            <Box>
+            <Box key={el.id}>
               <Grid
                 templateColumns={{
                   base: "repeat(1,1fr)",
@@ -107,7 +110,32 @@ export default function CartItem() {
                 </Grid>
               </Grid>
 
-              <Divider h={2} mb={2} />
+             
+
+              {/* Display Lens Name and Price if available */}
+              {el.selectedLens && (
+                <Flex justifyContent="space-between" alignItems="center" m="4">
+                  <Text fontSize="md" fontWeight="bold">
+                    Lens:{el.selectedLens.name}
+                  </Text>
+                  <Text fontSize="md" fontWeight="bold" ml={2} >
+                    ₹{el.selectedLens.price}
+                  </Text>
+                </Flex>
+              )}
+               <Divider h={2} mb={2} />
+
+              {/* Display "No Lens" if no lens is selected */}
+              {!el.selectedLens && (
+                <Flex justifyContent="center" alignItems="center">
+                  <Text fontSize="md" fontWeight="bold">
+                    No Lens
+                  </Text>
+                  <Text fontSize="md" fontWeight="bold" ml={2}>
+                    ₹0
+                  </Text>
+                </Flex>
+              )}
             </Box>
           ))}
         </Box>
