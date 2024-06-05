@@ -19,20 +19,20 @@ const CartItem = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
 
-  const handleDelete = (id) => {
-    dispatch(removeFromCart(id));
+  const handleDelete = (id, selectedLens) => {
+    dispatch(removeFromCart({ id, selectedLens }));
   };
 
-  const handleDecrementChange = (id, qty) => {
+  const handleDecrementChange = (id, selectedLens, qty) => {
     if (qty <= 1) {
-      dispatch(removeFromCart(id));
+      dispatch(removeFromCart({ id, selectedLens }));
     } else {
-      dispatch(decrement(id));
+      dispatch(decrement({ id, selectedLens }));
     }
   };
 
-  const handleIncrementChange = (id) => {
-    dispatch(increment(id));
+  const handleIncrementChange = (id, selectedLens) => {
+    dispatch(increment({ id, selectedLens }));
   };
 
   return (
@@ -158,7 +158,7 @@ const CartItem = () => {
                   textDecoration="underline"
                   fontSize={"18"}
                   ml="-1.5"
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => handleDelete(item.id,item.selectedLens)}
                 >
                   Remove
                 </Button>
@@ -175,7 +175,7 @@ const CartItem = () => {
                     borderRadius="50%"
                     fontSize="20px"
                     onClick={() =>
-                      handleDecrementChange(item.id, item.quantity)
+                      handleDecrementChange(item.id,item.selectedLens, item.quantity)
                     }
                   >
                     -
@@ -187,7 +187,7 @@ const CartItem = () => {
                     borderRadius="50%"
                     fontSize="20px"
                     size="md"
-                    onClick={() => handleIncrementChange(item.id)}
+                    onClick={() => handleIncrementChange(item.id,item.selectedLens)}
                   >
                     +
                   </Button>

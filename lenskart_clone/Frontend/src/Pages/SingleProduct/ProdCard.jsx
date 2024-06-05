@@ -22,11 +22,16 @@ const ProdCard = ({
 
   const buttonStyles = {
     mt: 2,
-    p: { lg: 7, base: 0 },
-    m: { lg: "10px 20px", base: "10px auto" },
+    p: { lg: 7, base: 0 }, // Consistent padding
+    m: { lg: "10px 20px", base: "10px auto" }, // Consistent margin
     w: { lg: "90%", base: "100%" },
     color: "white",
     _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },
+    textAlign: "center",
+    fontSize: { 
+      xs: 14,
+      md: 16,
+    },
   };
 
   return (
@@ -87,7 +92,7 @@ const ProdCard = ({
       </Text>
       <br />
 
-      <Button sx={buttonStyles} onClick={onOpen} bgColor= "#00bac6">
+      <Button sx={buttonStyles} onClick={onOpen} bgColor= "#00bac6" >
         {selectedLensName}
       </Button>
       <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensClick} />
