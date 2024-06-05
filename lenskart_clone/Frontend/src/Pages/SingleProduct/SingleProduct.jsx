@@ -7,10 +7,9 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import ProdCard from "./ProdCard";
 import axios from "axios";
-import { Grid, Box, Image, IconButton, SimpleGrid } from "@chakra-ui/react";
+import { Grid, Box, Image, IconButton, SimpleGrid, Button } from "@chakra-ui/react";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import Loading from "./loadingimg"
-
+import Loading from "./loadingimg";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -20,25 +19,32 @@ const SingleProduct = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [selectedLens, setSelectedLens] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleAddToCart = (item) => {
-    if (item.isLens) {
-      // Handling the addition of a lens to the cart
-      const existingLens = cart.findIndex(
-        (cartItem) => cartItem.id === item.id && cartItem.isLens && cartItem.productId === item.productId
-      );
-      if (existingLens === -1) {
-        const newLensData = { ...item, quantity: 1 };
-        dispatch(addToCart(newLensData));
-      } else {
-        alert('Lens Already Added in Cart');
-      }
-    } else {
-      // Handling the addition of a product to the cart
+    const productToAdd = {
+      ...item,
+      quantity: 1,
+      selectedLens,
+      totalPrice: selectedLens ? totalPrice : item.price,
+    };
+
+    if(selectedLens){
       const existingProduct = cart.findIndex((cartItem) => cartItem.id === item.id);
       if (existingProduct === -1) {
-        const newProductData = { ...item, quantity: 1 };
-        dispatch(addToCart(newProductData));
+        dispatch(addToCart(productToAdd));
+        setTimeout(() => {
+          navigate('/cart');
+        }, 1000);
+      } else {
+        alert('Product Already Added in Cart');
+      }
+    }
+    else{
+      const existingProduct = cart.findIndex((cartItem) => cartItem.id === item.id);
+      if (existingProduct === -1) {
+        dispatch(addToCart(productToAdd));
         setTimeout(() => {
           navigate('/cart');
         }, 1000);
@@ -47,7 +53,7 @@ const SingleProduct = () => {
       }
     }
   };
-  
+
   const handleAddToWishlist = () => {
     dispatch(addToWishlist(data));
     setTimeout(() => {
@@ -60,6 +66,7 @@ const SingleProduct = () => {
     try {
       const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/${id}?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`);
       setData(response.data);
+      setTotalPrice(response.data.price);
       setIsLoaded(false);
     } catch (error) {
       console.log(error);
@@ -81,6 +88,11 @@ const SingleProduct = () => {
     setCurrentImage((prev) => (prev === data?.images?.length - 1 ? 0 : prev + 1));
   };
 
+  const handleLensCart = (lens) => {
+    setSelectedLens(lens);
+    setTotalPrice(parseFloat(data.price) + parseFloat(lens.price==="Free"?0:lens.price));
+  };
+
   return (
     <>
       <Navbar />
@@ -93,7 +105,6 @@ const SingleProduct = () => {
               <Box position="relative" maxW="100%">
                 {data?.images?.length > 1 ? (
                   <>
-                    {/* For large screens, use grid layout with two columns */}
                     <SimpleGrid
                       columns={{ base: 1, md: 1, lg: 2 }}
                       spacing={5}
@@ -114,8 +125,6 @@ const SingleProduct = () => {
                         />
                       ))}
                     </SimpleGrid>
-
-                    {/* For small screens, use the current image carousel */}
                     <Box
                       display={{ base: "block", md: "none" }}
                       width="100%"
@@ -160,11 +169,14 @@ const SingleProduct = () => {
                 )}
               </Box>
             )}
-            <Box pos="sticky" top="0" alignSelf="start" >
+            <Box pos="sticky" top="0" alignSelf="start">
               <ProdCard
                 type={data}
                 handleCart={handleAddToCart}
                 handleWishlist={handleAddToWishlist}
+                handleLensCart={handleLensCart}
+                selectedLens={selectedLens}
+                totalPrice={totalPrice} 
               />
             </Box>
           </Grid>

@@ -19,12 +19,12 @@ const CartItem = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
 
-  const handleDelete = (item) => {
-    dispatch(removeFromCart(item));
+  const handleDelete = (id) => {
+    dispatch(removeFromCart(id));
   };
 
   const handleDecrementChange = (id, qty) => {
-    if (qty < 1) {
+    if (qty <= 1) {
       dispatch(removeFromCart(id));
     } else {
       dispatch(decrement(id));
@@ -38,9 +38,9 @@ const CartItem = () => {
   return (
     <Box>
       {cart &&
-        cart &&
         cart.map((item) => (
           <Grid
+            key={item.id}
             templateColumns={{
               lg: "20% 80%",
               md: "20% 80%",
@@ -71,7 +71,8 @@ const CartItem = () => {
                 xl: "unset",
                 "2xl": "unset"
               }}
-              src={item?.images?.[0]?.src }
+              src={item.images?.[0]?.src}
+              alt={item.name}
             />
             <Flex
               flexDirection={"column"}
@@ -101,7 +102,7 @@ const CartItem = () => {
                   letterSpacing="-0.32px"
                   fontWeight={500}
                 >
-                  {item.productRefLink}
+                  {item.name}
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
@@ -109,6 +110,25 @@ const CartItem = () => {
                   </Text>
                 </Flex>
               </Flex>
+              <Box border={"1px dashed #CECEDF"}></Box>
+              {item.selectedLens && (
+                <Flex justifyContent={"space-between"}>
+                  <Heading
+                    as="h1"
+                    fontSize={"18px"}
+                    lineHeight="22px"
+                    textTransform={"capitalize"}
+                    fontWeight={500}
+                  >
+                    Lens: {item.selectedLens.name}
+                  </Heading>
+                  <Flex gap={"2"}>
+                    <Text fontSize={"18px"} fontWeight="500" color="gray.600">
+                      ₹{item.selectedLens.price}
+                    </Text>
+                  </Flex>
+                </Flex>
+              )}
               <Box border={"1px dashed #CECEDF"}></Box>
               <Flex justifyContent={"space-between"}>
                 <Heading
@@ -122,7 +142,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.price}
+                    ₹{item.totalPrice}
                   </Text>
                 </Flex>
               </Flex>

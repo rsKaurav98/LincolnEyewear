@@ -1,14 +1,32 @@
+import { Box, Button, Text } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
-import { Button, Box, Text, useDisclosure } from "@chakra-ui/react";
-import SelectLens from "../Lenses/SelectLens"; // Import the SelectLens component
+import SelectLens from "../Lenses/SelectLens";
 
-const ProdCard = ({ type, handleCart, handleWishlist }) => {
+const ProdCard = ({
+  type,
+  handleCart,
+  handleWishlist,
+  handleLensCart,
+  selectedLens,
+  totalPrice, // added totalPrice prop
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
 
-  const handleLensCart = (lens) => {
-    // Adding a flag to indicate this is a lens
-    handleCart({ ...lens, isLens: true, productId: type.id });
+  const handleLensClick = (lens) => {
+    handleLensCart(lens);
+    setSelectedLensName(lens.name);
     onClose();
+  };
+
+  const buttonStyles = {
+    mt: 2,
+    p: { lg: 7, base: 0 },
+    m: { lg: "10px 20px", base: "10px auto" },
+    w: { lg: "90%", base: "100%" },
+    color: "white",
+    _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },
   };
 
   return (
@@ -45,7 +63,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         color="teal.500"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        ₹{type.max_price - (10 / 100) * type.max_price}{" "}
+        ₹{type.price}{" "}
         <span
           style={{
             fontSize: "18px",
@@ -55,7 +73,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
             marginRight: "2%",
           }}
         >
-          {"  "}₹{type.max_price}{" "}
+          {"  "}₹{type.regular_price}{" "}
         </span>
         <span
           style={{
@@ -64,46 +82,39 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
             color: "black",
           }}
         >
-          {"  "}(₹{type.max_price - (10 / 100) * type.max_price} with GST)
+          {" "}(₹{(type.price * 1.18).toFixed(2)} with GST)
         </span>
       </Text>
-      <Text
-        mt="-4"
-        textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      ></Text>
       <br />
 
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        color="white"
-        bgColor="#00bac6"
-        onClick={onOpen}
-      >
-        Select Lenses
+      <Button sx={buttonStyles} onClick={onOpen} bgColor= "#00bac6">
+        {selectedLensName}
       </Button>
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        color="white"
-        bgColor="#00bac6"
-        onClick={() => handleCart(type)}
-      >
+      <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensClick} />
+
+      {selectedLens && (
+        <Button
+          sx={buttonStyles}
+          mt={2}
+          onClick={() => handleCart(type)}
+          p={{ lg: 7, base: 0 }}
+          m={{ lg: "10px 20px", base: "10px auto" }}
+          w={{ lg: "90%", base: "100%" }}
+          color="white"
+          bg="#455666"
+          _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
+        >
+          Add to Cart - ₹{totalPrice}
+        </Button>
+      )}
+
+      <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor= "#00bac6">
         Purchase without Lenses
       </Button>
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        color="white"
-        bgColor="#00bac6"
-        onClick={() => handleWishlist(type)}
-      >
+
+      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor= "#00bac6">
         Add to Wishlist
       </Button>
-      <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensCart} />
     </Box>
   );
 };

@@ -98,7 +98,7 @@ const Wishlist = () => {
                         textTransform="capitalize"
                         mb={{ sm: "4", base: "4" }}
                       >
-                        {item.productRefLink}
+                        {item.name}
                       </Text>
                       <Grid
                         m={{ lg: "auto", sm: "left", base: "right" }}
@@ -141,7 +141,7 @@ const Wishlist = () => {
                       mb="1"
                     >
                       <img
-                        src={item.image.original}
+                        src={item?.images[0].src}
                         alt={item.name}
                         boxSize="180px"
                         m="auto"

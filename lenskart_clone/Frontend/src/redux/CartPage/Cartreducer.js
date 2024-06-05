@@ -22,18 +22,23 @@ export const CartReducer = (state = initialState, { type, payload }) => {
         coupon: payload
       };
 
-    case ADD_TO_CART:
-      const { cart } = state;
-      const product = payload;
-      const existingItem = cart.findIndex((item) => item.id === product.id);
-      if (existingItem === -1) {
-        const newItem = { ...product, quantity: 1 };
-        return {
-          ...state,
-          cart: [...cart, newItem]
-        };
-      }
-      alert("Product Already Added");
+      case ADD_TO_CART:
+        const { cart } = state;
+        const product = payload;
+        const existingItemIndex = cart.findIndex(
+          (item) => item.id === product.id && item.selectedLens?.id === product.selectedLens?.id
+        );
+      
+        if (existingItemIndex === -1) {
+          // Product with same id and selectedLens not found, add it to cart
+          const newItem = { ...product, quantity: 1 };
+          return {
+            ...state,
+            cart: [...cart, newItem]
+          };
+        } else {
+          alert("Product Already Added");
+            }
       return state;
 
     case REMOVE_FROM_CART:
