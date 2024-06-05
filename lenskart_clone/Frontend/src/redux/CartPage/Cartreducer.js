@@ -30,8 +30,8 @@ export const CartReducer = (state = initialState, { type, payload }) => {
       );
 
       if (existingItemIndex === -1) {
-        const lensPrice = product.selectedLens ? Number(product.selectedLens.price) : 0;
-        const newItem = { ...product, quantity: 1, totalPrice: Number(product.price) + lensPrice };
+        const lensPrice = product.selectedLens ? parseFloat(product.selectedLens.price) : 0;
+        const newItem = { ...product, quantity: 1, totalPrice: parseFloat(product.price) + lensPrice };
         return {
           ...state,
           cart: [...cart, newItem]
@@ -54,12 +54,12 @@ export const CartReducer = (state = initialState, { type, payload }) => {
         ...state,
         cart: state.cart.map((item) => {
           if (item.id === payload.id && item.selectedLens?.id === payload.selectedLens?.id) {
-            const lensPrice = item.selectedLens ? Number(item.selectedLens.price) : 0;
+            const lensPrice = item.selectedLens ? parseFloat(item.selectedLens.price) : 0;
             const newQuantity = item.quantity + 1;
             return {
               ...item,
               quantity: newQuantity,
-              totalPrice: newQuantity * (Number(item.price) + lensPrice)
+              totalPrice: newQuantity * (parseFloat(item.price) + lensPrice)
             };
           }
           return item;
@@ -71,13 +71,13 @@ export const CartReducer = (state = initialState, { type, payload }) => {
         ...state,
         cart: state.cart.map((item) => {
           if (item.id === payload.id && item.selectedLens?.id === payload.selectedLens?.id) {
-            const lensPrice = item.selectedLens ? Number(item.selectedLens.price) : 0;
+            const lensPrice = item.selectedLens ? parseFloat(item.selectedLens.price) : 0;
             const newQuantity = item.quantity - 1;
             return newQuantity > 0
               ? {
                   ...item,
                   quantity: newQuantity,
-                  totalPrice: newQuantity * (Number(item.price) + lensPrice)
+                  totalPrice: newQuantity * (parseFloat(item.price) + lensPrice)
                 }
               : null;
           }

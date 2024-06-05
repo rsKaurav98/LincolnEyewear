@@ -1,3 +1,6 @@
+// Wishlist.jsx
+
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Text, Button, Heading, Grid } from "@chakra-ui/react";
 import { removeFromWishlist } from "../../redux/wishlist/wishlist.actions";
@@ -12,21 +15,22 @@ const Wishlist = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDelete = (itemId) => {
-    dispatch(removeFromWishlist(itemId));
+  const handleDelete = (itemId, selectedLensId) => {
+    dispatch(removeFromWishlist(itemId, selectedLensId));
   };
 
   const handleAddToCart = (data) => {
-    const existingItem = cart.findIndex((item) => item.id === data.id);
-    if (existingItem === -1) {
+    const existingItemIndex = cart.findIndex((item) => item.id === data.id && item.selectedLens?.id === data.selectedLens?.id);
+    if (existingItemIndex === -1) {
       data.quantity = 1;
+      data.totalPrice = parseFloat(data.price) + (data.selectedLens ? parseFloat(data.selectedLens.price) : 0);
       dispatch(addToCart(data));
-      dispatch(removeFromWishlist(data.id));
+      dispatch(removeFromWishlist(data.id, data.selectedLens?.id)); // Adjusted to use data.id and data.selectedLens?.id
       setTimeout(() => {
         navigate("/cart");
       }, 1000);
     } else {
-      alert("Product Already Add in Cart");
+      alert("Product with this lens is already in the cart.");
     }
   };
 
@@ -67,10 +71,9 @@ const Wishlist = () => {
           <Box>
             <Grid templateColumns="repeat(1,1fr)" gap={18} w={"100%"}>
               {wishlistItems &&
-                wishlistItems &&
                 wishlistItems.map((item) => (
                   <Box
-                    key={item.id}
+                    key={`${item.id}-${item.selectedLens?.id}`}
                     borderWidth="1px"
                     boxShadow="2xl"
                     p="4"
@@ -121,7 +124,7 @@ const Wishlist = () => {
                         </Button>
                         <Button
                           colorScheme="red"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(item.id, item.selectedLens?.id)}
                         >
                           Remove
                         </Button>
@@ -166,6 +169,11 @@ const Wishlist = () => {
                         <Text fontSize="lg" fontWeight="bold">
                           Price : ₹ {item.price}.00 /-
                         </Text>
+                        {item.selectedLens && (
+                          <Text fontSize="lg" fontWeight="bold">
+                            Lens: {item.selectedLens.name} - ₹ {item.selectedLens.price}
+                          </Text>
+                        )}
                         <Text
                           fontSize="lg"
                           fontWeight="bold"
@@ -180,16 +188,8 @@ const Wishlist = () => {
                           color="gray.600"
                           textTransform="capitalize"
                         >
-                          Colour : {item.colors}
+                          Total : ₹ {parseFloat(item.price) + parseFloat(item.selectedLens?.price || 0)}
                         </Text>{" "}
-                        <Text
-                          fontSize="md"
-                          fontWeight="600"
-                          color="gray.600"
-                          textTransform="capitalize"
-                        >
-                          Shape : {item.shape}
-                        </Text>
                       </Box>
                     </Grid>
                   </Box>

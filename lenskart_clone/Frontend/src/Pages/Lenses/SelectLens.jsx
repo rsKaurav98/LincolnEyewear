@@ -10,7 +10,7 @@ import {
   Text,
   Button,
 } from "@chakra-ui/react";
-import { lensData } from "./data";
+import { data } from "./data";
 
 const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
   const [selectedCategory, setSelectedCategory] = useState("Single Vision");
@@ -22,7 +22,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
 
   const renderLensContent = (category) => (
     <Box mt="10px">
-      {lensData[category].map((item, idx) => (
+      {data[category].map((item, idx) => (
         <Box
           key={idx}
           mb="20px"
@@ -96,7 +96,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                 justify="space-between"
                 h="63vh"
               >
-                {Object.keys(lensData).map((category, index) => (
+                {Object.keys(data).map((category, index) => (
                   <Box key={index} gap="20px">
                     <Button
                       w={{ base: "98%", md: "90%" }}

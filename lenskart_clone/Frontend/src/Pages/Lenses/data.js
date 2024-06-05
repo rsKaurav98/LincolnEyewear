@@ -1,4 +1,4 @@
-export const lensData = {
+export const data = {
   "Single Vision": [
     {
       id: "sv1",

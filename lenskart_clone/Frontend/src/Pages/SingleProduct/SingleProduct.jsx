@@ -55,7 +55,14 @@ const SingleProduct = () => {
   };
 
   const handleAddToWishlist = () => {
-    dispatch(addToWishlist(data));
+    const productToAdd = {
+      ...data,
+      selectedLens: selectedLens,
+      totalPrice: selectedLens ? totalPrice : data.price
+    };
+    
+    dispatch(addToWishlist(productToAdd));
+    
     setTimeout(() => {
       navigate('/wishlist');
     }, 1000);
