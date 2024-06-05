@@ -17,6 +17,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
 
   const handleLensClick = (lens) => {
     handleLensCart(lens);
+    onClose();
   };
 
   const renderLensContent = (category) => (
@@ -37,7 +38,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
           boxShadow="md"
           cursor="pointer"
           _hover={{ bg: "#455666", color: "white" }}
-          onClick={() => handleLensClick(item)} // Add onClick to handle lens selection
+          onClick={() => handleLensClick(item)}
         >
           <Box w="80%">
             <Text fontWeight="400" fontSize={{ base: "17px", md: "24px" }}>
@@ -52,7 +53,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
               ))}
             </Box>
             <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.price === "Free" ? "#90EE90" : ""}>
-              {item.price}
+              ₹{item.price}
             </Text>
           </Box>
           <Box width="20%">

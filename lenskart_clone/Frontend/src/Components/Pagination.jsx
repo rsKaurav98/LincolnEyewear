@@ -7,12 +7,13 @@ function Pagination({ current, totalPages, onChange }) {
     color: "white",
     fontWeight: "bold",
     borderRadius: "8px",
-    padding: "10px 18px",
-    margin: "0 5px", // Adjusting margin to create 10px space between buttons
+    padding: { base: "4px 8px", md: "6px 12px", lg: "10px 18px" },
+    margin: { base: "0 2px", md: "0 5px" },
     _hover: { bg: "blue.600" },
     transition: "0.3s",
-    fontSize: { base: "14px", md: "16px", lg: "18px" },
-    w: "fit-content"
+    fontSize: { base: "12px", md: "14px", lg: "16px" },
+    w: "fit-content",
+    whiteSpace: "nowrap"
   };
 
   const handlePageChange = (page) => {
@@ -24,16 +25,15 @@ function Pagination({ current, totalPages, onChange }) {
   const renderPageNumbers = () => {
     const pages = [];
 
-    // Add the first page
     if (current > 2) {
       pages.push(
-        <Button key={1} onClick={() => handlePageChange(1)} {...buttonStyle}>
+        <Button key={1} onClick={() => handlePageChange(1)} {...buttonStyle} display={{base:"none",md:"inherit"}}>
           1
         </Button>
       );
     }
     if (current > 3) {
-      pages.push(<Text key="start-ellipsis" mx={1}>...</Text>); 
+      pages.push(<Text key="start-ellipsis" mx={1} display={{base:"none",md:"inherit"}}>...</Text>); 
     }
 
     for (let i = Math.max(1, current - 1); i <= Math.min(totalPages, current + 1); i++) {
@@ -43,6 +43,7 @@ function Pagination({ current, totalPages, onChange }) {
           onClick={() => handlePageChange(i)}
           {...buttonStyle}
           bg={current === i ? "blue.600" : "gray.600"}
+          display={{base:"none",md:"inherit"}}
         >
           {i}
         </Button>
@@ -50,7 +51,7 @@ function Pagination({ current, totalPages, onChange }) {
     }
 
     if (current < totalPages - 2) {
-      pages.push(<Text key="end-ellipsis" mx={1}>...</Text>);
+      pages.push(<Text key="end-ellipsis" mx={1} display={{base:"none",md:"inherit"}} >...</Text>);
     }
     if (current < totalPages - 1) {
       pages.push(
@@ -58,6 +59,7 @@ function Pagination({ current, totalPages, onChange }) {
           key={totalPages}
           onClick={() => handlePageChange(totalPages)}
           {...buttonStyle}
+          display={{base:"none",md:"inherit"}}
         >
           {totalPages}
         </Button>
@@ -68,19 +70,28 @@ function Pagination({ current, totalPages, onChange }) {
   };
 
   return (
-    <Flex w="100%" my={8} justifyContent="center" alignItems="center">
+    <Flex
+      w="100%"
+      my={8}
+      justifyContent="center"
+      alignItems="center"
+      flexWrap="nowrap"
+      overflowX="auto"
+    >
       <Button
         disabled={current === 1}
-        onClick={() => handlePageChange(current - 1)}
+        onClick={() => { handlePageChange(current - 1); window.scrollTo(0, 0); }}
+        
         {...buttonStyle}
         leftIcon={<ChevronLeftIcon />}
+        
       >
         PREV
       </Button>
       {renderPageNumbers()}
       <Button
         disabled={current === totalPages}
-        onClick={() => handlePageChange(current + 1)}
+        onClick={() => { handlePageChange(current + 1); window.scrollTo(0, 0); }}
         {...buttonStyle}
         rightIcon={<ChevronRightIcon />}
       >

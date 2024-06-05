@@ -189,9 +189,14 @@ const NewProduct = () => {
               </Flex>
             </Flex>
             {products.length !== 0 && (
+              <>
               <Text mt="5px" textAlign="center" fontSize="15px">
                 Showing {products.length} Results of {totalprod} Products
               </Text>
+              <Text mt="5px" textAlign="center" fontSize="15px" fontWeight="600" display={{base:"inherit",md:"none"}}>
+                Page: {page}
+              </Text>
+              </>
             )}
             {isLoaded ? (
               <Loading />

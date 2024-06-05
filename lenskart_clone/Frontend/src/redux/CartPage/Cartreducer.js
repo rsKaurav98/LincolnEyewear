@@ -25,29 +25,42 @@ export const CartReducer = (state = initialState, { type, payload }) => {
     case ADD_TO_CART:
       const { cart } = state;
       const product = payload;
-      const existingItem = cart.findIndex((item) => item.id === product.id);
-      if (existingItem === -1) {
-        const newItem = { ...product, quantity: 1 };
+      const existingItemIndex = cart.findIndex(
+        (item) => item.id === product.id && item.selectedLens?.id === product.selectedLens?.id
+      );
+
+      if (existingItemIndex === -1) {
+        const lensPrice = product.selectedLens ? Number(product.selectedLens.price) : 0;
+        const newItem = { ...product, quantity: 1, totalPrice: Number(product.price) + lensPrice };
         return {
           ...state,
           cart: [...cart, newItem]
         };
+      } else {
+        alert("Product Already Added");
       }
-      alert("Product Already Added");
       return state;
 
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: state.cart.filter((item) => item.id !== payload)
+        cart: state.cart.filter(
+          (item) => !(item.id === payload.id && item.selectedLens?.id === payload.selectedLens?.id)
+        )
       };
 
     case INCREMENT:
       return {
         ...state,
         cart: state.cart.map((item) => {
-          if (item.id === payload) {
-            return { ...item, quantity: item.quantity + 1 };
+          if (item.id === payload.id && item.selectedLens?.id === payload.selectedLens?.id) {
+            const lensPrice = item.selectedLens ? Number(item.selectedLens.price) : 0;
+            const newQuantity = item.quantity + 1;
+            return {
+              ...item,
+              quantity: newQuantity,
+              totalPrice: newQuantity * (Number(item.price) + lensPrice)
+            };
           }
           return item;
         })
@@ -57,18 +70,25 @@ export const CartReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         cart: state.cart.map((item) => {
-          if (item.id === payload) {
+          if (item.id === payload.id && item.selectedLens?.id === payload.selectedLens?.id) {
+            const lensPrice = item.selectedLens ? Number(item.selectedLens.price) : 0;
             const newQuantity = item.quantity - 1;
-            return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+            return newQuantity > 0
+              ? {
+                  ...item,
+                  quantity: newQuantity,
+                  totalPrice: newQuantity * (Number(item.price) + lensPrice)
+                }
+              : null;
           }
           return item;
-        }).filter(item => item !== null)
+        }).filter((item) => item !== null)
       };
 
     case RESET:
       return {
         ...state,
-        coupon:0,
+        coupon: 0,
         cart: []
       };
 
