@@ -8,42 +8,53 @@ import { Box, Flex, Text, Button, IconButton, Drawer, DrawerBody, DrawerHeader, 
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
-import { Gender, ProductTypes, FrameColor, Frame1, Frame2 } from "./FilterDetails";
-import { CategoryContext } from "../../Components/Navbar/CategoryContext";
+import { CategoryContext } from "../../Context/CategoryContext";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
+import { useSearch } from "../../Context/SearchContext";
 
-let totalprod = 0;
+const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
+const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [types, setTypes] = useState("");
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("");
-  const [frame, setFrame] = useState("");
-  const [shape, setShape] = useState("");
-  const [gender, setGender] = useState("");
-  const [productRef, setProductRef] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
   const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const { searchValue, setSearchValue } = useSearch();
 
-  const { selectedCategory } = useContext(CategoryContext);
-
+  const { selectedCategory, setSelectedCategory } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
-      const categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
+      let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
+      let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
+      let sortQuery = sort === "lowtohigh" ? "asc" : sort === "hightolow" ? "desc" : "";
+
+      // Reset filters if search value is present
+      if (searchValue) {
+        setSelectedCategory("");
+        setSelectedTag("");
+        categoryFilter = "";
+        tagFilter = "";
+      }
+
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=15&page=${page}${categoryFilter}`      );
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}&per_page=15&page=${page}${categoryFilter}${tagFilter}&search=${encodeURIComponent(searchValue)}`);
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
       const postData = await response.json();
-      const totalProducts = response.headers.get('X-WP-Total');
-      setTotalPages(Math.ceil(totalProducts / 15));
-      totalprod = totalProducts;
+      const totalProductsCount = response.headers.get('X-WP-Total');
+      setTotalPages(Math.ceil(totalProductsCount / 15));
+      setTotalProducts(totalProductsCount);
       setProducts(postData);
       setIsLoaded(false);
     } catch (error) {
@@ -54,7 +65,22 @@ const NewProduct = () => {
 
   useEffect(() => {
     fetchProduct();
-  }, [page, sort, gender, types, productRef, selectedCategory]);
+  }, [page, sort, selectedCategory, selectedTag, searchValue]);
+
+  const handleSortChange = (value) => {
+    setSort(value);
+    setPage(1); // Reset page to 1 when sorting changes
+  };
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
+    setSearchValue("");
+  };
+
+  const handleTagChange = (value) => {
+    setSelectedTag(value);
+    setSearchValue("");
+  };
 
   return (
     <>
@@ -68,26 +94,16 @@ const NewProduct = () => {
             flexDirection="column"
           >
             <ProdFilter
-              frameheading={"FRAME TYPE"}
-              frametype={Frame1}
-              handleframe={setFrame}
-              valframe={frame}
-              shapeheading={"FRAME SHAPE"}
-              shapetype={Frame2}
-              handleshape={setShape}
-              valshape={shape}
-              type={Gender}
-              heading={"GENDER"}
-              handlechange={setGender}
-              val={gender}
-              type1={ProductTypes}
-              heading1={"PRODUCT TYPE"}
-              handlechange1={setTypes}
-              val1={types}
-              type2={FrameColor}
-              heading2={"FRAME COLOR"}
-              handlechange2={setProductRef}
-              val2={productRef}
+              handleCategoryChange={(value) => {
+                handleCategoryChange(value);
+                setSearchValue(""); // Clear search value
+              }}
+              handleTagChange={(value) => {
+                handleTagChange(value);
+                setSearchValue(""); // Clear search value
+              }}
+              selectedCategory={selectedCategory}
+              selectedTag={selectedTag}
             />
             <hr />
           </Flex>
@@ -99,26 +115,16 @@ const NewProduct = () => {
                 <DrawerHeader>Filter Options</DrawerHeader>
                 <DrawerBody>
                   <ProdFilter
-                    frameheading={"FRAME TYPE"}
-                    frametype={Frame1}
-                    handleframe={setFrame}
-                    valframe={frame}
-                    shapeheading={"FRAME SHAPE"}
-                    shapetype={Frame2}
-                    handleshape={setShape}
-                    valshape={shape}
-                    type={Gender}
-                    heading={"GENDER"}
-                    handlechange={setGender}
-                    val={gender}
-                    type1={ProductTypes}
-                    heading1={"PRODUCT TYPE"}
-                    handlechange1={setTypes}
-                    val1={types}
-                    type2={FrameColor}
-                    heading2={"FRAME COLOR"}
-                    handlechange2={setProductRef}
-                    val2={productRef}
+                    handleCategoryChange={(value) => {
+                      handleCategoryChange(value);
+                      setSearchValue(""); // Clear search value
+                    }}
+                    handleTagChange={(value) => {
+                      handleTagChange(value);
+                      setSearchValue(""); // Clear search value
+                    }}
+                    selectedCategory={selectedCategory}
+                    selectedTag={selectedTag}
                   />
                 </DrawerBody>
               </DrawerContent>
@@ -167,9 +173,9 @@ const NewProduct = () => {
                     {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
                   </MenuButton>
                   <MenuList placement="bottom" zIndex="10" w={{ base: "100%", sm: "auto" }}>
-                    <MenuItem onClick={() => setSort("")}>Select</MenuItem>
-                    <MenuItem onClick={() => setSort("lowtohigh")}>Price: low to high</MenuItem>
-                    <MenuItem onClick={() => setSort("hightolow")}>Price: high to low</MenuItem>
+                    <MenuItem onClick={() => handleSortChange("")}>Select</MenuItem>
+                    <MenuItem onClick={() => handleSortChange("lowtohigh")}>Price: low to high</MenuItem>
+                    <MenuItem onClick={() => handleSortChange("hightolow")}>Price: high to low</MenuItem>
                   </MenuList>
                 </Menu>
                 <IconButton
@@ -187,12 +193,12 @@ const NewProduct = () => {
             </Flex>
             {products.length !== 0 && (
               <>
-              <Text mt="5px" textAlign="center" fontSize="15px">
-                Showing {products.length} Results of {totalprod} Products
-              </Text>
-              <Text mt="5px" textAlign="center" fontSize="15px" fontWeight="600" display={{base:"inherit",md:"none"}}>
-                Page: {page}
-              </Text>
+                <Text mt="5px" textAlign="center" fontSize="15px">
+                  Showing {products.length} Results of {totalProducts} Products
+                </Text>
+                <Text mt="5px" textAlign="center" fontSize="15px" fontWeight="600" display={{ base: "inherit", md: "none" }}>
+                  Page: {page}
+                </Text>
               </>
             )}
             {isLoaded ? (

@@ -1,73 +1,66 @@
-import {
-  Box,
-  Text,
-  Radio,
-  RadioGroup,
-  Stack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
-} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Text, Radio, RadioGroup, Stack, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
 
-const ProdFilter = ({
-  frametype,
-  frameheading,
-  handleframe,
-  valframe,
-  shapetype,
-  shapeheading,
-  handleshape,
-  valshape,
-  type,
-  heading,
-  handlechange,
-  val,
-  type1,
-  heading1,
-  handlechange1,
-  val1,
-  type2,
-  heading2,
-  handlechange2,
-  val2
-}) => {
+const ProdFilter = ({ handleCategoryChange, handleTagChange, selectedCategory, selectedTag }) => {
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Fetch Error:", error);
+      }
+    };
+
+    const fetchTags = async () => {
+      try {
+        const response = await fetch(
+          "https://lincolneyewear.com/wp-json/wc/v3/products/tags?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setTags(data);
+      } catch (error) {
+        console.error("Fetch Error:", error);
+      }
+    };
+
+    fetchCategories();
+    fetchTags();
+  }, []);
+
   return (
     <Box>
       <br />
-      <Accordion defaultIndex={[0,1,2]} allowMultiple w="100%" m="auto" mt="-1%">
-      <AccordionItem>
+      <Accordion defaultIndex={[0, 1]} allowMultiple w="100%" m="auto" mt="-1%">
+        <AccordionItem>
           <h2>
             <AccordionButton>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontWeight="500"
-                color="gray.500"
-              >
-                <Text
-                  fontWeight="bold"
-                  mb="3px"
-                  color="gray.600"
-                  fontSize="15px"
-                >
-                  {frameheading}
+              <Box as="span" flex="1" textAlign="left" fontWeight="500" color="gray.500">
+                <Text fontWeight="bold" mb="3px" color="gray.600" fontSize="15px">
+                  Categories
                 </Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4} color="gray.500" p="2">
-            <RadioGroup onChange={handleframe} value={valframe}>
+            <RadioGroup onChange={handleCategoryChange} value={selectedCategory}>
               <Stack direction="column" gap="2">
-                {frametype.map((el, i) => (
-                  <Radio value={el.title} key={i}>
-                    <Box display="flex" alignItems="center">
-                    <img src={el.src} alt={el.name} style={{ marginRight: '8px' }} />
-                    {el.name}
-                    </Box>
+                {categories.map((category) => (
+                  <Radio value={category.id.toString()} key={category.id}>
+                    {category.name}
                   </Radio>
                 ))}
               </Stack>
@@ -78,137 +71,20 @@ const ProdFilter = ({
         <AccordionItem>
           <h2>
             <AccordionButton>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontWeight="500"
-                color="gray.500"
-              >
-                <Text
-                  fontWeight="bold"
-                  mb="3px"
-                  color="gray.600"
-                  fontSize="15px"
-                >
-                  {shapeheading}
+              <Box as="span" flex="1" textAlign="left" fontWeight="500" color="gray.500">
+                <Text fontWeight="bold" mb="3px" color="gray.600" fontSize="15px">
+                  Tags
                 </Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4} color="gray.500" p="2">
-            <RadioGroup onChange={handleshape} value={valshape}>
+            <RadioGroup onChange={handleTagChange} value={selectedTag}>
               <Stack direction="column" gap="2">
-                {shapetype.map((el, i) => (
-                  <Radio value={el.title} key={i}>
-                    <Box display="flex" alignItems="center">
-                    <img src={el.src} alt={el.name} style={{ marginRight: '8px' }} />
-                    {el.name}
-                    </Box>
-                  </Radio>
-                ))}
-              </Stack>
-            </RadioGroup>
-          </AccordionPanel>
-        </AccordionItem>
-
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontWeight="500"
-                color="gray.500"
-              >
-                <Text
-                  fontWeight="bold"
-                  mb="3px"
-                  color="gray.600"
-                  fontSize="15px"
-                >
-                  {heading}
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4} color="gray.500" p="2">
-            <RadioGroup onChange={handlechange} value={val}>
-              <Stack direction="column" gap="2">
-                {type.map((ele, i) => (
-                  <Radio value={ele.title} key={i}>
-                    {ele.title}
-                  </Radio>
-                ))}
-              </Stack>
-            </RadioGroup>
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontWeight="500"
-                color="gray.500"
-              >
-                <Text
-                  fontWeight="bold"
-                  mb="3px"
-                  color="gray.600"
-                  fontSize="15px"
-                >
-                  {heading1}
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4} color="gray.500" p="2">
-            <RadioGroup onChange={handlechange1} value={val1}>
-              <Stack direction="column" gap="2">
-                {type1.map((el, i) => (
-                  <Radio value={el.title} key={i}>
-                    {el.name}
-                  </Radio>
-                ))}
-              </Stack>
-            </RadioGroup>
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box
-                as="span"
-                flex="1"
-                textAlign="left"
-                fontWeight="500"
-                color="gray.500"
-              >
-                <Text
-                  fontWeight="bold"
-                  mb="3px"
-                  color="gray.600"
-                  fontSize="15px"
-                >
-                  {heading2}
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4} color="gray.500" p="2">
-            <RadioGroup onChange={handlechange2} value={val2}>
-              <Stack direction="column" gap="2">
-                {type2.map((ele, i) => (
-                  <Radio value={ele.title} key={i}>
-                    {ele.title}
+                {tags.map((tag) => (
+                  <Radio value={tag.id.toString()} key={tag.id}>
+                    {tag.name}
                   </Radio>
                 ))}
               </Stack>
