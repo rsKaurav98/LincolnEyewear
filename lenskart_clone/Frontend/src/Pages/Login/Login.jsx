@@ -73,7 +73,7 @@ const Login = () => {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data));
           setisAuth(true);
-          setAuthData(data.user_display_name);
+          setAuthData(data);
           
 
           onClose();
