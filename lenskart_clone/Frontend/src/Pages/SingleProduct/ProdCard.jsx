@@ -36,13 +36,13 @@ const ProdCard = ({
 
   return (
     <Box>
-      <Text
+      {/* <Text
         color="gray.500"
         fontSize="md"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        {type.name}
-      </Text>
+        {type.slug}
+      </Text> */}
       <Text
         my="10px"
         fontWeight={"700"}
@@ -50,7 +50,7 @@ const ProdCard = ({
         textTransform="capitalize"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        {type.productRefLink}
+        {type.name}
       </Text>
       <Text
         my="10px"
@@ -59,7 +59,7 @@ const ProdCard = ({
         fontSize="15px"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        Size : Medium
+        Size : Standard
       </Text>
       <Text
         my="10px"

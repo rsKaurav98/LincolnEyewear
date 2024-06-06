@@ -78,7 +78,7 @@ const ProductCard = ({ type }) => {
                     fontSize="15px"
                     textTransform="capitalize"
                   >
-                    {ele.productRefLink}{" "}
+                    {ele.name}{" "}
                   </Text>
                   <Text
                     mt="5px"
@@ -86,7 +86,7 @@ const ProductCard = ({ type }) => {
                     color="gray.400"
                     fontSize="14px"
                   >
-                    {ele.name}{" "}
+                    {ele.slug}{" "}
                   </Text>
                   <Text
                     mt="5px"
@@ -111,7 +111,7 @@ const ProductCard = ({ type }) => {
                         textDecoration: "line-through"
                       }}
                     >
-                      {"  "}₹{ele.mPrice}
+                      {"  "}₹{ele.regular_price}
                     </span>
                     <span
                       style={{
@@ -133,7 +133,7 @@ const ProductCard = ({ type }) => {
                 fontWeight="bold"
                 bgGradient="linear(to-r,  #f8f2e0, yellow.50)"
               >
-                BUY1 GET1 +10% OFF
+                FREE LENS AVAILABLE
               </Box>
             </Box>
           </Link>

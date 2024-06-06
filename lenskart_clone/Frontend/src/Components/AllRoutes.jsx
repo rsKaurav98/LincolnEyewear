@@ -50,14 +50,14 @@ const AllRoutes = () => {
           </Privateroutes>
         }
       />
-      {/* <Route
+      <Route
         path="/payment"
         element={
           <Privateroutes>
             <Payment />
           </Privateroutes>
         }
-      /> */}
+      />
       <Route
         path="/confirm"
         element={

@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Avatar,
@@ -12,13 +12,24 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  MenuItem,
   Divider
 } from "@chakra-ui/react";
-import "../../App.css";
+import { CategoryContext } from "../../Components/Navbar/CategoryContext";
 
-function NavbarCard5() {
+const NavbarCard5 = () => {
+  const { setSelectedCategory, categories, findCategoryIdBySlug, selectedCategory } = useContext(CategoryContext);
+
+  const handleCategoryClick = (slug) => {
+    const categoryId = findCategoryIdBySlug(slug);
+    if (categoryId) {
+      setSelectedCategory(categoryId);
+    }
+  };
+
   return (
     <Flex bg="#455666" cursor="pointer" gap="36" h="7" display="flex">
+
       <Menu>
         <MenuButton
           bg="#455666"
@@ -36,162 +47,10 @@ function NavbarCard5() {
         <MenuList
           color="blackAlpha.900"
           bg="whiteAlpha.900"
-          w="400px"
-          p="4"
-          borderRadius="md"
-          boxShadow="lg"
-          maxH="700"
-          overflowY="auto"
-          css={{
-            '&::-webkit-scrollbar': {
-              display: 'none',
-            },
-            '-ms-overflow-style': 'none',
-            scrollbarWidth: 'none',
-          }}
-        >
-          <Link to="/products">
-            <Box>
-              <Grid templateColumns="repeat(2, 1fr)" gap="4">
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
-                  <Flex alignItems="center" gap="3">
-                    <Avatar
-                      name="Dan Abrahmov"
-                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="men"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Men
-                    </Box>
-                  </Flex>
-
-                  <Flex alignItems="center" gap="3" mt="2">
-                    <Avatar
-                      name="Kola Tioluwani"
-                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="women"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Women
-                    </Box>
-                  </Flex>
-
-                  <Flex alignItems="center" gap="3" mt="2">
-                    <Avatar
-                      name="Kent Dodds"
-                      src="https://images.unsplash.com/photo-1631424542224-54dc0ddb69b4?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="kid"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Kids
-                    </Box>
-                  </Flex>
-                </Box>
-
-                {/* <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
-                    CLASSIC EYE-GLASSES
-                    <p>Starting From ₹ <span>1199</span></p>
-                  </Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
-                    PREMIUM EYE-GLASSES
-                    <p>Starting From ₹ <span>3000</span></p>
-                  </Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
-                    COMPUTER EYE-GLASSES
-                    <p>Starting From ₹ <span>1299</span></p>
-                  </Box>
-                </Box> */}
-              </Grid>
-
-              <Divider my="2" />
-
-              <Box>
-                <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
-                <Flex direction="column" fontSize="md" gap="2">
-                  <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Lenskart BLU lenses</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Trending</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Tinted Eyeglasses</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Computer Eyeglasses</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Progressive Eyeglasses</Box>
-                </Flex>
-              </Box>
-
-              <Divider my="2" />
-
-              <Box>
-                <Box fontSize="lg" fontWeight="bold" mb="2">Frame Type</Box>
-                <Flex direction="column" fontSize="md" gap="2">
-                  <Box _hover={{ fontWeight: "bold" }}>Rectangle Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Wayfarer Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Round Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Aviator Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Cat-Eye Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Rimless Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Half Rim Frames</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Geometric Frames</Box>
-                </Flex>
-              </Box>
-
-              <Divider my="2" />
-
-              <Box>
-                <Box fontSize="lg" fontWeight="bold" mb="2">Brands</Box>
-                <Flex direction="column" fontSize="md" gap="2">
-                  <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Lenskart Air</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>OJOS</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>New Balance</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Carrera</Box>
-                  <Box _hover={{ fontWeight: "bold" }}>Fossil</Box>
-                </Flex>
-              </Box>
-            </Box>
-          </Link>
-        </MenuList>
-      </Menu>
-
-      <Menu>
-        <MenuButton
-          bg="#455666"
-          fontSize="15px"
-          fontWeight="600"
-          fontFamily="sans-serif"
-          color="white"
-          _hover={{
-            borderBottom: "2px solid white",
-          }}
-        >
-          COMPUTER GLASSES
-        </MenuButton>
-
-        <MenuList
-          color="blackAlpha.900"
-          bg="whiteAlpha.900"
           w="300px"
           p="4"
           borderRadius="md"
-          boxShadow="lg"
+          BoxShadow="lg"
           maxH="700px"
           overflowY="auto"
           css={{
@@ -201,116 +60,266 @@ function NavbarCard5() {
             '-ms-overflow-style': 'none',
             scrollbarWidth: 'none',
           }}
+          display="flex"
+          flexDir="column"
         >
-          <Link to="/products">
-            <Box>
-              <Grid templateColumns="repeat(1, 1fr)" gap="4">
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
-                  <Flex alignItems="center" gap="3">
-                    <Avatar
-                      name="Dan Abrahmov"
-                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="men"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Men
-                    </Box>
-                  </Flex>
+          <MenuItem display="flex"
+          flexDir="column">
+  <MenuItem
+    fontSize="lg"
+    mb="3"
+    bg={
+      selectedCategory === findCategoryIdBySlug("acetate-eyeglasses")
+        ? "gray.200"
+        : "transparent"
+    }
+    _hover={{ bg: "gray.200" }}
+    onClick={() => handleCategoryClick("acetate-eyeglasses")}
+  >
+    ACETATE EYEGLASSES
+  </MenuItem>
 
-                  <Flex alignItems="center" gap="3" mt="2">
-                    <Avatar
-                      name="Kola Tioluwani"
-                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="women"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Women
-                    </Box>
-                  </Flex>
-
-                  <Flex alignItems="center" gap="3" mt="2">
-                    <Avatar
-                      name="Kent Dodds"
-                      src="https://images.unsplash.com/photo-1631424542224-54dc0ddb69b4?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="kid"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Kids
-                    </Box>
-                  </Flex>
-                </Box>
-
-                <Divider my="2" />
-
-                {/* <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
-                    Blu 0 Computer Glasses
-                    <p>Starting From ₹ <span>1299</span></p>
-                  </Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
-                    PREMIUM RANGE
-                    <p>Starting From ₹ <span>3000</span></p>
-                  </Box>
-                </Box> */}
-<Box>
-  <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
-  <Flex direction="column" fontSize="md" gap="2">
-    <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Lenskart BLU lenses</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Trending</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Tinted Eyeglasses</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Computer Eyeglasses</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Progressive Eyeglasses</Box>
-  </Flex>
-</Box>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("hawk")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("hawk")}
+    >
+      HAWK
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("chariot")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("chariot")}
+    >
+      CHARIOT
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("poseidon")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("poseidon")}
+    >
+      POSEIDON
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("eagle")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("eagle")}
+    >
+      EAGLE
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("king")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("king")}
+    >
+      KING
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("leo")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("leo")}
+    >
+      LEO
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("oliver")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("oliver")}
+    >
+      OLIVER
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("august")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("august")}
+    >
+      AUGUST
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("carter")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("carter")}
+    >
+      CARTER
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("zeus")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("zeus")}
+    >
+      ZEUS
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("alexa")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("alexa")}
+    >
+      ALEXA
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("frank")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("frank")}
+    >
+      FRANK
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("hogan")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("hogan")}
+    >
+      HOGAN
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("samantha")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("samantha")}
+    >
+      SAMANTHA
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("austin")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("austin")}
+    >
+      AUSTIN
+    </MenuItem>
+</MenuItem>
 
 <Divider my="2" />
 
-<Box>
-  <Box fontSize="lg" fontWeight="bold" mb="2">Frame Type</Box>
-  <Flex direction="column" fontSize="md" gap="2">
-    <Box _hover={{ fontWeight: "bold" }}>Rectangle Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Wayfarer Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Round Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Aviator Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Cat-Eye Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Rimless Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Half Rim Frames</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Geometric Frames</Box>
-  </Flex>
-</Box>
+<MenuItem display="flex"
+          flexDir="column">
+  <MenuItem
+    fontSize="lg"
+    mb="3"
+    bg={
+      selectedCategory === findCategoryIdBySlug("tr-eyeglases")
+        ? "gray.200"
+        : "transparent"
+    }
+    _hover={{ bg: "gray.200" }}
+    onClick={() => handleCategoryClick("tr-eyeglases")}
+  >
+    TR EYEGLASSES
+  </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("urban-edge-series")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("urban-edge-series")}
+    >
+      Urban Edge Series
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("lens-luxury-eyewear")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("lens-luxury-eyewear")}
+    >
+      Lens Luxury Eyewear
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("trufocus-tr-frames")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("trufocus-tr-frames")}
+    >
+      TruFocus TR Frames
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("techtrend-tr-series")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("techtrend-tr-series")}
+    >
+      TechTrend TR Series
+    </MenuItem>
+    <MenuItem
+      bg={
+        selectedCategory === findCategoryIdBySlug("vintage-charm-collection")
+          ? "gray.200"
+          : "transparent"
+      }
+      _hover={{ bg: "gray.200" }}
+      onClick={() => handleCategoryClick("vintage-charm-collection")}
+    >
+      Vintage Charm Collection
+    </MenuItem>
+</MenuItem>
 
-<Divider my="2" />
-
-<Box>
-  <Box fontSize="lg" fontWeight="bold" mb="2">Brands</Box>
-  <Flex direction="column" fontSize="md" gap="2">
-    <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
-    <Box _hover={{ fontWeight: "bold" }}>Lenskart Air</Box>
-    <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
-    </Flex>
-    </Box>
-              </Grid>
-            </Box>
-          </Link>
         </MenuList>
       </Menu>
 
@@ -334,44 +343,44 @@ function NavbarCard5() {
           p="2"
         >
           <Link to="/products">
-            <Box>
+            <MenuItem>
               <Grid
                 gridTemplateColumns="repeat(3, 1fr)"
                 justifyContent="center"
                 p="5"
               >
-                <Box bg="whiteAlpha.900" h="250px" w="240px">
+                <MenuItem bg="whiteAlpha.900" h="250px" w="240px">
                   <img
                     className="navImg1"
                     src="https://static1.lenskart.com/media/desktop/img/May22/glasses.jpg"
                     alt="kidsIcon_1"
                   />
-                  <Box mt="10px" textAlign="center" fontSize="lg">
+                  <MenuItem mt="10px" textAlign="center" fontSize="lg">
                     Eye Glasses
-                  </Box>
-                </Box>
-                <Box bg="whiteAlpha.900" h="250px" w="240px">
+                  </MenuItem>
+                </MenuItem>
+                <MenuItem bg="whiteAlpha.900" h="250px" w="240px">
                   <img
                     className="navImg2"
                     src="https://static1.lenskart.com/media/desktop/img/May22/computer-glasses.jpg"
                     alt="kidsIcon_2"
                   />
-                  <Box mt="10px" textAlign="center" fontSize="lg">
+                  <MenuItem mt="10px" textAlign="center" fontSize="lg">
                     Zero Power Computer Glasses
-                  </Box>
-                </Box>
-                <Box bg="whiteAlpha.900" h="250px" w="240px">
+                  </MenuItem>
+                </MenuItem>
+                <MenuItem bg="whiteAlpha.900" h="250px" w="240px">
                   <img
                     className="navImg2"
                     src="https://static1.lenskart.com/media/desktop/img/May22/Sunnies.jpg"
                     alt="kidsIcon_3"
                   />
-                  <Box mt="10px" textAlign="center" fontSize="lg">
+                  <MenuItem mt="10px" textAlign="center" fontSize="lg">
                     Sun Glasses
-                  </Box>
-                </Box>
+                  </MenuItem>
+                </MenuItem>
               </Grid>
-            </Box>
+            </MenuItem>
           </Link>
         </MenuList>
       </Menu> */}
@@ -396,101 +405,101 @@ function NavbarCard5() {
           w="100%"
         >
           <Link to="/newproduct">
-            <Box>
+            <MenuItem>
               <Grid gridTemplateColumns="repeat(5, 1fr)" p="1" w="100%">
                 <Flex direction="column" gap="6">
-                  <Box
+                  <MenuItem
                     fontSize="md"
                     fontWeight="bold"
                     borderBottom="1px solid black"
                     p="1"
                   >
                     Brands
-                  </Box>
+                  </MenuItem>
                   <Flex direction="column" gap="2" fontSize="md">
-                    <Box _hover={{ fontWeight: "bold" }}> Aqualens</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Bausch Lomb</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Johnson & Johnson</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Soflens</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Acuvue</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Alcon</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Air Optix</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Pure Vision</Box>
+                    <MenuItem _hover={{ fontWeight: "bold" }}> Aqualens</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Bausch Lomb</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Johnson & Johnson</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Soflens</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Acuvue</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Alcon</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Air Optix</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Pure Vision</MenuItem>
                   </Flex>
                 </Flex>
 
                 <Flex direction="column" gap="6">
-                  <Box
+                  <MenuItem
                     fontSize="md"
                     fontWeight="bold"
                     borderBottom="1px solid black"
                     p="1"
                   >
                     Explore by Disposability
-                  </Box>
+                  </MenuItem>
                   <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}> Monthly</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Day & Night</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Daily</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Yearly</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Bi-weekly</Box>
+                    <MenuItem _hover={{ fontWeight: "bold" }}> Monthly</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Day & Night</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Daily</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Yearly</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Bi-weekly</MenuItem>
                   </Flex>
                 </Flex>
 
                 <Flex direction="column" gap="6">
-                  <Box
+                  <MenuItem
                     fontSize="md"
                     fontWeight="bold"
                     borderBottom="1px solid black"
                     p="1"
                   >
                     Explore by Power
-                  </Box>
+                  </MenuItem>
                   <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Spherical - CYL</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Spherical + CYL</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Cylindrical Power</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Toric Power</Box>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Spherical - CYL</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Spherical + CYL</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Cylindrical Power</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Toric Power</MenuItem>
                   </Flex>
                 </Flex>
 
                 <Flex direction="column" gap="6">
-                  <Box
+                  <MenuItem
                     fontSize="md"
                     fontWeight="bold"
                     borderBottom="1px solid black"
                     p="1"
                   >
                     Explore by Colors
-                  </Box>
+                  </MenuItem>
                   <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Green</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Blue</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Brown</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Turquoise</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>View all colors</Box>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Green</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Blue</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Brown</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Turquoise</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>View all colors</MenuItem>
                   </Flex>
                 </Flex>
 
                 <Flex direction="column" gap="6">
-                  <Box
+                  <MenuItem
                     fontSize="md"
                     fontWeight="bold"
                     borderBottom="1px solid black"
                     p="1"
                   >
                     Solution
-                  </Box>
+                  </MenuItem>
                   <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Small</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Large</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Small</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>Large</MenuItem>
+                    <MenuItem _hover={{ fontWeight: "bold" }}>
                       View all solutions
-                    </Box>
+                    </MenuItem>
                   </Flex>
                 </Flex>
               </Grid>
-            </Box>
+            </MenuItem>
           </Link>
         </MenuList>
       </Menu> */}
@@ -515,7 +524,7 @@ function NavbarCard5() {
           w="100%"
           p="4"
           borderRadius="md"
-          boxShadow="lg"
+          BoxShadow="lg"
           maxH="700px"
           overflowY="auto"
           css={{
@@ -526,109 +535,20 @@ function NavbarCard5() {
             scrollbarWidth: 'none',
           }}
         >
-          <Link to="/products">
-            <Box>
-              <Grid templateColumns="repeat(1, 1fr)" gap="4">
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Shop By</Box>
-                  <Flex alignItems="center" gap="3">
-                    <Avatar
-                      name="Dan Abrahmov"
-                      src="https://images.unsplash.com/photo-1587310311582-aa7610e90826?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="men"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Men
-                    </Box>
-                  </Flex>
-
-                  <Flex alignItems="center" gap="3" mt="2">
-                    <Avatar
-                      name="Kola Tioluwani"
-                      src="https://images.unsplash.com/flagged/photo-1577479662097-5e0347cbe923?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                      alt="women"
-                      size="sm"
-                    />
-                    <Box
-                      fontSize="md"
-                      fontWeight="bold"
-                      _hover={{ textDecoration: "underline" }}
-                    >
-                      Women
-                    </Box>
-                  </Flex>
-                </Box>
-
-                <Divider my="2" />
-                {/* <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Select Category</Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2">
-                    CLASSIC SUNGLASSES
-                    <p>Starting From ₹ <span>1299</span></p>
-                  </Box>
-                  <Box fontSize="md" _hover={{ bg: "gray.100" }} p="2" mt="2">
-                    PREMIUM SUNGLASSES
-                    <p>Starting From ₹ <span>2500</span></p>
-                  </Box>
-                </Box> */}
-
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Our Top Picks</Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>New Arrivals</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Best Seller</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Pilot Style</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Power Sunglasses</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Polarized Sunglasses</Box>
-                  </Flex>
-                </Box>
-
-                <Divider my="2" />
-
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Shape</Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Aviator</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Rounders</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Wayfarer</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Rectangle</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Hexagon</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Cat-Eye</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Clubmaster</Box>
-                  </Flex>
-                </Box>
-
-                <Divider my="2" />
-
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Collections</Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Glam Slam</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Havana</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Polarized</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Power Sunglasses</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>Designer Sunglasses</Box>
-                  </Flex>
-                </Box>
-
-                <Divider my="2" />
-
-                <Box>
-                  <Box fontSize="lg" fontWeight="bold" mb="2">Brand</Box>
-                  <Flex direction="column" fontSize="md" gap="2">
-                    <Box _hover={{ fontWeight: "bold" }}>Vincent Chase</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>John Jacobs</Box>
-                    <Box _hover={{ fontWeight: "bold" }}>OJOS</Box>
-                  </Flex>
-                </Box>
-              </Grid>
-            </Box>
-          </Link>
+          {categories.map((category) => (
+            (category.slug === "acetate-sunglasses" ||
+              category.slug === "metal-sunglasses" ||
+              category.slug === "tr-sunglasses") && (
+              <MenuItem
+                key={category.id}
+                onClick={() => handleCategoryClick(category.slug)}
+                bg={selectedCategory === category.id.toString() ? "gray.200" : "transparent"}
+                _hover={{ bg: "gray.200" }}
+              >
+                {category.name}
+              </MenuItem>
+            )
+          ))}
         </MenuList>
       </Menu>
 
@@ -645,18 +565,18 @@ function NavbarCard5() {
         </MenuButton>
 
         <MenuList color="blackAlpha.900" h="400px" bg="whiteAlpha.800" w="100%">
-          <Box>
+          <MenuItem>
             <Grid gridTemplateColumns="repeat(2, 1fr)">
-              <Box>
+              <MenuItem>
                 <Image
                   h="100%"
                   w="100%"
                   src="https://static1.lenskart.com/media/desktop/img/HomeTryOut.png"
                   alt="doc_img"
                 />
-              </Box>
-              <Box>
-                <Box m="auto">
+              </MenuItem>
+              <MenuItem>
+                <MenuItem m="auto">
                   <Heading
                     color="black"
                     fontWeight=""
@@ -698,10 +618,10 @@ function NavbarCard5() {
                   >
                     Book appointment
                   </Button>
-                </Box>
-              </Box>
+                </MenuItem>
+              </MenuItem>
             </Grid>
-          </Box>
+          </MenuItem>
         </MenuList>
       </Menu> */}
 
@@ -725,7 +645,7 @@ function NavbarCard5() {
           p="5"
         >
           <Grid gridTemplateColumns="repeat(2, 1fr)">
-            <Box>
+            <MenuItem>
               <Heading
                 color="black"
                 fontWeight=""
@@ -736,12 +656,12 @@ function NavbarCard5() {
               >
                 Over 1100+ Lenskart Store
               </Heading>
-              <Box color="black" fontSize="15px" textAlign="center" mt="6%">
+              <MenuItem color="black" fontSize="15px" textAlign="center" mt="6%">
                 Experience eyewear in a whole new way: Visit your nearest store
-              </Box>
-              <Box color="black" fontSize="15px" textAlign="center" mt="1.5%">
+              </MenuItem>
+              <MenuItem color="black" fontSize="15px" textAlign="center" mt="1.5%">
                 and treat yourself to 5000+ eyewear styles.
-              </Box>
+              </MenuItem>
               <Button
                 colorScheme="black"
                 variant="outline"
@@ -755,9 +675,9 @@ function NavbarCard5() {
               >
                 Locate a store
               </Button>
-            </Box>
+            </MenuItem>
             <Flex mt="30%" fontSize="14px" fontWeight="600">
-              <Box>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -767,8 +687,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="22px">
                   Delhi
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -778,8 +698,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="15px">
                   Banglore
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -789,8 +709,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="15px">
                   Mumbai
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -800,8 +720,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="10px">
                   Ahmedabad
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -811,8 +731,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="15px">
                   Chennai
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -822,8 +742,8 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="15px">
                   Hyderabad
                 </Text>
-              </Box>
-              <Box>
+              </MenuItem>
+              <MenuItem>
                 <Image
                   h=""
                   w=""
@@ -833,7 +753,7 @@ function NavbarCard5() {
                 <Text mt="-8px" ml="15px">
                   +100 cities
                 </Text>
-              </Box>
+              </MenuItem>
             </Flex>
           </Grid>
         </MenuList>

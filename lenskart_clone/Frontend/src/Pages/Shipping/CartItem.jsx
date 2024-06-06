@@ -8,7 +8,7 @@ export default function ShippingPage() {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.price * item.quantity;
       if (item.selectedLens) {
-        itemPrice += item.selectedLens.price * item.quantity;
+        itemPrice += item.selectedLens.price=="Free"?0:item.selectedLens.price * item.quantity;
       }
       return acc + itemPrice;
     }, 0);
@@ -119,7 +119,7 @@ export default function ShippingPage() {
                     Lens:{el.selectedLens.name}
                   </Text>
                   <Text fontSize="md" fontWeight="bold" ml={2} >
-                    ₹{el.selectedLens.price}
+                    ₹{el.selectedLens.price=="Free"?0:el.selectedLens.price}
                   </Text>
                 </Flex>
               )}
