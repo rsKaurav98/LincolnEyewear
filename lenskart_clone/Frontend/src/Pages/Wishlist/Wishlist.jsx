@@ -1,19 +1,20 @@
-// Wishlist.jsx
-
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Text, Button, Heading, Grid } from "@chakra-ui/react";
-import { removeFromWishlist } from "../../redux/wishlist/wishlist.actions";
+import { Box, Text, Button, Heading, Grid, IconButton, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { removeFromWishlist, WishlistReset } from "../../redux/wishlist/wishlist.actions";
 import { addToCart } from "../../redux/CartPage/action";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
 const Wishlist = () => {
   const wishlistItems = useSelector((store) => store.wishlistManager.wishlist);
   const { cart } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isDeletingAll, setIsDeletingAll] = useState(false);
 
   const handleDelete = (itemId, selectedLensId) => {
     dispatch(removeFromWishlist(itemId, selectedLensId));
@@ -25,13 +26,23 @@ const Wishlist = () => {
       data.quantity = 1;
       data.totalPrice = parseFloat(data.price) + (data.selectedLens ? parseFloat(data.selectedLens.price) : 0);
       dispatch(addToCart(data));
-      dispatch(removeFromWishlist(data.id, data.selectedLens?.id)); // Adjusted to use data.id and data.selectedLens?.id
+      dispatch(removeFromWishlist(data.id, data.selectedLens?.id));
       setTimeout(() => {
         navigate("/cart");
       }, 1000);
     } else {
       alert("Product with this lens is already in the cart.");
     }
+  };
+
+  const handleReset = () => {
+    dispatch(WishlistReset());
+    onClose();
+  };
+
+  const handleDeleteAll = () => {
+    setIsDeletingAll(true);
+    onOpen();
   };
 
   return (
@@ -56,7 +67,7 @@ const Wishlist = () => {
         >
           Wishlist
         </Heading>
-        <br/>
+        <br />
         {wishlistItems.length === 0 ? (
           <Text
             textAlign="center"
@@ -195,10 +206,35 @@ const Wishlist = () => {
                   </Box>
                 ))}
             </Grid>
+            <IconButton
+              icon={<FaTrash />}
+              aria-label="Delete all items"
+              onClick={handleDeleteAll}
+              mt={4}
+              colorScheme="red"
+              display={wishlistItems.length > 1?"flex":"none" }
+            />
           </Box>
         )}
       </Box>
-      <br/>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delete All Items</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete all the items from the wishlist?
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              No
+            </Button>
+            <Button colorScheme="red" onClick={handleReset} ml={3}>
+              Proceed
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+      <br />
       <Footer />
     </Box>
   );

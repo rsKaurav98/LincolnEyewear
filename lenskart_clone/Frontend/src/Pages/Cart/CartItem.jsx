@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
   decrement,
-  increment
+  increment,
+  cartReset
 } from "../../redux/CartPage/action";
 import {
   Flex,
@@ -12,12 +13,23 @@ import {
   Image,
   Text,
   Box,
-  Grid
+  Grid,
+  IconButton,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 
 const CartItem = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isDeletingAll, setIsDeletingAll] = useState(false);
 
   const handleDelete = (id, selectedLens) => {
     dispatch(removeFromCart({ id, selectedLens }));
@@ -33,6 +45,16 @@ const CartItem = () => {
 
   const handleIncrementChange = (id, selectedLens) => {
     dispatch(increment({ id, selectedLens }));
+  };
+
+  const handleReset = () => {
+    dispatch(cartReset());
+    onClose();
+  };
+
+  const handleDeleteAll = () => {
+    setIsDeletingAll(true);
+    onOpen();
   };
 
   return (
@@ -142,7 +164,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.totalPrice}
+                    ₹{item.selectedLens?.id==="sv1"?item.price:item.totalPrice}
                   </Text>
                 </Flex>
               </Flex>
@@ -196,6 +218,33 @@ const CartItem = () => {
             </Flex>
           </Grid>
         ))}
+
+      <IconButton
+        icon={<FaTrash />}
+        aria-label="Delete all items"
+        onClick={handleDeleteAll}
+        mt={4}
+        colorScheme="red"
+        display={cart.length > 1?"flex":"none" }
+      />
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delete All Items</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete all the items from the cart?
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              No
+            </Button>
+            <Button colorScheme="red" onClick={handleReset} ml={3}>
+              Proceed
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

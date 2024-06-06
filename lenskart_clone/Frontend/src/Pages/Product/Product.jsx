@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Loading from "./Loading";
-import Navbar from "../../Components/Navbar/Navbar";
-import Footer from "../../Components/Footer/Footer";
 import Pagination from "../../Components/Pagination";
 import ProductCard from "./ProductCard";
 import ProdFilter from "./ProdFilter";
@@ -11,6 +9,10 @@ import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
 import { Gender, ProductTypes, FrameColor, Frame1, Frame2 } from "./FilterDetails";
+import { CategoryContext } from "../../Components/Navbar/CategoryContext";
+import Navbar from "../../Components/Navbar/Navbar";
+import Footer from "../../Components/Footer/Footer";
+
 let totalprod = 0;
 
 const NewProduct = () => {
@@ -25,20 +27,16 @@ const NewProduct = () => {
   const [productRef, setProductRef] = useState("");
   const [totalPages, setTotalPages] = useState(1);
 
+  const { selectedCategory } = useContext(CategoryContext);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const fetchProduct = async (bearerToken) => {
+  const fetchProduct = async () => {
     setIsLoaded(true);
     try {
+      const categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=15&page=${page}`,
-        // {
-        //   headers: {
-        //     Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL2xpbmNvbG5leWV3ZWFyLmNvbSIsImlhdCI6MTcxNzMyNzQwNiwibmJmIjoxNzE3MzI3NDA2LCJleHAiOjE3MTc5MzIyMDYsImRhdGEiOnsidXNlciI6eyJpZCI6IjMifX19.N7umzxQpgKAmD7eMTXiuNf4lnf3OS2JQ492Ho_7ztLs`,
-        //     'Content-Type': 'application/json',
-        //   },
-        // }
-      );
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=15&page=${page}${categoryFilter}`      );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -54,10 +52,9 @@ const NewProduct = () => {
     }
   };
 
-
   useEffect(() => {
     fetchProduct();
-  }, [page, sort, gender, types, productRef]);
+  }, [page, sort, gender, types, productRef, selectedCategory]);
 
   return (
     <>

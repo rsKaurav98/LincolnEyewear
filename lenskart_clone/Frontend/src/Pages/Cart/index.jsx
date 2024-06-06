@@ -18,7 +18,7 @@ const CartPage = () => {
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.price * item.quantity;
-      if (item.selectedLens) {
+      if (item.selectedLens && item.selectedLens?.id!="sv1") {
         itemPrice += item.selectedLens.price * item.quantity;
       }
       return acc + itemPrice;
@@ -30,7 +30,7 @@ const CartPage = () => {
   const getdiscountPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.price * item.quantity;
-      if (item.selectedLens) {
+      if (item.selectedLens && item.selectedLens?.id!="sv1") {
         itemPrice += item.selectedLens.price * item.quantity;
       }
       return acc + itemPrice;
