@@ -3,6 +3,8 @@ import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
 import {
   Box,
   Text,
@@ -42,6 +44,7 @@ function Shipping() {
   const [cities, setCities] = useState();
   const [countries, setCountries] = useState();
   const [statess, setStatess] = useState();
+  const [Razorpay] = useRazorpay();
 
   const Required = (props) => {
     return (
@@ -132,6 +135,11 @@ function Shipping() {
         break;
     }
   };
+  const handleCheckout = useCallback(() =>{
+
+   
+  
+}, []);
 
   return (
     <>
@@ -385,20 +393,7 @@ function Shipping() {
               userData.country.length >= 1 &&
               userData.state.length >= 1 ? (
                 <Button
-                  onClick={() => navigate("/checkout")}
-                  bg="455666"
-                  p="25px 20px"
-                  color="#fff"
-                  textAlign="center"
-                  fontWeight="bold"
-                  borderRadius="5px"
-                  fontSize="18px"
-                  ml={{ lg: "80%", sm: "70%", base: "50%" }}
-                >
-                  CONTINUE
-                </Button>
-              ) : (
-                <Button
+                   onClick={() => navigate("/checkout")}
                   bg="teal"
                   p="25px 20px"
                   color="#fff"
@@ -407,6 +402,24 @@ function Shipping() {
                   borderRadius="5px"
                   fontSize="18px"
                   ml={{ lg: "80%", md: "72%", sm: "60%", base: "40%" }}
+                  
+                  
+                >
+                  CONTINUE
+                </Button>
+              ) : (
+                <Button
+                 
+                  bg="455666"
+                  p="25px 20px"
+                  color="#fff"
+                  textAlign="center"
+                  fontWeight="bold"
+                  borderRadius="5px"
+                  fontSize="18px"
+                  ml={{ lg: "80%", sm: "70%", base: "50%" }}
+                  onClick={handleCheckout}
+                   
                 >
                   CONTINUE
                 </Button>

@@ -5,6 +5,8 @@ import Footer from "../../Components/Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { cartReset } from "../../redux/CartPage/action";
 import { addToOrder } from "../../redux/order/order.actions";
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
 import {
   Box,
   Button,
@@ -41,6 +43,7 @@ const Orders = () => {
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const currentDate = `${day}-${month}-${year}`;
+  const [Razorpay] = useRazorpay();
 
   return (
     <Box m="auto">
@@ -240,7 +243,34 @@ const Orders = () => {
                   borderRadius="4px"
                   p="15px 35px"
                   _hover={{ backgroundColor: "teal" }}
-                  onClick={() => navigate("/payment")}
+                  onClick={() => {
+                    
+                    const options = {
+                    key: "rzp_test_oxZqK1EarM2jYY",
+                    amount: "3000",
+                    currency: "INR",
+                    name: "ABC",
+                    description: "Test Transaction",
+                    image: "https://example.com/your_logo",
+                    order_id: 'order_OJTMWnrM1CxIh9',
+                    handler: (res) => {
+                      console.log(res);
+                    },
+                    prefill: {
+                      name: "Piyush Garg",
+                      email: "youremail@example.com",
+                      contact: "9999999999",
+                    },
+                    notes: {
+                      address: "Razorpay Corporate Office",
+                    },
+                    theme: {
+                      color: "#3399cc",
+                    },
+                  };
+                
+                  const rzpay = new Razorpay(options);
+                  rzpay.open();}}
                 >
                   PAY NOW
                 </Button>
@@ -291,7 +321,7 @@ const Orders = () => {
                 textAlign={{ md: "left", sm: "center", base: "center" }}
               >
                 <Image
-                  src={el.image.thumbnail}
+                  src={el.image?.thumbnail}
                   w={"200px"}
                   h="100px"
                   m={{

@@ -141,7 +141,7 @@ export const NavbarCard2 = () => {
                       color="#333368"
                       onClick={() => {
                         setisAuth(false);
-                        localStorage.removeItem("res")
+                        localStorage.removeItem("user")
                         return <Navigate to="/" />;
                       }}
                       _hover={{ fontWeight: "bold" }}

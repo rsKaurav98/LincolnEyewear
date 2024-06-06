@@ -17,7 +17,7 @@ const Payment = () => {
   };
 
   const navigate = useNavigate();
-  const { cart } = useSelector((state) => state.CartReducer);
+  const { cart } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState(init);
   const [cards, setCards] = useState();
