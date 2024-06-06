@@ -270,7 +270,8 @@ const Orders = () => {
                   };
                 
                   const rzpay = new Razorpay(options);
-                  rzpay.open();}}
+                  //rzpay.open();
+                }}
                 >
                   PAY NOW
                 </Button>
