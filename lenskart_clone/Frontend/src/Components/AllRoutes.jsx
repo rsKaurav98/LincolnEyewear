@@ -14,7 +14,6 @@ import Wishlist from "../Pages/Wishlist/Wishlist";
 import Productlist from "../Pages/Admin/Productlist";
 import ProductPost from "../Pages/Admin/ProductPost";
 import EditProduct from "../Pages/Admin/EditProduct";
-import { CategoryProvider } from "../Components/Navbar/CategoryContext";
 
 const AllRoutes = () => {
   const location = useLocation();
@@ -24,9 +23,9 @@ const AllRoutes = () => {
   }, [location.pathname]);
   return (
     <Routes>
-      <Route path="/" element={<CategoryProvider><Home /></CategoryProvider>} />
-      <Route path="/products" element={<CategoryProvider><Product /></CategoryProvider>} />
-      <Route path="/products/:id" element={<CategoryProvider><SingleProduct /></CategoryProvider>} />
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<Product />} />
+      <Route path="/products/:id" element={<SingleProduct />} />
       <Route
         path="/cart"
         element={
@@ -51,14 +50,14 @@ const AllRoutes = () => {
           </Privateroutes>
         }
       />
-      {/* <Route
+      <Route
         path="/payment"
         element={
           <Privateroutes>
             <Payment />
           </Privateroutes>
         }
-      /> */}
+      />
       <Route
         path="/confirm"
         element={
