@@ -91,10 +91,10 @@ const ProductCard = ({ type }) => {
                   <Text
                     mt="5px"
                     fontWeight="400"
-                    color="#000042"
+                    color={ele.stock_status==="instock"?"lightgreen":"crimson"}
                     fontSize="14px"
                   >
-                    Shape : {ele.shape}
+                    {ele.stock_status}{""}
                   </Text>
                   <Text
                     mt="5px"

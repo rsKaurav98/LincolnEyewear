@@ -40,7 +40,8 @@ export const data = {
     },
     {
       id: "sv4",
-      name: "Ultra BLU Thin: MAXIMUM EYE PROTECTION",
+      name: "Ultra BLU Thin",
+      head:"MAXIMUM EYE PROTECTION",
       features: [
         "1 Year Warranty",
         "Ultra thin Blue Block & Anti-Glare",
@@ -55,7 +56,8 @@ export const data = {
     },
     {
       id: "sv5",
-      name: "Ultra BLU Thin: MAXIMUM EYE PROTECTION (Premium)",
+      name: "Ultra BLU Thin",
+      head:"MAXIMUM EYE PROTECTION (Premium)",
       features: [
         "Premium quality vision ",
         "Specially designed in Korea",
@@ -72,7 +74,8 @@ export const data = {
     },
     {
       id: "sv6",
-      name: "Owndays Shatterproof: DESIGNED IN KOREA",
+      name: "Owndays Shatterproof",
+      head:"DESIGNED IN KOREA",
       features: [
         "1 Year Warranty",
         "Blue Light Block & Anti-Glare coating",
@@ -87,7 +90,8 @@ export const data = {
     },
     {
       id: "sv7",
-      name: "Owndays Ultra Thin: DESIGNED IN KOREA",
+      name: "Owndays Ultra Thin",
+      head:"DESIGNED IN KOREA",
       features: [
         "1 Year Warranty",
         "Blue Light Block & Anti-Glare coating",
@@ -141,7 +145,8 @@ export const data = {
     },
     {
       id: "bp4",
-      name: "Normal Corridor Progressive: MAXIMUM EYE PROTECTION",
+      name: "Normal Corridor Progressive",
+      head:"MAXIMUM EYE PROTECTION",
       features: [
         "1 Year Warranty",
         "Near To Far Progression",
@@ -157,7 +162,8 @@ export const data = {
     },
     {
       id: "bp5",
-      name: "Normal Corridor BLU Progressive: MAXIMUM EYE PROTECTION",
+      name: "Normal Corridor",
+      head:"BLU Progressive: MAXIMUM EYE PROTECTION",
       features: [
         "Ultra premium quality",
         "1 Year Warranty",
@@ -173,7 +179,8 @@ export const data = {
     },
     {
       id: "bp6",
-      name: "Digital Owndays Wide Corridor Progressive: DESIGNED IN KOREA",
+      name: "Digital Owndays",
+      head:"Wide Corridor Progressive: DESIGNED IN KOREA",
       features: [
         "1 Year Warranty",
         "Near To Far Progression",
@@ -204,7 +211,8 @@ export const data = {
     },
     {
       id: "zp2",
-      name: "Anti-Fog BLU Thin Zero Power",
+      name: "Anti-Fog BLU Thin",
+      head:"Zero Power",
       features: [
         "1 Year Warranty",
         "Anti-Fog, Blue Block & Anti-Glare",
@@ -219,7 +227,8 @@ export const data = {
     },
     {
       id: "zp3",
-      name: "Owndays Clear Vision Zero Power",
+      name: "Owndays Clear Vision",
+      head:"Zero Power",
       subtitle: "DESIGNED IN KOREA",
       features: [
         "1 Year Warranty",

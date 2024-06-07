@@ -31,8 +31,8 @@ const ProdCard = ({
 
   const buttonStyles = {
     mt: 2,
-    p: { lg: 7, base: 0 }, // Consistent padding
-    m: { lg: "10px 20px", base: "10px auto" }, // Consistent margin
+    p: { lg: 7, base: 0 },
+    m: { lg: "10px 20px", base: "10px auto" },
     w: { lg: "90%", base: "100%" },
     color: "white",
     _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },

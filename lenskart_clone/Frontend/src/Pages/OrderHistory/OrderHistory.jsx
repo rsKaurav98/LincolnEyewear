@@ -1,32 +1,43 @@
-import { useSelector,useDispatch} from "react-redux";
-import { Box, Text, Stack, Heading, Image, Grid, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Box, Text, Stack, Heading, Grid, Button, Collapse,Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import { removeFromOrders } from "../../redux/order/order.actions"; 
+import { removeFromOrders } from "../../redux/order/order.actions";
 
 const OrderHistory = () => {
   const orders = useSelector((store) => store.orderManager.order);
-  console.log(orders)
   const dispatch = useDispatch();
   const today = new Date();
   const year = today.getFullYear();
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const currentDate = `${day}-${month}-${year}`;
-  
 
-  const handleDeleteOrder = (orders) => {
-    console.log(orders)
-    dispatch(removeFromOrders(orders));
+  const [expandedOrder, setExpandedOrder] = useState(null);
+
+  const handleDeleteOrder = (orderId) => {
+    dispatch(removeFromOrders(orderId));
+  };
+
+  const toggleOrderDetails = (index) => {
+    setExpandedOrder(expandedOrder === index ? null : index);
+  };
+
+  const calculateTotalPrice = (order) => {
+    return order.reduce((total, product) => {
+      const productPrice = Number(product.price);
+      const lensPrice = product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : Number(product.selectedLens.price)) : 0;
+      return total + (productPrice + lensPrice) * 1.18;
+    }, 0);
   };
 
   return (
     <Box>
       <Navbar />
-      <br />
       <Box
-        minHeight="635"
+        minHeight="635px"
         p={8}
         w={{ lg: "70%", md: "70%", sm: "98%", base: "98%" }}
         m="auto"
@@ -42,7 +53,7 @@ const OrderHistory = () => {
         >
           Order History
         </Heading>
-        <br/>
+        <br />
         {orders.length === 0 ? (
           <Text
             textAlign="center"
@@ -55,102 +66,75 @@ const OrderHistory = () => {
           </Text>
         ) : (
           <Stack spacing={4}>
-            {orders.map((order, i) => (
-              <Grid
-                key={order[0].id}
-                borderRadius="20px"
-                fontSize="16px"
-                textAlign="center"
-                templateColumns="1fr auto"
-                gap={4}
-              >
-                <Link to={`/products/${order[0].id}`} style={{ textDecoration: 'none' }}>
-                  <Grid
-                    m="auto"
-                    templateColumns={{
-                      base: "repeat(1,1fr)",
-                      md: "30% 60%",
-                      lg: "30% 60%",
-                      xl: "20% 60%"
-                    }}
-                    key={order.id + i}
-                    bg="whiteAlpha.900"
-                    p={4}
-                    boxShadow="dark-lg"
-                    gap="5"
-                    color="gray.600"
-                  >
-                    <Box>
-                      <Image
-                        src={order[0]?.image?.thumbnail}
-                        w={{
-                          base: "60%",
-                          sm: "50%",
-                          md: "100%",
-                          lg: "100%",
-                          xl: "100%",
-                          "2xl": "100%"
-                        }}
-                        m="auto"
-                      />
-                    </Box>
-                    <Box
-                      textAlign={{
-                        lg: "left",
-                        md: "left",
-                        sm: "center",
-                        base: "center"
-                      }}
-                    >
-                      <Text fontWeight="bold">
-                        Product ID: {order[0].id}
-                      </Text>
-                      <Text fontWeight="600">
-                        Order Date : {currentDate}
-                      </Text>
-                      <Text
-                        fontSize="18px"
-                        fontWeight="bold"
-                        textTransform="capitalize"
+            {orders.map((order, index) => {
+              const totalPrice = calculateTotalPrice(order).toFixed(2);
+              return (
+                <Box key={index} borderRadius="20px" boxShadow="lg" p={4} bg="whiteAlpha.900">
+                  <Box onClick={() => toggleOrderDetails(index)} cursor="pointer">
+                    <Grid templateColumns="1fr auto" gap={4}>
+                      <Box>
+                        <Text fontWeight="bold">Order Date: {currentDate}</Text>
+                        <Text>Number of Products: {order.length}</Text>
+                        <Text>Total Price: ₹{Math.round(totalPrice)}.00</Text>
+                      </Box>
+                      <Box>
+                        <Text color="blue.500" fontWeight="bold">Click To See Details</Text>
+                      </Box>
+                    </Grid>
+                  </Box>
+                  <Collapse in={expandedOrder === index} animateOpacity>
+                    <Box mt={4}>
+                      {order.map((product) => (
+                        <Link to={`/products/${product.id}`} key={product.id} style={{ textDecoration: 'none' }}>
+                          <Grid
+                            templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+                            gap={4}
+                            p={4}
+                            border="1px"
+                            borderColor="gray.200"
+                            borderRadius="10px"
+                            mb={2}
+                          >
+                            <Image
+                              src={product?.images[0]?.src}
+                              w="100px"
+                              h="100px"
+                              objectFit="cover"
+                              borderRadius="10px"
+                            />
+                            <Box>
+                              <Text fontWeight="bold">Product ID: {product.id}</Text>
+                              <Text fontSize="18px" fontWeight="bold">
+                                {product.name}
+                              </Text>
+                              <Text fontWeight="500" fontSize="17px">
+                                {product.selectedLens ? product.selectedLens.name : "No Lens"}
+                              </Text>
+                              <Text fontWeight="bold" fontSize="18px">
+                                Price: ₹{Math.round((Number(product.price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
+                              </Text>
+                              <Text fontWeight="500" fontSize="15px">
+                                Status : Completed
+                              </Text>
+                            </Box>
+                          </Grid>
+                        </Link>
+                      ))}
+                      <Button
+                        colorScheme="red"
+                        onClick={() => handleDeleteOrder(order[0].id)}
+                        alignSelf="center"
                       >
-                        {order.productRefLink}
-                      </Text>
-                      <Text
-                        textTransform="capitalize"
-                        fontWeight="500"
-                        fontSize="17px"
-                      >
-                        {order.productType}
-                      </Text>
-                      <Text fontWeight="bold" fontSize="18px">
-                        Price: ₹ {Math.round(order[0].price + order[0].price * 0.18)}.00 /-
-                      </Text>
-                      <Text fontWeight="500" fontSize="15px">
-                        Colors : {order.colors}
-                      </Text>
-                      <Text fontWeight="500" fontSize="15px">
-                        Dimension : {order.dimension}
-                      </Text>
-                      <Text fontWeight="500" fontSize="15px">
-                        Status : Completed
-                      </Text>
+                        Delete Order
+                      </Button>
                     </Box>
-                  </Grid>
-                </Link>
-                <Button
-                  colorScheme="red"
-                  onClick={() => handleDeleteOrder(order[0].id)}
-                  alignSelf="center"
-                >
-                  Delete Order
-                </Button>
-              </Grid>
-            ))}
+                  </Collapse>
+                </Box>
+              );
+            })}
           </Stack>
         )}
       </Box>
-      <br />
-      <br />
       <Footer />
     </Box>
   );
