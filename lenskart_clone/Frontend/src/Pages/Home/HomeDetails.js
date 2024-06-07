@@ -2,17 +2,20 @@ export const HomeDetails = [
   {
     img: "https://static1.lenskart.com/media/desktop/img/Apr22/a2.png",
     caption: "Slide 1",
-    title: "Eyeglasses"
+    title: "Eyeglasses",
+    slug:"eyeglasses"
   },
   {
     img: "https://static1.lenskart.com/media/desktop/img/Apr22/b2.png",
     caption: "Slide 2",
-    title: "Sunglasses"
+    title: "Sunglasses",
+    slug:"sunglasses"
   },
   {
     img: "https://static1.lenskart.com/media/desktop/img/Apr22/d2.png",
     caption: "Slide 3",
-    title: "Computer Glasses"
+    title: "Computer Glasses",
+    slug:"eyeglasses"
   },
   // {
   //   img: "https://static1.lenskart.com/media/desktop/img/Apr22/d.png",
@@ -27,7 +30,8 @@ export const HomeDetails = [
   {
     img: "https://static1.lenskart.com/media/desktop/img/June22/prog11.jpg",
     caption: "Slide 4",
-    title: "Progressive Lenses"
+    title: "Progressive Lenses",
+    slug:"eyeglasses"
   }
 ];
 

@@ -18,11 +18,13 @@ const Orders = () => {
   const dispatch = useDispatch();
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
-    console.log(cart)
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price=="Free"?0:item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 
@@ -371,7 +373,16 @@ const Orders = () => {
                     color="gray.500"
                     fontWeight="bold"
                   >
-                    {el?.name || "Vincent Chase Eyeglasses"}
+                    {el?.name|| "Vincent Chase Eyeglasses"}
+                  </Box>
+                  <Box
+                    m="10px 5px 5px 0px"
+                    fontSize="17px"
+                    textTransform="capitalize"
+                    color="gray.500"
+                    fontWeight="bold"
+                  >
+                    {el.selectedLens?el.selectedLens.name: "No Lens"}
                   </Box>
                   <Box fontSize="15px" mb="4px" fontWeight="500">
 
@@ -394,7 +405,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                      ₹{Math.round(el.price * el.quantity + el.price * el.quantity * 0.18)}.00
+                     ₹{Math.round((Number(el.price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0))*1.18)}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">

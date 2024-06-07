@@ -1,7 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text, Radio, RadioGroup, Stack, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Radio,
+  RadioGroup,
+  Stack,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from "@chakra-ui/react";
 
-const ProdFilter = ({ handleCategoryChange, handleTagChange, selectedCategory, selectedTag }) => {
+const ProdFilter = ({
+  handleCategoryChange,
+  handleTagChange,
+  selectedCategory,
+  selectedTag,
+}) => {
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
 
@@ -58,6 +74,9 @@ const ProdFilter = ({ handleCategoryChange, handleTagChange, selectedCategory, s
           <AccordionPanel pb={4} color="gray.500" p="2">
             <RadioGroup onChange={handleCategoryChange} value={selectedCategory}>
               <Stack direction="column" gap="2">
+                <Radio value="" key="all">
+                  All Categories
+                </Radio>
                 {categories.map((category) => (
                   <Radio value={category.id.toString()} key={category.id}>
                     {category.name}
@@ -82,6 +101,9 @@ const ProdFilter = ({ handleCategoryChange, handleTagChange, selectedCategory, s
           <AccordionPanel pb={4} color="gray.500" p="2">
             <RadioGroup onChange={handleTagChange} value={selectedTag}>
               <Stack direction="column" gap="2">
+                <Radio value="" key="all">
+                  All Tags
+                </Radio>
                 {tags.map((tag) => (
                   <Radio value={tag.id.toString()} key={tag.id}>
                     {tag.name}

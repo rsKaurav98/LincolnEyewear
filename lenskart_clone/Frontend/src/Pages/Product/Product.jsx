@@ -77,17 +77,19 @@ const NewProduct = () => {
 
   const handleSortChange = (value) => {
     setSort(value);
-    setPage(1); // Reset page to 1 when sorting changes
+    setPage(1);
   };
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
     setSearchValue("");
+    setPage(1);
   };
 
   const handleTagChange = (value) => {
     setSelectedTag(value);
     setSearchValue("");
+    setPage(1);
   };
 
   return (
@@ -99,16 +101,20 @@ const NewProduct = () => {
             w="17%"
             m={0}
             display={{ base: "none", xl: "inherit" }}
+            pos="sticky"
+            top="0"
+            alignSelf="start"
             flexDirection="column"
+            
           >
             <ProdFilter
               handleCategoryChange={(value) => {
                 handleCategoryChange(value);
-                setSearchValue(""); // Clear search value
+                setSearchValue(""); 
               }}
               handleTagChange={(value) => {
                 handleTagChange(value);
-                setSearchValue(""); // Clear search value
+                setSearchValue("");
               }}
               selectedCategory={selectedCategory}
               selectedTag={selectedTag}
@@ -125,11 +131,11 @@ const NewProduct = () => {
                   <ProdFilter
                     handleCategoryChange={(value) => {
                       handleCategoryChange(value);
-                      setSearchValue(""); // Clear search value
+                      setSearchValue(""); 
                     }}
                     handleTagChange={(value) => {
                       handleTagChange(value);
-                      setSearchValue(""); // Clear search value
+                      setSearchValue("");
                     }}
                     selectedCategory={selectedCategory}
                     selectedTag={selectedTag}
@@ -145,6 +151,9 @@ const NewProduct = () => {
             borderLeft="1px solid"
             borderColor="gray.300"
             m={0}
+            pos="sticky"
+            top="0"
+            alignSelf="start"
           >
             <Flex
               justifyContent="space-between"

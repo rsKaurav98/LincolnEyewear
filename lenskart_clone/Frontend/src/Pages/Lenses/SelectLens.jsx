@@ -44,6 +44,9 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
             <Text fontWeight="400" fontSize={{ base: "17px", md: "24px" }}>
               {item.name}
             </Text>
+            <Text fontWeight="400" fontSize={{ base: "15px", md: "20px" }}>
+              {item.head}
+            </Text>
             <br />
             <Box pl={{ base: "10px", md: "20px" }}>
               {item.features.map((feature, fidx) => (
