@@ -3,6 +3,8 @@ import { Box, Text, Image, Flex, Center, Grid } from "@chakra-ui/react";
 import { AiFillFacebook } from "react-icons/ai";
 import { TfiTwitter } from "react-icons/tfi";
 import { AiOutlineInstagram } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { FaLinkedin,FaYoutube  } from "react-icons/fa";
 
 export const FooterCard1 = ({ type, heading }) => {
   return (
@@ -11,13 +13,15 @@ export const FooterCard1 = ({ type, heading }) => {
       <Box lineHeight="8">
         {type.map((i, index) => (
           <Box key={index}>
-            <Text
-              fontSize="15px"
-              _hover={{ color: "whiteAlpha.600" }}
-              lineHeight="2"
-            >
-              {i.labels}
-            </Text>
+            <Link to={i.src}>
+              <Text
+                fontSize="15px"
+                _hover={{ color: "whiteAlpha.600" }}
+                lineHeight="2"
+              >
+                {i.labels}
+              </Text>
+            </Link>
           </Box>
         ))}
       </Box>
@@ -69,9 +73,8 @@ export const FooterCard = () => {
         gap="10%"
         pb={{ lg: "2%", sm: "4%", base: "10%" }}
       >
-        <Text fontSize="20px">T&C</Text>
-        <Text fontSize="20px">Privacy</Text>
-        <Text fontSize="20px">Disclaimer</Text>
+        <Link to="/TC"><Text fontSize="20px">T&C</Text></Link>
+        <Link to="/PP"><Text fontSize="20px">Privacy</Text></Link>
       </Grid>
       <Grid
         templateColumns={{
@@ -88,9 +91,18 @@ export const FooterCard = () => {
           FOLLOWS US AT
         </Text>
         <Flex gap="2">
-          <AiFillFacebook size="35px" />
-          <AiOutlineInstagram size="35px" />
-          <TfiTwitter size="35px" />
+        <a href="https://www.facebook.com/profile.php?id=61559231648874" target="_blank" rel="noopener noreferrer">
+        <AiFillFacebook size="35px" />
+      </a>
+      <a href="https://www.instagram.com/lincoln_eyewear" target="_blank" rel="noopener noreferrer">
+        <AiOutlineInstagram size="35px" />
+      </a>
+      <a href="https://www.youtube.com/channel/UCC0JN9PAPidcRUwEJ4tqPFQ" target="_blank" rel="noopener noreferrer">
+        <FaYoutube size="35px" />
+      </a>
+      <a href="https://www.linkedin.com/in/lincoln-eyewear-485793308/" target="_blank" rel="noopener noreferrer">
+        <FaLinkedin size="35px"/>
+      </a>
         </Flex>
       </Grid>
     </Grid>

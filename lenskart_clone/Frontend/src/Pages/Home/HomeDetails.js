@@ -441,20 +441,25 @@ export const HomeDetails12 = [
 export const HomeDetails15 = [
   {
     head: "SUNGLASSES",
-    info: `Sunglasses help protect the eyes from the damaging UV rays of the sun and, today, they have become an essential fashion accessory too. The classic styles of shades never go out of fashion as they are reiterated with each passing trend to suit one’s contemporary style sensibility. With different combinations of frame and lens colours, sunglasses appeal to all ages irrespective of gender. Luxury eyewear brands such as Linda Farrow and Tom Ford, among others have an excellent collection of aviator-shaped and cat-eye goggles that go an extra mile to create style and provide luxury. Vogue, Tommy Hilfiger, French Connection, Ray-Ban, John Jacobs and Vincent Chase, on the other hand, have plenty of sunglasses for women as well in various elegant colours and chic styles.
-    Ray-Ban Goggles Are Popular For Their Timeless Frame Designs Such As The Aviator-Shaped, Wayfarer-Shaped And Browline Styles. These Shades Are Available In Plenty Of Colours On The Frames And Lenses That Would Go With Any Modern Outfit Effortlessly. Brands Such As Carrera And Calvin Klein, Among Several Others Have Excellent Variations Of The Classic Aviator-Shaped And Wayfarer-Shaped Goggles With Sporty And Suave Lens Colours. Sunglasses For Men Are Available From The Best Brands Such As Hugo Boss, Oakley And John Jacobs, Among Others, And Are Ideal For Various Occasions.
-    
-    Popular Sunglasses Brands- Ray Ban Sunglasses, Oakley Sunglasses, Carrera Sunglasses, IDEE Sunglasses`
+    info: `Sunglasses help protect the eyes from the damaging UV rays of the sun and have become an essential fashion accessory. Classic styles of shades never go out of fashion and are continually updated to suit contemporary style sensibilities. With different combinations of frame and lens colors, sunglasses appeal to all ages and genders. Luxury eyewear brands have excellent collections of aviator-shaped and cat-eye goggles that create style and luxury. Various brands offer sunglasses in elegant colors and chic styles.
+
+    Popular Sunglasses Categories: Acetate Sunglasses, Metal Sunglasses, Polarized Sunglasses, Vintage Charm Collection
+    Features: 100% Biodegradable, Durable, Non-Allergic`,
   },
   {
     head: "EYEGLASSES",
-    info: `Lincoln has a wide range of styles that are highly fashionable. You can try out the full-rimmed and half-rimmed eyeglasses that come with various frame and temple materials such as acetate, stainless steel, TR-90, and metal, among others. Rimless spectacles also come in various styles with sporty and elegant temples.
-    Various Brands Such As Ray-Ban, Oakley, Carrera, John Jacobs, Lee Cooper, And Oakley Have An Amazing Variety Of Frame And Temple Styles. The Browline, Round, Rectangular, Square And Wayfarer-Shaped Spectacles Are Some Of The Best Styles Of Men’s Eyeglasses And They Come With Sophisticated As Well As Sporty Frame And Temple Colours. Spectacles With Tortoise Shell Frames Have A Vintage Appeal And You Can Easily Choose From The Various Styles Available At Lenskart.
-    
-    Top Brand Eyeglasses- Ray-Ban Eyeglasses, Carrera Eyeglasses, Oakley, Men Eyeglasses, Women Eyeglasses, John Jacob Eyeglasses
-    
-    Best Styles In Eyeglasses- Full Rim Eyeglasses, Half Rim Eyeglasses, Rimless Eyeglasses, Cat Eye Eyeglasses, Aviator Shapes Eyeglasses, Wayfarer Shapes Eyeglasses`
+    info: `Lincoln Eyewear offers a wide range of highly fashionable eyeglasses. Choose from full-rimmed, half-rimmed, and rimless spectacles with frames and temples made of acetate, stainless steel, TR-90, and metal. Lincoln Eyewear also offers sports and elegant styles in rimless spectacles.
+
+    Top Eyeglasses Categories: Acetate Eyeglasses, Metal Eyeglasses, Computer Glasses
+    Features: 100% Biodegradable, Durable, Non-Allergic`,
   },
+  {
+    head: "COMPUTER GLASSES",
+    info: `Computer glasses from Lincoln Eyewear are designed to reduce eye strain caused by prolonged exposure to digital screens. They come in various styles and are equipped with lenses that reduce blue light and prevent eye fatigue.
+
+    Features: Blue Light Filtering, Comfortable Fit`,
+  },
+
   // {
   //   head: "CONTACT LENSES",
   //   info: `Lenskart has various types of contact lenses. Brands such as Aqualens, Bausch & Lomb, Johnson & Johnson, Acuvue, Alcon, and Purevision, among others have yearly, monthly, 2-weekly, and daily disposable contact lenses. Specially designed toric contact lenses are also available from these brands.

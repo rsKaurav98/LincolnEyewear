@@ -153,7 +153,7 @@ const NewProduct = () => {
             m={0}
             pos="sticky"
             top="0"
-            alignSelf="start"
+            // alignSelf="start"
           >
             <Flex
               justifyContent="space-between"

@@ -14,6 +14,10 @@ import Wishlist from "../Pages/Wishlist/Wishlist";
 import Productlist from "../Pages/Admin/Productlist";
 import ProductPost from "../Pages/Admin/ProductPost";
 import EditProduct from "../Pages/Admin/EditProduct";
+import PrivacyPolicy from "./Footer/PP";
+import TC from "./Footer/TC";
+import CR from "./Footer/CR";
+import SD from "./Footer/SD";
 
 const AllRoutes = () => {
   const location = useLocation();
@@ -23,6 +27,10 @@ const AllRoutes = () => {
   }, [location.pathname]);
   return (
     <Routes>
+      <Route path="/PP" element={<PrivacyPolicy />} />
+      <Route path="/TC" element={<TC />} />
+      <Route path="/CR" element={<CR />} />
+      <Route path="/SD" element={<SD />} />
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Product />} />
       <Route path="/products/:id" element={<SingleProduct />} />

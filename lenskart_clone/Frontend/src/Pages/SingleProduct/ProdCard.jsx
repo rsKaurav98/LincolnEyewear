@@ -123,7 +123,7 @@ const ProdCard = ({
         Add to Wishlist
       </Button>
 
-      <Accordion allowMultiple>
+      <Accordion allowMultiple defaultIndex={[0]}>
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
