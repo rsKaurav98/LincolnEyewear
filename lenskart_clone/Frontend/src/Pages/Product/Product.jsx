@@ -101,7 +101,11 @@ const NewProduct = () => {
             w="17%"
             m={0}
             display={{ base: "none", xl: "inherit" }}
+            pos="sticky"
+            top="0"
+            alignSelf="start"
             flexDirection="column"
+            
           >
             <ProdFilter
               handleCategoryChange={(value) => {
@@ -147,6 +151,9 @@ const NewProduct = () => {
             borderLeft="1px solid"
             borderColor="gray.300"
             m={0}
+            pos="sticky"
+            top="0"
+            alignSelf="start"
           >
             <Flex
               justifyContent="space-between"
