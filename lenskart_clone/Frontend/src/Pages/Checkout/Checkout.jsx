@@ -50,17 +50,6 @@ const Orders = () => {
       <Navbar />
       <Box w="90%" m="auto">
         <HStack spacing={"100px"} mt="15px" mb="20px" w="100%" gap="2">
-          <HStack>
-            <Image
-              src="http://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
-              boxSize="30px"
-            />
-            <Box fontSize={{ lg: "16px", base: "sm" }} fontWeight="400">
-              Get Orders Updates on Whatsapp
-            </Box>
-            <Switch size="md" />
-            <Spacer />
-          </HStack>
         </HStack>
         <Box border={"1px"} borderColor="gray.300">
           <Box p={"10px 10px 10px 10px "} m="15px 0px 0px 15px" w="97%">
@@ -322,7 +311,7 @@ const Orders = () => {
                 textAlign={{ md: "left", sm: "center", base: "center" }}
               >
                 <Image
-                  src={el.image?.thumbnail}
+                  src={el?.images?.[0]?.src}
                   w={"200px"}
                   h="100px"
                   m={{
@@ -340,10 +329,10 @@ const Orders = () => {
                     color="gray.500"
                     fontWeight="bold"
                   >
-                    {el.productRefLink || "Vincent Chase Eyeglasses"}
+                    {el?.name|| "Vincent Chase Eyeglasses"}
                   </Box>
                   <Box fontSize="15px" mb="4px" fontWeight="500">
-                    + Hydrophobic Anti-Glare
+                    
                   </Box>
                   <Box
                     fontSize="14px"
@@ -351,7 +340,7 @@ const Orders = () => {
                     color={"gray"}
                     fontWeight={"500"}
                   >
-                    Sold by Lenskart Pvt Ltd.
+                    Sold by Lincoln Eyewear.
                   </Box>
                   <Flex
                     fontWeight={"500"}
@@ -363,7 +352,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                      ₹{Math.round(el.price + el.price * 0.18)}.00
+                     ₹{Math.round(getTotalPrice() + getTotalPrice() * 0.18)}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">

@@ -34,9 +34,16 @@ const NewProduct = () => {
     try {
       let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
-      let sortQuery = sort === "lowtohigh" ? "asc" : sort === "hightolow" ? "desc" : "";
+      let sortQuery = "";
+      
+     
+      if (sort === "lowtohigh") {
+        sortQuery = "&orderby=price&order=asc";
+      } else if (sort === "hightolow") {
+        sortQuery = "&orderby=price&order=desc";
+      }
 
-      // Reset filters if search value is present
+     
       if (searchValue) {
         setSelectedCategory("");
         setSelectedTag("");
@@ -45,7 +52,8 @@ const NewProduct = () => {
       }
 
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}&per_page=15&page=${page}${categoryFilter}${tagFilter}&search=${encodeURIComponent(searchValue)}`);
+        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}&per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
