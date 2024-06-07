@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
+import { ShippingContext } from '../../Context/shippingContext';
 import { useCallback } from "react";
 import useRazorpay from "react-razorpay";
 import {
@@ -19,6 +20,7 @@ import {
 import "../../App.css";
 
 function Shipping() {
+  const { setShippingDetails } = useContext(ShippingContext);
   const navigate = useNavigate();
 
   const init = {
@@ -134,6 +136,11 @@ function Shipping() {
       default:
         break;
     }
+  };
+
+  const handleShipping = () => {
+    setShippingDetails(userData);
+    navigate('/checkout');
   };
   const handleCheckout = useCallback(() =>{
 
@@ -393,7 +400,7 @@ function Shipping() {
               userData.country.length >= 1 &&
               userData.state.length >= 1 ? (
                 <Button
-                   onClick={() => navigate("/checkout")}
+                   onClick={handleShipping}
                   bg="teal"
                   p="25px 20px"
                   color="#fff"
@@ -418,7 +425,7 @@ function Shipping() {
                   borderRadius="5px"
                   fontSize="18px"
                   ml={{ lg: "80%", sm: "70%", base: "50%" }}
-                  onClick={handleCheckout}
+                  onClick={handleShipping}
                    
                 >
                   CONTINUE

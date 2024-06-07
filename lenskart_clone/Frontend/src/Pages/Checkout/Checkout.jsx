@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { cartReset } from "../../redux/CartPage/action";
 import { addToOrder } from "../../redux/order/order.actions";
-import { useCallback } from "react";
-import useRazorpay from "react-razorpay";
+import { ShippingContext } from '../../Context/shippingContext';
+
+
 import {
   Box,
   Button,
@@ -20,6 +21,8 @@ import {
 } from "@chakra-ui/react";
 
 const Orders = () => {
+  const { shippingDetails } = useContext(ShippingContext);
+  console.log(shippingDetails.first_name)
   const navigate = useNavigate();
   const { cart, coupon } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
@@ -43,7 +46,7 @@ const Orders = () => {
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const currentDate = `${day}-${month}-${year}`;
-  const [Razorpay] = useRazorpay();
+  // const [Razorpay] = useRazorpay();
 
   return (
     <Box m="auto">
