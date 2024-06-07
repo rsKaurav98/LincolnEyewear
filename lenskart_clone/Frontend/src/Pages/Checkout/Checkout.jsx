@@ -1,25 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { cartReset } from "../../redux/CartPage/action";
 import { addToOrder } from "../../redux/order/order.actions";
-import { useCallback } from "react";
-import useRazorpay from "react-razorpay";
+import { ShippingContext } from '../../Context/shippingContext';
 import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Spacer,
-  Switch,
-  Text,
-  Grid
+  Box, Button, Flex, HStack, Image, Text, Grid
 } from "@chakra-ui/react";
 
 const Orders = () => {
+  const { shippingDetails } = useContext(ShippingContext);
+  console.log(shippingDetails)
   const navigate = useNavigate();
   const { cart, coupon } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
@@ -35,7 +28,88 @@ const Orders = () => {
     return totalPrice;
   };
 
-  const handleClick = () => {
+  const handleOrderCreation = async (paymentMethod) => {
+    const orderData = {
+      billing_address: {
+        first_name: shippingDetails?.first_name,
+        last_name: shippingDetails?.last_name,
+        company: "",
+        email: shippingDetails?.email,
+        phone: shippingDetails.phone,
+        address_1: shippingDetails.address,
+        address_2: "",
+        city: shippingDetails.city,
+        state: shippingDetails.state,
+        postcode: shippingDetails.pincode,
+        country: shippingDetails.country
+      },
+      shipping_address: {
+        first_name: shippingDetails?.first_name,
+        last_name: shippingDetails?.last_name,
+        company: "",
+        email: shippingDetails?.email,
+        phone: shippingDetails.phone,
+        address_1: shippingDetails.address,
+        address_2: "",
+        city: shippingDetails.city,
+        state: shippingDetails.state,
+        postcode: shippingDetails.pincode,
+        country: shippingDetails.country
+      },
+      products: cart.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        meta_data: {
+          LensData: item.selectedLens ? item.selectedLens.name : "No Lens",
+          LensPrice: item.selectedLens ? item.selectedLens.price : 0
+        }
+      })),
+      customer_id: "",
+      shipping_method: {
+        title: "Free shipping",
+        id: "free_shipping:1",
+        total: 0
+      },
+      payment_method: paymentMethod,
+      order_status: "wc-completed",
+      meta_data: {
+        my_custom_key: "value-1",
+        another_key: "another value"
+      }
+    };
+    const token = localStorage.getItem("token");
+    console.log(token)
+
+    try {
+      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Include the token in the Authorization header
+        },
+        body: JSON.stringify(orderData)
+      });
+      const data = await response.json();
+      console.log("Order created successfully:", data);
+      // Handle success (e.g., navigate to confirmation page, show success message, etc.)
+    } catch (error) {
+      console.error("Error creating order:", error);
+      // Handle error (e.g., show error message)
+    }
+  };
+
+  const handlePayNow = () => {
+    handleOrderCreation({
+      id: "razorpay",
+      title: "Credit/Debit card"
+    });
+  };
+
+  const handleCashOnDelivery = () => {
+    handleOrderCreation({
+      id: "cod",
+      title: "Cash on delivery"
+    });
     dispatch(addToOrder(cart));
     navigate("/confirm");
     dispatch(cartReset());
@@ -46,7 +120,6 @@ const Orders = () => {
   const month = (today.getMonth() + 1).toString().padStart(2, "0");
   const day = today.getDate().toString().padStart(2, "0");
   const currentDate = `${day}-${month}-${year}`;
-  const [Razorpay] = useRazorpay();
 
   return (
     <Box m="auto">
@@ -80,7 +153,6 @@ const Orders = () => {
                   <Box fontSize={"15px"} fontWeight="400">
                     Order ID :
                   </Box>
-
                   <Box
                     fontSize={"14px"}
                     ml="3px"
@@ -90,7 +162,6 @@ const Orders = () => {
                     {Math.round(Math.random() * 1125452 + Math.random())}
                   </Box>
                 </Flex>
-
                 <Flex>
                   <Box fontSize={"15px"} fontWeight="400">
                     Order Date :
@@ -140,7 +211,6 @@ const Orders = () => {
                       .00
                     </strong>
                   </Box>
-
                   <Flex
                     justifyContent={{
                       lg: "left",
@@ -175,7 +245,6 @@ const Orders = () => {
                   <Box fontSize={"16px"} fontWeight="400" textAlign="right">
                     Total Price :
                   </Box>
-
                   <Box
                     fontSize={"17px"}
                     ml="3px"
@@ -235,35 +304,7 @@ const Orders = () => {
                   borderRadius="4px"
                   p="15px 35px"
                   _hover={{ backgroundColor: "teal" }}
-                  onClick={() => {
-                    
-                    const options = {
-                    key: "rzp_test_oxZqK1EarM2jYY",
-                    amount: "3000",
-                    currency: "INR",
-                    name: "ABC",
-                    description: "Test Transaction",
-                    image: "https://example.com/your_logo",
-                    order_id: 'order_OJTMWnrM1CxIh9',
-                    handler: (res) => {
-                      console.log(res);
-                    },
-                    prefill: {
-                      name: "Piyush Garg",
-                      email: "youremail@example.com",
-                      contact: "9999999999",
-                    },
-                    notes: {
-                      address: "Razorpay Corporate Office",
-                    },
-                    theme: {
-                      color: "#3399cc",
-                    },
-                  };
-                
-                  const rzpay = new Razorpay(options);
-                  //rzpay.open();
-                }}
+                  onClick={handlePayNow}
                 >
                   PAY NOW
                 </Button>
@@ -274,7 +315,7 @@ const Orders = () => {
                   borderRadius="4px"
                   p="15px 35px"
                   _hover={{ backgroundColor: "teal" }}
-                  onClick={handleClick}
+                  onClick={handleCashOnDelivery}
                 >
                   CASH ON DELIVERY
                 </Button>
