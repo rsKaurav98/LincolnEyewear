@@ -249,26 +249,7 @@ const Login = () => {
                   </Button>
                 </Box>
               )}
-              <Box
-                textDecoration={"underline"}
-                m="15px 0px 0px 0px"
-                color="#000042"
-                fontSize="15px"
-              >
-                Forget Password
-              </Box>
-
-              <HStack fontSize="16px">
-                <Checkbox mb={"20px"} mt="20px" size="sm">
-                  Get Update on WhatsApp
-                </Checkbox>
-                <Image
-                  src="https://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
-                  w={"22px"}
-                  h="22px"
-                />
-              </HStack>
-
+              
               <HStack spacing={"0px"} mt="19px" gap="2">
                 <Box fontSize={"14px"}> New member?</Box>
                 <Link

@@ -59,7 +59,7 @@ const Orders = () => {
         quantity: item.quantity,
         meta_data: {
           LensData: item.selectedLens ? item.selectedLens.name : "No Lens",
-          LensPrice: item.selectedLens ? item.selectedLens.price : 0
+          LensPrice: item.selectedLens ? (item.selectedLens.price === "Free" ? 0 : item.selectedLens.price) : 0
         }
       })),
       customer_id: "",
@@ -374,7 +374,7 @@ const Orders = () => {
                     {el?.name || "Vincent Chase Eyeglasses"}
                   </Box>
                   <Box fontSize="15px" mb="4px" fontWeight="500">
-                    
+
                   </Box>
                   <Box
                     fontSize="14px"
