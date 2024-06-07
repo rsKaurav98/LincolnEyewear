@@ -1,4 +1,13 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import SelectLens from "../Lenses/SelectLens";
@@ -36,13 +45,6 @@ const ProdCard = ({
 
   return (
     <Box>
-      {/* <Text
-        color="gray.500"
-        fontSize="md"
-        textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      >
-        {type.slug}
-      </Text> */}
       <Text
         my="10px"
         fontWeight={"700"}
@@ -92,12 +94,12 @@ const ProdCard = ({
       </Text>
       <br />
 
-      <Button sx={buttonStyles} onClick={onOpen} bgColor= "#00bac6" >
+      <Button sx={buttonStyles} onClick={onOpen} bgColor="#00bac6">
         {selectedLensName}
       </Button>
       <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensClick} />
 
-      {selectedLens && (
+      {selectedLens ? (
         <Button
           sx={buttonStyles}
           mt={2}
@@ -111,15 +113,103 @@ const ProdCard = ({
         >
           Add to Cart - ₹{totalPrice}
         </Button>
+      ) : (
+        <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor="#00bac6">
+          Purchase without Lenses
+        </Button>
       )}
 
-      {!selectedLens &&(<Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor= "#00bac6">
-        Purchase without Lenses
-      </Button>)}
-
-      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor= "#00bac6">
+      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor="#00bac6">
         Add to Wishlist
       </Button>
+
+      <Accordion allowMultiple>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+        fontWeight={"700"}
+        fontSize="lg">
+              Short Description
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <div dangerouslySetInnerHTML={{ __html: type.description }} />
+          </AccordionPanel>
+        </AccordionItem>
+
+        {/* <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+        fontWeight={"700"}
+        fontSize="lg">
+              Short Description
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <div dangerouslySetInnerHTML={{ __html: type.short_description }} />
+          </AccordionPanel>
+        </AccordionItem> */}
+
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+        fontWeight={"700"}
+        fontSize="lg">
+              Categories
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            {type.categories?.map((category) => (
+              <Text key={category.id}>{category.name}</Text>
+            )) || <Text>No categories available</Text>}
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+        fontWeight={"700"}
+        fontSize="lg">
+              Tags
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            {type.tags?.map((tag) => (
+              <Text key={tag.id}>{tag.name}</Text>
+            )) || <Text>No tags available</Text>}
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+        fontWeight={"700"}
+        fontSize="lg">
+              In Stock
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>{type.stock_status === "instock" ? "In Stock" : "Out of Stock"}</Text>
+          </AccordionPanel>
+        </AccordionItem>
+
+        {/* <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left">
+              Weight
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>{type.weight}g</Text>
+          </AccordionPanel>
+        </AccordionItem> */}
+      </Accordion>
     </Box>
   );
 };

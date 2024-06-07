@@ -16,17 +16,19 @@ import {
   Divider
 } from "@chakra-ui/react";
 import { CategoryContext } from "../../Context/CategoryContext";
+import { useSearch } from "../../Context/SearchContext";
 
 const NavbarCard5 = () => {
-  const { setSelectedCategory, categories, findCategoryIdBySlug, selectedCategory } = useContext(CategoryContext);
+  const { setSelectedCategory, findCategoryIdBySlug, selectedCategory ,categories} = useContext(CategoryContext);
+  const { setSearchValue } = useSearch();
 
   const handleCategoryClick = (slug) => {
     const categoryId = findCategoryIdBySlug(slug);
     if (categoryId) {
       setSelectedCategory(categoryId);
+      setSearchValue(""); // Clear the search value
     }
   };
-
   const menuButtonStyles = {
     bg: "#455666",
     fontSize: "15px",
@@ -36,7 +38,7 @@ const NavbarCard5 = () => {
     _hover: {
       borderBottom: "2px solid white",
     },
-    px: "4", // Adjust padding for alignment
+    px: "4",
   };
 
   return (
@@ -120,7 +122,7 @@ const NavbarCard5 = () => {
 
       <Menu>
         <Link to="/products">
-          <MenuButton {...menuButtonStyles} onClick={() => handleCategoryClick("computer-glasses")}>
+          <MenuButton {...menuButtonStyles} onClick={() => handleCategoryClick("eyeglasses")}>
             COMPUTER GLASSES
           </MenuButton>
         </Link>

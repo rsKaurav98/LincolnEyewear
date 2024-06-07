@@ -69,17 +69,19 @@ const NewProduct = () => {
 
   const handleSortChange = (value) => {
     setSort(value);
-    setPage(1); // Reset page to 1 when sorting changes
+    setPage(1);
   };
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
     setSearchValue("");
+    setPage(1);
   };
 
   const handleTagChange = (value) => {
     setSelectedTag(value);
     setSearchValue("");
+    setPage(1);
   };
 
   return (
@@ -96,11 +98,11 @@ const NewProduct = () => {
             <ProdFilter
               handleCategoryChange={(value) => {
                 handleCategoryChange(value);
-                setSearchValue(""); // Clear search value
+                setSearchValue(""); 
               }}
               handleTagChange={(value) => {
                 handleTagChange(value);
-                setSearchValue(""); // Clear search value
+                setSearchValue("");
               }}
               selectedCategory={selectedCategory}
               selectedTag={selectedTag}
@@ -117,11 +119,11 @@ const NewProduct = () => {
                   <ProdFilter
                     handleCategoryChange={(value) => {
                       handleCategoryChange(value);
-                      setSearchValue(""); // Clear search value
+                      setSearchValue(""); 
                     }}
                     handleTagChange={(value) => {
                       handleTagChange(value);
-                      setSearchValue(""); // Clear search value
+                      setSearchValue("");
                     }}
                     selectedCategory={selectedCategory}
                     selectedTag={selectedTag}
