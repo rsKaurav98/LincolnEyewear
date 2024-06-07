@@ -26,6 +26,7 @@ import {
   PopoverContent,
   PopoverBody
 } from "@chakra-ui/react";
+import { useSearch } from '../../Context/SearchContext';
 
 // export const NavbarCard1 = () => {
 //   return (
@@ -50,7 +51,7 @@ export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState('');
+  const { setSearchValue,searchValue } = useSearch();
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {

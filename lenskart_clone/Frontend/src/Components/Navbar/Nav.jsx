@@ -31,6 +31,7 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useSearch } from '../../Context/SearchContext';
 
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -38,7 +39,7 @@ function Nav() {
  // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState('');
+  const { setSearchValue,searchValue } = useSearch();
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
