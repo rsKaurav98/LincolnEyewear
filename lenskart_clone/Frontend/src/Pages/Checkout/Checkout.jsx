@@ -19,7 +19,7 @@ const Orders = () => {
 
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
-      let itemPrice = item.price * item.quantity;
+      let itemPrice = item.sale_price * item.quantity;
       if (item.selectedLens) {
         itemPrice += item.selectedLens.price=="Free"?0:item.selectedLens.price * item.quantity;
       }
@@ -405,7 +405,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                     ₹{Math.round((Number(el.price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0))*1.18)}.00
+                     ₹{Math.round((Number(el.sale_price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0))*1.18)}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">

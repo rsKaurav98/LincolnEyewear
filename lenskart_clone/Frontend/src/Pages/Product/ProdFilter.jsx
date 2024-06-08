@@ -11,6 +11,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
+import Loadingfilter from "./Loadingfilter";
 
 const ProdFilter = ({
   handleCategoryChange,
@@ -20,6 +21,7 @@ const ProdFilter = ({
 }) => {
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -52,9 +54,17 @@ const ProdFilter = ({
       }
     };
 
-    fetchCategories();
-    fetchTags();
+    const fetchData = async () => {
+      await Promise.all([fetchCategories(), fetchTags()]);
+      setLoading(false);
+    };
+
+    fetchData();
   }, []);
+
+  if (loading) {
+    return <Loadingfilter />;
+  }
 
   return (
     <Box>

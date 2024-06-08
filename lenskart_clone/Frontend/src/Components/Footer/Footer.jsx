@@ -33,7 +33,7 @@ const Footer = () => {
             gap="5"
           >
             <FooterCard1 type={services} heading="Helpful Links" />
-            <FooterCard2 type={about} heading="Contact Us" />
+            <FooterCard2 type={about} heading="Contact Us"/>
           </Grid>
         </Box>
       </Grid>

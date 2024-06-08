@@ -70,7 +70,7 @@ const ProdCard = ({
         color="teal.500"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        ₹{type.price}{" "}
+        ₹{type.sale_price}{" "}
         <span
           style={{
             fontSize: "18px",
@@ -89,7 +89,7 @@ const ProdCard = ({
             color: "black",
           }}
         >
-          {" "}(₹{(type.price * 1.18).toFixed(2)} with GST)
+          {" "}(₹{(type.sale_price * 1.18).toFixed(2)} with GST)
         </span>
       </Text>
       <br />

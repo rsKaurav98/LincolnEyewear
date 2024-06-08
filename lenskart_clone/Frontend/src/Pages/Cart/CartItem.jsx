@@ -128,7 +128,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.price}
+                    ₹{item.sale_price}
                   </Text>
                 </Flex>
               </Flex>
@@ -164,7 +164,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.selectedLens?.id==="sv1"?item.price:item.totalPrice}
+                    ₹{item.selectedLens?.id==="sv1"?item.sale_price:item.totalPrice}
                   </Text>
                 </Flex>
               </Flex>

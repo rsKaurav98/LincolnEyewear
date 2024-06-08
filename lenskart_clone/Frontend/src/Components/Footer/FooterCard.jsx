@@ -31,7 +31,7 @@ export const FooterCard1 = ({ type, heading }) => {
 
 export const FooterCard2 = ({ type, heading }) => {
   return (
-    <Box cursor="pointer">
+    <Box cursor="pointer" id="contact-details">
       <Text fontSize="25px">{heading}</Text>
       <Box lineHeight="8">
         {type.map((i, index) => (

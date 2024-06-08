@@ -1,11 +1,11 @@
 import { Spinner, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-const Loadingimg = () => {
+const Loadingfilter = () => {
   return (
-    <Flex direction="column" align="center" justify="center" height="100vh" bg="gray.100">
+    <Flex direction="column" align="center" justify="center" height="100vh">
       <Text fontSize="2xl" mb="8" color="gray.700">
-        Getting Images, please wait...
+        Getting Filters...
       </Text>
       <Spinner
         thickness="4px"
@@ -18,4 +18,4 @@ const Loadingimg = () => {
   );
 };
 
-export default Loadingimg;
+export default Loadingfilter;

@@ -31,7 +31,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
 
       if (existingItemIndex === -1) {
         const lensPrice = product.selectedLens ? parseFloat(product.selectedLens.price) : 0;
-        const newItem = { ...product, quantity: 1, totalPrice: parseFloat(product.price) + lensPrice };
+        const newItem = { ...product, quantity: 1, totalPrice: parseFloat(product.sale_price) + lensPrice };
         return {
           ...state,
           cart: [...cart, newItem]
@@ -59,7 +59,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
             return {
               ...item,
               quantity: newQuantity,
-              totalPrice: newQuantity * (parseFloat(item.price) + lensPrice)
+              totalPrice: newQuantity * (parseFloat(item.sale_price) + lensPrice)
             };
           }
           return item;
@@ -77,7 +77,7 @@ export const CartReducer = (state = initialState, { type, payload }) => {
               ? {
                   ...item,
                   quantity: newQuantity,
-                  totalPrice: newQuantity * (parseFloat(item.price) + lensPrice)
+                  totalPrice: newQuantity * (parseFloat(item.sale_price) + lensPrice)
                 }
               : null;
           }

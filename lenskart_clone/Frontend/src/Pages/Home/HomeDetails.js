@@ -38,59 +38,59 @@ export const HomeDetails = [
 export const HomeDetails1 = [
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Dec22/blend-edit/web.jpg",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 1"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Nov22/airplay/desk-play.jpg",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 2"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Nov22/LK-Airflex-desktop-banner.gif",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 3"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Nov22/tinted/launch-desk.gif",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 4"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Oct22/kiara/Refresh-Banner-Web.gif",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 5"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Nov22/mens-edit/desktop.jpg",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 1"
   },
   {
-    img: "https://static1.lenskart.com/media/desktop/img/Oct22/at/web.jpg",
+    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 2"
   },
   {
-    img: "https://static1.lenskart.com/media/desktop/img/Nov22/trans1.gif",
+    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 3"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Jan23/23jan/hooper/hooper-web.jpg",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 4"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Dec22/1-Dec/Homepage-Banner-web.gif",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 5"
   },
   {
-    img: "https://static1.lenskart.com/media/desktop/img/Jan23/desktoop.gif",
+    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 1"
   },
   {
     img:
-      "https://static1.lenskart.com/media/desktop/img/Dec22/new-collection/desktop.gif",
+      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
     caption: "Slide 2"
   }
 ];
