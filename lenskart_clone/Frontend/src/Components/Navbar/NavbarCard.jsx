@@ -143,6 +143,8 @@ export const NavbarCard2 = () => {
                       onClick={() => {
                         setisAuth(false);
                         localStorage.removeItem("user")
+                        localStorage.removeItem("token")
+                        localStorage.removeItem("customerData",decoded.data.user );
                         return <Navigate to="/" />;
                       }}
                       _hover={{ fontWeight: "bold" }}

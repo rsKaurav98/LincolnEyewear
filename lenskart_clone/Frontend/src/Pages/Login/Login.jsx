@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import {
   Checkbox,
   useDisclosure,
@@ -34,7 +35,7 @@ const Login = () => {
   
   const [incorrect, setIncorrect] = useState(false);
   const navigate = useNavigate();
-  const toast = useToast(); // Initialize useToast hook
+  const toast = useToast(); 
 
   const handleChange = (e) => {
     setIncorrect(false);
@@ -44,7 +45,6 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuth) {
-      // Navigate only if isAuth is true
       navigate("/");
     }
   }, [isAuth]);
@@ -68,8 +68,10 @@ const Login = () => {
 
         const data = await res.json();
         if (data.token) {
-          console.log(`login response`,data)
-          console.log(data.token)
+          const token = data.token
+         const decoded = jwtDecode(token);
+         
+          localStorage.setItem("customerData", JSON.stringify(decoded.data.user));
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data));
           setisAuth(true);

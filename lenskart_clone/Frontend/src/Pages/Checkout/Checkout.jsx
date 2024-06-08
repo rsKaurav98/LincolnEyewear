@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
@@ -6,13 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { cartReset } from "../../redux/CartPage/action";
 import { addToOrder } from "../../redux/order/order.actions";
 import { ShippingContext } from '../../Context/shippingContext';
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
 import {
   Box, Button, Flex, HStack, Image, Text, Grid
 } from "@chakra-ui/react";
 
 const Orders = () => {
   const { shippingDetails } = useContext(ShippingContext);
-  console.log(shippingDetails)
+  const [Razorpay, isLoaded] = useRazorpay();
   const navigate = useNavigate();
   const { cart, coupon } = useSelector((state) => state.cartManager);
   const dispatch = useDispatch();
@@ -21,12 +23,62 @@ const Orders = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.price * item.quantity;
       if (item.selectedLens) {
-        itemPrice += item.selectedLens.price=="Free"?0:item.selectedLens.price * item.quantity;
+        itemPrice += item.selectedLens.price == "Free" ? 0 : item.selectedLens.price * item.quantity;
       }
       return acc + itemPrice;
     }, 0);
     return totalPrice;
   };
+
+  const handlePayment = useCallback(async (orderData) => {
+    const token = localStorage.getItem("token");
+    console.log(orderData);
+    try {
+      const paymentResponse = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      if (!paymentResponse.ok) {
+        throw new Error('Failed to initiate payment');
+      }
+
+      const paymentData = await paymentResponse.json();
+
+      const options = {
+        key: "rzp_test_oxZqK1EarM2jYY",
+        amount: paymentData.amount,
+        currency: "INR",
+        name: "Lincoln Eyewear",
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: paymentData.orderid,
+        handler: (res) => {
+          console.log(res);
+        },
+        prefill: {
+          name: `${shippingDetails?.first_name} ${shippingDetails?.last_name}`,
+          email: shippingDetails?.email,
+          contact: shippingDetails.phone,
+        },
+        notes: {
+          address: shippingDetails.address,
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzpay = new Razorpay(options);
+      rzpay.open();
+    } catch (error) {
+      console.error("Error in payment processing:", error);
+    }
+  }, [Razorpay, shippingDetails]);
 
   const handleOrderCreation = async (paymentMethod) => {
     const orderData = {
@@ -78,35 +130,109 @@ const Orders = () => {
       }
     };
     const token = localStorage.getItem("token");
-    console.log(token)
 
     try {
       const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Include the token in the Authorization header
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(orderData)
       });
       const data = await response.json();
       console.log("Order created successfully:", data);
-      // Handle success (e.g., navigate to confirmation page, show success message, etc.)
+      return data; 
+
     } catch (error) {
       console.error("Error creating order:", error);
-      // Handle error (e.g., show error message)
+      throw error;
     }
   };
 
-  const handlePayNow = () => {
-    handleOrderCreation({
-      id: "razorpay",
-      title: "Credit/Debit card"
-    });
+  const handleOrderCreationCOD = async (paymentMethod) => {
+    const orderData = {
+      billing_address: {
+        first_name: shippingDetails?.first_name,
+        last_name: shippingDetails?.last_name,
+        company: "",
+        email: shippingDetails?.email,
+        phone: shippingDetails.phone,
+        address_1: shippingDetails.address,
+        address_2: "",
+        city: shippingDetails.city,
+        state: shippingDetails.state,
+        postcode: shippingDetails.pincode,
+        country: shippingDetails.country
+      },
+      shipping_address: {
+        first_name: shippingDetails?.first_name,
+        last_name: shippingDetails?.last_name,
+        company: "",
+        email: shippingDetails?.email,
+        phone: shippingDetails.phone,
+        address_1: shippingDetails.address,
+        address_2: "",
+        city: shippingDetails.city,
+        state: shippingDetails.state,
+        postcode: shippingDetails.pincode,
+        country: shippingDetails.country
+      },
+      products: cart.map(item => ({
+        id: item.id,
+        quantity: item.quantity,
+        meta_data: {
+          LensData: item.selectedLens ? item.selectedLens.name : "No Lens",
+          LensPrice: item.selectedLens ? (item.selectedLens.price === "Free" ? 0 : item.selectedLens.price) : 0
+        }
+      })),
+      customer_id: "",
+      shipping_method: {
+        title: "Free shipping",
+        id: "free_shipping:1",
+        total: 0
+      },
+      payment_method: paymentMethod,
+      order_status: "wc-completed",
+      meta_data: {
+        my_custom_key: "value-1",
+        another_key: "another value"
+      }
+    };
+    const token = localStorage.getItem("token");
+    
+
+    try {
+      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+      const data = await response.json();
+      console.log("Order created successfully:", data);
+
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
+
+  const handlePayNow = async () => {
+    try {
+      const orderData = await handleOrderCreation({
+        id: "razorpay",
+        title: "Credit/Debit card"
+      });
+      handlePayment(orderData); // pass the order data to handlePayment
+    } catch (error) {
+      console.error("Error during Pay Now process:", error);
+    }
   };
 
   const handleCashOnDelivery = () => {
-    handleOrderCreation({
+    handleOrderCreationCOD({
       id: "cod",
       title: "Cash on delivery"
     });
@@ -373,7 +499,7 @@ const Orders = () => {
                     color="gray.500"
                     fontWeight="bold"
                   >
-                    {el?.name|| "Vincent Chase Eyeglasses"}
+                    {el?.name || "Vincent Chase Eyeglasses"}
                   </Box>
                   <Box
                     m="10px 5px 5px 0px"
@@ -382,7 +508,7 @@ const Orders = () => {
                     color="gray.500"
                     fontWeight="bold"
                   >
-                    {el.selectedLens?el.selectedLens.name: "No Lens"}
+                    {el.selectedLens ? el.selectedLens.name : "No Lens"}
                   </Box>
                   <Box fontSize="15px" mb="4px" fontWeight="500">
 
@@ -405,7 +531,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                     ₹{Math.round((Number(el.price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0))*1.18)}.00
+                      ₹{Math.round((Number(el.price) + Number(el.selectedLens ? (el.selectedLens.price === "Free" ? 0 : el.selectedLens.price) : 0)) * 1.18)}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">
