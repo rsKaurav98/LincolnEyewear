@@ -48,6 +48,7 @@ const Orders = () => {
       }
 
       const paymentData = await paymentResponse.json();
+      console.log(paymentData)
 
       const options = {
         key: "rzp_test_oxZqK1EarM2jYY",
@@ -58,7 +59,7 @@ const Orders = () => {
         image: "https://example.com/your_logo",
         order_id: paymentData.orderid,
         handler: (res) => {
-          console.log(res);
+          console.log("Razorpay payment response:", res);
         },
         prefill: {
           name: `${shippingDetails?.first_name} ${shippingDetails?.last_name}`,
