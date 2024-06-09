@@ -35,15 +35,15 @@ const NewProduct = () => {
       let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
-      
-     
+
+
       if (sort === "lowtohigh") {
         sortQuery = "&orderby=price&order=asc";
       } else if (sort === "hightolow") {
         sortQuery = "&orderby=price&order=desc";
       }
 
-     
+
       if (searchValue) {
         setSelectedCategory("");
         setSelectedTag("");
@@ -105,12 +105,12 @@ const NewProduct = () => {
             top="0"
             alignSelf="start"
             flexDirection="column"
-            
+
           >
             <ProdFilter
               handleCategoryChange={(value) => {
                 handleCategoryChange(value);
-                setSearchValue(""); 
+                setSearchValue("");
               }}
               handleTagChange={(value) => {
                 handleTagChange(value);
@@ -131,7 +131,7 @@ const NewProduct = () => {
                   <ProdFilter
                     handleCategoryChange={(value) => {
                       handleCategoryChange(value);
-                      setSearchValue(""); 
+                      setSearchValue("");
                     }}
                     handleTagChange={(value) => {
                       handleTagChange(value);
@@ -159,56 +159,50 @@ const NewProduct = () => {
             <Flex
               justifyContent="space-between"
               alignItems="center"
-              p="7px"
-              bg="#e2e8f0"
-              borderColor="#ededed"
+              p="10px"
+              bg="#f7fafc"
+              borderBottomWidth="1px"
+              borderColor="#cbd5e0"
               flexWrap="wrap"
             >
-              <Text fontSize="15px" color="gray.600" fontWeight="500">
-                EYEGLASSES & SUNGLASSES
-              </Text>
-              <Flex alignItems="center" display={{ md: "inherit", base: "none" }}>
-              </Flex>
-              <Flex>
-                <Flex alignItems="center" mr={{ base: "8px", md: "0" }}>
+              <Flex alignItems="center" flex="1" flexWrap="wrap" justify="space-between">
+                <Text fontSize="18px" color="#2d3748" fontWeight="600" mr="10px">
+                  EYEGLASSES & SUNGLASSES
+                </Text>
+                <Flex alignItems="center">
                   <TbArrowsUpDown color="green" fontWeight="bold" />
-                  <Text fontWeight="bold" color="green" fontSize="15px" mr="2%">
+                  <Text fontWeight="bold" color="green" fontSize="15px" ml="5px" mr="5px">
                     SortBy
                   </Text>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rightIcon={<ChevronDownIcon />}
+                      p="0px"
+                      fontSize="16px"
+                      bg=""
+                      textAlign="left"
+                    >
+                      {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
+                    </MenuButton>
+                    <MenuList placement="bottom" zIndex="10">
+                      <MenuItem onClick={() => handleSortChange("")}>Select</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("lowtohigh")}>Price: low to high</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("hightolow")}>Price: high to low</MenuItem>
+                    </MenuList>
+                  </Menu>
                 </Flex>
-
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rightIcon={<ChevronDownIcon />}
-                    ml={{ base: "2px", md: "4px" }}
-                    mt={{ base: "8px", md: "0" }}
-                    p="0px"
-                    fontSize="16px"
-                    bg=""
-                    w={{ base: "100%", sm: "auto" }}
-                  >
-                    {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
-                  </MenuButton>
-                  <MenuList placement="bottom" zIndex="10" w={{ base: "100%", sm: "auto" }}>
-                    <MenuItem onClick={() => handleSortChange("")}>Select</MenuItem>
-                    <MenuItem onClick={() => handleSortChange("lowtohigh")}>Price: low to high</MenuItem>
-                    <MenuItem onClick={() => handleSortChange("hightolow")}>Price: high to low</MenuItem>
-                  </MenuList>
-                </Menu>
-                <IconButton
-                  aria-label="Open filter menu"
-                  icon={<FaFilter />}
-                  display={{ base: "inherit", xl: "none" }}
-                  onClick={onOpen}
-                  ml={{ base: "7px", md: "8px" }}
-                  mt={{ base: "8px", md: "0" }}
-                  fontSize="16px"
-                  bg=""
-                  w={{ base: "100%", sm: "auto" }}
-                />
               </Flex>
+              <IconButton
+                aria-label="Open filter menu"
+                icon={<FaFilter />}
+                onClick={onOpen}
+                fontSize={{ base: "30px", md: "26px" }}
+                bg=""
+                ml={{ base: "0", md: "8px" }}
+              />
             </Flex>
+
             {products.length !== 0 && (
               <>
                 <Text mt="5px" textAlign="center" fontSize="15px">
