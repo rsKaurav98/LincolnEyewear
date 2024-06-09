@@ -33,13 +33,13 @@ const Home = () => {
       <Navbar />
       <HomeCard type={HomeDetails} />
       <HomeCard1 type={HomeDetails1} />
-      <Link to="/products">
+      {/* <Link to="/products">
       <Image
-        src="https://static1.lenskart.com/media/desktop/img/Apr22/Bannerforexport.jpg"
+        src="https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png"
         alt="img"
         mt="10"
       />
-      </Link>
+      </Link> */}
       <HomeCard2 type={HomeDetails2} src="https://i.imgur.com/Gry0Q5D.png" />
       <br />
       <HomeCard4

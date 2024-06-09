@@ -24,7 +24,7 @@ const Wishlist = () => {
     const existingItemIndex = cart.findIndex((item) => item.id === data.id && item.selectedLens?.id === data.selectedLens?.id);
     if (existingItemIndex === -1) {
       data.quantity = 1;
-      data.totalPrice = parseFloat(data.price) + (data.selectedLens ? parseFloat(data.selectedLens.price) : 0);
+      data.totalPrice = parseFloat(data.sale_price) + (data.selectedLens ? parseFloat(data.selectedLens.price) : 0);
       dispatch(addToCart(data));
       dispatch(removeFromWishlist(data.id, data.selectedLens?.id));
       setTimeout(() => {
@@ -178,7 +178,7 @@ const Wishlist = () => {
                           {item.name}
                         </Text>
                         <Text fontSize="lg" fontWeight="bold">
-                          Price : ₹ {item.price}.00 /-
+                          Price : ₹ {item.sale_price}.00 /-
                         </Text>
                         {item.selectedLens && (
                           <Text fontSize="lg" fontWeight="bold">
@@ -199,7 +199,7 @@ const Wishlist = () => {
                           color="gray.600"
                           textTransform="capitalize"
                         >
-                          Total : ₹ {parseFloat(item.price) + parseFloat(item.selectedLens?.price || 0)}
+                          Total : ₹ {parseFloat(item.sale_price) + parseFloat(item.selectedLens?.price || 0)}
                         </Text>{" "}
                       </Box>
                     </Grid>

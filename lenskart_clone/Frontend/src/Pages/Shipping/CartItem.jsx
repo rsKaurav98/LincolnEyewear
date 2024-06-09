@@ -6,7 +6,7 @@ export default function ShippingPage() {
 
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
-      let itemPrice = item.price * item.quantity;
+      let itemPrice = item.sale_price * item.quantity;
       if (item.selectedLens) {
         itemPrice += item.selectedLens.price==="Free"?0:item.selectedLens.price * item.quantity;
       }
@@ -100,10 +100,10 @@ export default function ShippingPage() {
                       textAlign={{ lg: "left", sm: "center", base: "center" }}
                     >
                       <Text color="#9999b3" fontWeight="500" fontSize="16px">
-                        <s>{"₹" + el.price}</s>
+                        <s>{"₹" + el.sale_price}</s>
                       </Text>
                       <Text color="#000042" fontWeight="700">
-                        {"₹" + el.price}
+                        {"₹" + el.sale_price}
                       </Text>
                     </Flex>
                   </Box>
@@ -148,7 +148,7 @@ export default function ShippingPage() {
           <Flex justifyContent={"space-between"} fontSize="15px" mb={2}>
             <Text fontWeight="bold">TAX COLLECTED</Text>
             <Text fontWeight="medium">
-              + ₹{Math.round((getTotalPrice() - (coupon || 0)) * 0.18)}.00
+              + ₹{Math.round((getTotalPrice()) * 0.18)}.00
             </Text>
           </Flex>
           <Divider mb={2} border="1px solid" />

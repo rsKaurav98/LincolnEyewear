@@ -276,7 +276,7 @@ const Productlist = () => {
                       {el.productType}
                     </Td>
                     <Td fontSize="15px">₹ {el.mPrice}</Td>
-                    <Td fontSize="15px">₹ {el.price}</Td>
+                    <Td fontSize="15px">₹ {el.sale_price}</Td>
                     <Td fontSize="15px">{el.rating}</Td>
                     <Td fontSize="15px">{el.imageTsrc}</Td>
                   </Tr>

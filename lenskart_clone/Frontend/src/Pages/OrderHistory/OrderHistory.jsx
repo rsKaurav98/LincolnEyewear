@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Text, Stack, Heading, Grid, Button, Collapse,Image } from "@chakra-ui/react";
+import { Box, Text, Stack, Heading, Grid, Button, Collapse,Image,Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
@@ -27,7 +27,7 @@ const OrderHistory = () => {
 
   const calculateTotalPrice = (order) => {
     return order.reduce((total, product) => {
-      const productPrice = Number(product.price);
+      const productPrice = Number(product.sale_price);
       const lensPrice = product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : Number(product.selectedLens.price)) : 0;
       return total + (productPrice + lensPrice) * 1.18;
     }, 0);
@@ -71,7 +71,7 @@ const OrderHistory = () => {
               return (
                 <Box key={index} borderRadius="20px" boxShadow="lg" p={4} bg="whiteAlpha.900">
                   <Box onClick={() => toggleOrderDetails(index)} cursor="pointer">
-                    <Grid templateColumns="1fr auto" gap={4}>
+                    <Flex flexDirection={{base:"column",md:"row"}} justify="space-between">
                       <Box>
                         <Text fontWeight="bold">Order Date: {currentDate}</Text>
                         <Text>Number of Products: {order.length}</Text>
@@ -80,7 +80,7 @@ const OrderHistory = () => {
                       <Box>
                         <Text color="blue.500" fontWeight="bold">Click To See Details</Text>
                       </Box>
-                    </Grid>
+                    </Flex>
                   </Box>
                   <Collapse in={expandedOrder === index} animateOpacity>
                     <Box mt={4}>
@@ -111,7 +111,7 @@ const OrderHistory = () => {
                                 {product.selectedLens ? product.selectedLens.name : "No Lens"}
                               </Text>
                               <Text fontWeight="bold" fontSize="18px">
-                                Price: ₹{Math.round((Number(product.price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
+                                Price: ₹{Math.round((Number(product.sale_price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
                               </Text>
                               <Text fontWeight="500" fontSize="15px">
                                 Status : Completed

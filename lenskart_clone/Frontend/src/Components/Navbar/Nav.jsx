@@ -33,19 +33,27 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useSearch } from '../../Context/SearchContext';
 
+
+
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
- // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
+  // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { setSearchValue,searchValue } = useSearch();
+  const { setSearchValue, searchValue } = useSearch();
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       navigate(`/products?search=${searchValue}`);
     }
   }
+  const scrollToContact = () => {
+    const contactDetails = document.getElementById("contact-details");
+    if (contactDetails) {
+      contactDetails.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <Box
@@ -60,7 +68,7 @@ function Nav() {
             <Image
               src={logo}
               alt="logo"
-              // w={{ lg: "75%", md: "75%", sm: "75%", base: "75%" }}
+            // w={{ lg: "75%", md: "75%", sm: "75%", base: "75%" }}
             />
           </Link>
         </Box>
@@ -115,7 +123,7 @@ function Nav() {
                         alignItems="flex-start"
                       >
                         <Text mt="10px" fontSize="20px" color="blackAlpha.900">
-                          
+
                           {Authdata.user_display_name}
                         </Text>
                         {/* <Text color="gray.500" mt="5%" fontSize="sm">
@@ -211,18 +219,8 @@ function Nav() {
                       Wishlist
                     </Box>
                   </Link>
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      fontSize="15px"
-                      p="4% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                    >
-                      Manage Notification
-                    </Box>
-                  </Link>
-                  <Link>
+
+                  <Link to="/" onClick={scrollToContact}>
                     <Box
                       borderBottom="1px solid white"
                       fontSize="15px"
@@ -239,83 +237,10 @@ function Nav() {
                   SHOP NOW
                 </Heading>
                 <Box display="flex" flexDirection="column" fontSize="16px">
-                  <Accordion defaultIndex={[0]} allowMultiple w="100%" m="auto">
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box
-                            as="span"
-                            flex="1"
-                            textAlign="left"
-                            fontWeight="500"
-                          >
-                            Men
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Link to="/products">
-                          <Box>
-                            <Text pb="2">EYEGLASSES</Text>
-                            <Text pb="2">COMPUTER GLASSES</Text>
-                            {/* <Text pb="2">CONTACT LENSES</Text> */}
-                            <Text pb="2">SUN GLASSES</Text>
-                          </Box>
-                        </Link>
-                      </AccordionPanel>
-                    </AccordionItem>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box
-                            as="span"
-                            flex="1"
-                            textAlign="left"
-                            fontWeight="500"
-                          >
-                            Women
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={5}>
-                        <Link to="/products">
-                          <Box>
-                            <Text pb="2">EYEGLASSES</Text>
-                            <Text pb="2">COMPUTER GLASSES</Text>
-                            {/* <Text pb="2">CONTACT LENSES</Text> */}
-                            <Text pb="2">SUN GLASSES</Text>
-                          </Box>
-                        </Link>
-                      </AccordionPanel>
-                    </AccordionItem>
-                    <AccordionItem>
-                      <h2>
-                        <AccordionButton>
-                          <Box
-                            as="span"
-                            flex="1"
-                            textAlign="left"
-                            fontWeight="500"
-                          >
-                            Kids
-                          </Box>
-                          <AccordionIcon />
-                        </AccordionButton>
-                      </h2>
-                      <AccordionPanel pb={4}>
-                        <Link to="/products">
-                          <Box>
-                            <Text pb="2">EYEGLASSES</Text>
-                            <Text pb="2">COMPUTER GLASSES</Text>
-                            {/* <Text pb="2">CONTACT LENSES</Text> */}
-                            <Text pb="2">SUN GLASSES</Text>
-                          </Box>
-                        </Link>
-                      </AccordionPanel>
-                    </AccordionItem>
-                  </Accordion>
+                  <Text pb="2" borderBottom="1px solid white">EYEGLASSES</Text>
+                  <Text pb="2" borderBottom="1px solid white">COMPUTER GLASSES</Text>
+                  {/* <Text pb="2">CONTACT LENSES</Text> */}
+                  <Text pb="2" borderBottom="1px solid white">SUN GLASSES</Text>
                 </Box>
                 <Heading mt="15%" color="black" fontSize="15px" mb="5%">
                   Our Services

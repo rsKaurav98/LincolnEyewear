@@ -67,14 +67,14 @@ export const NavbarCard2 = () => {
             <Image src={logo} alt="logo" />
           </Link>
         </Box>
-        <HStack w="85%" m="auto" display="flex" justify="space-between">
+        <HStack w="80%" m="auto" display="flex" justify="space-between">
           {/* <Box w="15%">
             <HStack fontSize="18px" fontWeight="bold">
               <FiPhoneCall />
               <Text>1800-111-111</Text>
             </HStack>
           </Box> */}
-          <Box w="55%">
+          <Box w="50%">
             <input
               type="text"
               placeholder="Search for Eyeglasses, Sunglasses and more.."
@@ -92,8 +92,8 @@ export const NavbarCard2 = () => {
               onKeyDown={handleKeyDown}
             />
           </Box>
-          <Box w="30%"></Box>
-          <HStack w="45%">
+          <Box w="20%"></Box>
+          <HStack w="30%" justifyItems="flex-end">
             <Button
               width="fit-content"
               h="45px"

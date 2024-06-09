@@ -15,6 +15,7 @@ const CartEmpty = () => {
         gap="5"
         justifyContent="center"
         alignItems="center"
+        minHeight="600"
       >
         <Heading
           as="h1"
