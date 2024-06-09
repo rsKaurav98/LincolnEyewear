@@ -27,7 +27,7 @@ const OrderHistory = () => {
 
   const calculateTotalPrice = (order) => {
     return order.reduce((total, product) => {
-      const productPrice = Number(product.sale_price);
+      const productPrice = Number(product.price);
       const lensPrice = product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : Number(product.selectedLens.price)) : 0;
       return total + (productPrice + lensPrice) * 1.18;
     }, 0);
@@ -111,7 +111,7 @@ const OrderHistory = () => {
                                 {product.selectedLens ? product.selectedLens.name : "No Lens"}
                               </Text>
                               <Text fontWeight="bold" fontSize="18px">
-                                Price: ₹{Math.round((Number(product.sale_price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
+                                Price: ₹{Math.round((Number(product.price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
                               </Text>
                               <Text fontWeight="500" fontSize="15px">
                                 Status : Completed

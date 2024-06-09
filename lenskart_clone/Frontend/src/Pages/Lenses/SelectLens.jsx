@@ -55,8 +55,8 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                 </Text>
               ))}
             </Box>
-            <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.sale_price === "Free" ? "#90EE90" : ""}>
-              ₹{item.sale_price}
+            <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.price === "Free" ? "#90EE90" : ""}>
+              ₹{item.price}
             </Text>
           </Box>
           <Box width="20%">
