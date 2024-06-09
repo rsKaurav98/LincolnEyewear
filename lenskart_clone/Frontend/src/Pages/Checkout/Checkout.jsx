@@ -57,7 +57,7 @@ const Orders = () => {
         name: "Lincoln Eyewear",
         description: "Test Transaction",
         image: "https://example.com/your_logo",
-        order_id: paymentData.orderid,
+        order_id: paymentData.order_id,
         handler: (res) => {
           console.log("Razorpay payment response:", res);
         },
@@ -73,6 +73,8 @@ const Orders = () => {
           color: "#3399cc",
         },
       };
+
+      console.log(options);
 
       const rzpay = new Razorpay(options);
       rzpay.open();

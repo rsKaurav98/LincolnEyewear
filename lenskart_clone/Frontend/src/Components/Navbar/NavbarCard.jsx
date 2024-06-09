@@ -93,7 +93,7 @@ export const NavbarCard2 = () => {
             />
           </Box>
           <Box w="20%"></Box>
-          <HStack w="30%" justifyItems="flex-end">
+          <HStack w="45%">
             <Button
               width="fit-content"
               h="45px"
