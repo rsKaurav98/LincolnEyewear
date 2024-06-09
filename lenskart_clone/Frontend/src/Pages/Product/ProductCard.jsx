@@ -113,7 +113,7 @@ const ProductCard = ({ type }) => {
                       color="gray.400"
                       fontSize="14px"
                     >
-                      {ele.slug}{" "}
+                      {ele.slug?ele.slug:"eyewear"}{" "}
                     </Text>
                     <Text
                       mt="5px"
