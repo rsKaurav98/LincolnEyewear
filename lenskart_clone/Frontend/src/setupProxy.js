@@ -1,12 +1,15 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// src/setupProxy.js
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
-module.exports = function(app) {
+export default function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
       target: 'https://lincolneyewear.com',
       changeOrigin: true,
-      secure: false,  
+      pathRewrite: {
+        '^/api': '', // Rewrite path to match the API endpoint
+      },
     })
   );
-};
+}
