@@ -10,7 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import { FaRegEye } from "react-icons/fa";  // Importing an eye icon for the try on button
 import SelectLens from "../Lenses/SelectLens";
+import { useNavigate } from "react-router-dom";  // Importing useNavigate for routing
 
 const ProdCard = ({
   type,
@@ -22,11 +24,16 @@ const ProdCard = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
+  const navigate = useNavigate();  // Initializing useNavigate for navigation
 
   const handleLensClick = (lens) => {
     handleLensCart(lens);
     setSelectedLensName(lens.name);
     onClose();
+  };
+
+  const handleTryOn = () => {
+    navigate("/tryon");
   };
 
   const buttonStyles = {
@@ -121,6 +128,23 @@ const ProdCard = ({
 
       <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor="#00bac6">
         Add to Wishlist
+      </Button>
+
+      <Button
+        sx={buttonStyles}
+        onClick={handleTryOn}
+        bgColor="#00bac6"
+        leftIcon={<FaRegEye />}  // Adding the eye icon
+        style={{
+          boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.3)",  // 3D effect
+          transform: "translateY(0)",
+          transition: "transform 0.2s",
+        }}
+        _hover={{
+          transform: "translateY(-2px)",
+        }}
+      >
+        3D Try On
       </Button>
 
       <Accordion allowMultiple defaultIndex={[0]}>

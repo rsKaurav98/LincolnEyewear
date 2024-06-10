@@ -202,6 +202,7 @@ const NewProduct = () => {
                 fontSize={{ base: "30px", md: "26px" }}
                 bg=""
                 ml={{ base: "0", md: "8px" }}
+                display={{base:"inherit",md:"none"}}
               />
             </Flex>
 
