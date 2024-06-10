@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import glassesSrc from './assets/images/sunglasses.png';
+import glassesSrc from '../../Images/sunglasses.png';
 
 const VirtualTryOn = () => {
   const webcamRef = useRef(null);
