@@ -28,6 +28,7 @@ const AllRoutes = () => {
   }, [location.pathname]);
   return (
     <Routes>
+      <Route path="/tryon" element={<VirtualTryOn/>}/>
       <Route path="/PP" element={<PrivacyPolicy />} />
       <Route path="/TC" element={<TC />} />
       <Route path="/CR" element={<CR />} />

@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SelectLens from "../Lenses/SelectLens";
 
 const ProdCard = ({
@@ -22,6 +23,7 @@ const ProdCard = ({
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
+  const navigate = useNavigate();
 
   const handleLensClick = (lens) => {
     handleLensCart(lens);
@@ -41,6 +43,10 @@ const ProdCard = ({
       xs: 14,
       md: 16,
     },
+  };
+
+  const handleTryOnClick = () => {
+    navigate('/tryon');
   };
 
   return (
@@ -123,6 +129,10 @@ const ProdCard = ({
         Add to Wishlist
       </Button>
 
+      <Button sx={buttonStyles} onClick={handleTryOnClick} bgColor="#00bac6">
+        Try On
+      </Button>
+
       <Accordion allowMultiple defaultIndex={[0]}>
         <AccordionItem>
           <AccordionButton>
@@ -137,20 +147,6 @@ const ProdCard = ({
             <div dangerouslySetInnerHTML={{ __html: type.description }} />
           </AccordionPanel>
         </AccordionItem>
-
-        {/* <AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
-              Short Description
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <div dangerouslySetInnerHTML={{ __html: type.short_description }} />
-          </AccordionPanel>
-        </AccordionItem> */}
 
         <AccordionItem>
           <AccordionButton>
@@ -197,18 +193,6 @@ const ProdCard = ({
             <Text>{type.stock_status === "instock" ? "In Stock" : "Out of Stock"}</Text>
           </AccordionPanel>
         </AccordionItem>
-
-        {/* <AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Weight
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <Text>{type.weight}g</Text>
-          </AccordionPanel>
-        </AccordionItem> */}
       </Accordion>
     </Box>
   );
