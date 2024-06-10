@@ -12,6 +12,7 @@ import { CategoryContext } from "../../Context/CategoryContext";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
+import base64 from 'base-64';
 
 const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
 const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
@@ -36,13 +37,11 @@ const NewProduct = () => {
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
 
-
       if (sort === "lowtohigh") {
         sortQuery = "&orderby=price&order=asc";
       } else if (sort === "hightolow") {
         sortQuery = "&orderby=price&order=desc";
       }
-
 
       if (searchValue) {
         setSelectedCategory("");
@@ -52,7 +51,12 @@ const NewProduct = () => {
       }
 
       const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}&per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`
+        `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`,
+        {
+          headers: {
+            'Authorization': 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
+          }
+        }
       );
 
       if (!response.ok) {
@@ -105,7 +109,6 @@ const NewProduct = () => {
             top="0"
             alignSelf="start"
             flexDirection="column"
-
           >
             <ProdFilter
               handleCategoryChange={(value) => {
@@ -153,7 +156,6 @@ const NewProduct = () => {
             m={0}
             pos="sticky"
             top="0"
-            // alignSelf="start"
             minH="600"
           >
             <Flex

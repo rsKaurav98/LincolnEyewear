@@ -30,6 +30,36 @@ const Orders = () => {
     return totalPrice;
   };
 
+  const handlePaymentSuccess = async (order_id, razorpay_payment_id, razorpay_signature) => {
+    const token = localStorage.getItem("token");
+
+    const body = {
+      order_id: order_id,
+      razorpay_payment_id: razorpay_payment_id,
+      razorpay_signature: razorpay_signature
+    };
+
+    try {
+      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentSuccess`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to record payment success');
+      }
+
+      const data = await response.json();
+      console.log("Payment success recorded:", data);
+    } catch (error) {
+      console.error("Error in payment success processing:", error);
+    }
+  };
+
   const handlePayment = useCallback(async (orderData) => {
     const token = localStorage.getItem("token");
     console.log(orderData);
@@ -60,6 +90,7 @@ const Orders = () => {
         order_id: paymentData.order_id,
         handler: (res) => {
           console.log("Razorpay payment response:", res);
+          handlePaymentSuccess(orderData.order_id, res.razorpay_payment_id, res.razorpay_signature);
         },
         prefill: {
           name: `${shippingDetails?.first_name} ${shippingDetails?.last_name}`,
@@ -144,8 +175,8 @@ const Orders = () => {
         body: JSON.stringify(orderData)
       });
       const data = await response.json();
-      console.log("Order created successfully:", data);
-      return data; 
+      console.log("/createOrder response :", data);
+      return data;
 
     } catch (error) {
       console.error("Error creating order:", error);
@@ -203,7 +234,6 @@ const Orders = () => {
       }
     };
     const token = localStorage.getItem("token");
-    
 
     try {
       const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
@@ -234,14 +264,18 @@ const Orders = () => {
     }
   };
 
-  const handleCashOnDelivery = () => {
-    handleOrderCreationCOD({
-      id: "cod",
-      title: "Cash on delivery"
-    });
-    dispatch(addToOrder(cart));
-    navigate("/confirm");
-    dispatch(cartReset());
+  const handleCOD = async () => {
+    try {
+      await handleOrderCreationCOD({
+        id: "cod",
+        title: "Cash on Delivery (COD)"
+      });
+      dispatch(addToOrder(cart));
+      dispatch(cartReset());
+      navigate("/ordersuccess");
+    } catch (error) {
+      console.error("Error during COD process:", error);
+    }
   };
 
   const today = new Date();
@@ -444,7 +478,7 @@ const Orders = () => {
                   borderRadius="4px"
                   p="15px 35px"
                   _hover={{ backgroundColor: "teal" }}
-                  onClick={handleCashOnDelivery}
+                  onClick={handleCOD}
                 >
                   CASH ON DELIVERY
                 </Button>
