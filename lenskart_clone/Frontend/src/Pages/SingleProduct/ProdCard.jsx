@@ -50,6 +50,10 @@ const ProdCard = ({
     },
   };
 
+  const handleTryOnClick = () => {
+    navigate('/tryon');
+  };
+
   return (
     <Box>
       <Text
@@ -162,20 +166,6 @@ const ProdCard = ({
           </AccordionPanel>
         </AccordionItem>
 
-        {/* <AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
-              Short Description
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <div dangerouslySetInnerHTML={{ __html: type.short_description }} />
-          </AccordionPanel>
-        </AccordionItem> */}
-
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
@@ -221,18 +211,6 @@ const ProdCard = ({
             <Text>{type.stock_status === "instock" ? "In Stock" : "Out of Stock"}</Text>
           </AccordionPanel>
         </AccordionItem>
-
-        {/* <AccordionItem>
-          <AccordionButton>
-            <Box flex="1" textAlign="left">
-              Weight
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel pb={4}>
-            <Text>{type.weight}g</Text>
-          </AccordionPanel>
-        </AccordionItem> */}
       </Accordion>
     </Box>
   );
