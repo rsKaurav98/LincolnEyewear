@@ -5,11 +5,10 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import glassesSrc from '../../assets/images/sunglasses.png';
-import { Box, Text, Center } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 
 const VirtualTryOn = forwardRef((props, ref) => {
-  const { isOpen, onClose } = props;
+  const { isOpen, imageSrc } = props;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [model, setModel] = useState(null);
@@ -49,8 +48,9 @@ const VirtualTryOn = forwardRef((props, ref) => {
 
         // Glasses Mesh
         const textureLoader = new THREE.TextureLoader();
-        textureLoader.load(glassesSrc, (texture) => {
-          const geometry = new THREE.PlaneGeometry(2, 1);
+        const proxyUrl = 'https://api.allorigins.win/raw?url=';
+        textureLoader.load(proxyUrl + imageSrc, (texture) => {
+          const geometry = new THREE.PlaneGeometry(3, 1.5);
           const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
           const glasses = new THREE.Mesh(geometry, material);
           scene.add(glasses);
@@ -127,7 +127,6 @@ const VirtualTryOn = forwardRef((props, ref) => {
       webcamRef.current.srcObject = null;
     }
   };
-
   return (
     <Center position="relative" width="80vw" height="80vh" bg="transparent">
       <Box

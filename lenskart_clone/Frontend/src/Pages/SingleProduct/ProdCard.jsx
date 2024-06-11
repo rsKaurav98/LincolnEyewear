@@ -28,6 +28,7 @@ const ProdCard = ({
   handleLensCart,
   selectedLens,
   totalPrice,
+  virtualTryOnImage
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpen: isTryOnOpen, onOpen: onTryOnOpen, onClose: onTryOnClose } = useDisclosure();
@@ -229,7 +230,7 @@ const ProdCard = ({
          alignItems="center">
           <ModalCloseButton />
           <ModalBody>
-            <VirtualTryOn ref={tryOnRef} isOpen={isTryOnOpen} onClose={onTryOnClose} />
+            <VirtualTryOn ref={tryOnRef} isOpen={isTryOnOpen} onClose={onTryOnClose} imageSrc={virtualTryOnImage} />
           </ModalBody>
           <ModalFooter>
           
