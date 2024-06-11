@@ -113,7 +113,7 @@ function Nav() {
                   >
                     <Flex w="100%">
                       <Avatar
-                        src="https://bit.ly/broken-link"
+                        src="https://i.pinimg.com/originals/46/3e/3a/463e3a853866fd0615fead90841838dc.jpg"
                         size="lg"
                         mr="2"
                       />
@@ -237,12 +237,18 @@ function Nav() {
                   SHOP NOW
                 </Heading>
                 <Box display="flex" flexDirection="column" fontSize="16px">
+                <Link to="/products?category=52">
                   <Text pb="2" borderBottom="1px solid white">EYEGLASSES</Text>
+                  </Link>
+                  <Link to="/products?category=52">
                   <Text pb="2" borderBottom="1px solid white">COMPUTER GLASSES</Text>
+                  </Link>
                   {/* <Text pb="2">CONTACT LENSES</Text> */}
+                  <Link to="/products?category=52">
                   <Text pb="2" borderBottom="1px solid white">SUN GLASSES</Text>
+                  </Link>
                 </Box>
-                <Heading mt="15%" color="black" fontSize="15px" mb="5%">
+                {/* <Heading mt="15%" color="black" fontSize="15px" mb="5%">
                   Our Services
                 </Heading>
                 <Box display="flex" flexDirection="column" fontSize="16px">
@@ -328,12 +334,12 @@ function Nav() {
                       Dowloads Apps
                     </Box>
                   </Link>
-                </Box>
+                </Box> */}
                 <Heading mt="15%" color="black" fontSize="15px" mb="5%">
                   FAQ's & POLICIES
                 </Heading>
                 <Box display="flex" flexDirection="column" fontSize="16px">
-                  <Link>
+                  <Link to="/PP">
                     <Box
                       borderBottom="0.1px solid gray"
                       p="5% 0%"
@@ -341,10 +347,10 @@ function Nav() {
                       _hover={{ fontWeight: "bold" }}
                       fontSize="15px"
                     >
-                      Frequently Asked Questions
+                      Privacy Policy
                     </Box>
                   </Link>
-                  <Link>
+                  <Link to="/CR">
                     <Box
                       borderBottom="0.1px solid gray"
                       p="5% 0%"
@@ -355,14 +361,14 @@ function Nav() {
                       Cancellation & Return Policy
                     </Box>
                   </Link>
-                  <Link>
+                  <Link to="/SD">
                     <Box
                       p="5% 0%"
                       color="black"
                       _hover={{ fontWeight: "bold" }}
                       fontSize="15px"
                     >
-                      Cobrowsing
+                      Shipping & Delivery
                     </Box>
                   </Link>
                 </Box>

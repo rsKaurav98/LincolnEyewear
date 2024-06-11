@@ -1,42 +1,62 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Box, Text, Stack, Heading, Grid, Button, Collapse,Image,Flex } from "@chakra-ui/react";
+// OrderHistory.jsx
+
+import React, { useState, useEffect } from "react";
+import { Box, Text, Stack, Heading, Grid, Collapse, Image, Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
-import { removeFromOrders } from "../../redux/order/order.actions";
+import Loadingimg from "../SingleProduct/loadingimg";
 
 const OrderHistory = () => {
-  const orders = useSelector((store) => store.orderManager.order);
-  const dispatch = useDispatch();
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, "0");
-  const day = today.getDate().toString().padStart(2, "0");
-  const currentDate = `${day}-${month}-${year}`;
-
+  const [orders, setOrders] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState(null);
+  const [error, setError] = useState(null);
+  const customerData = JSON.parse(localStorage.getItem("customerData"));
+  const customerId = customerData ? customerData.id : null;
 
-  const handleDeleteOrder = (orderId) => {
-    dispatch(removeFromOrders(orderId));
-  };
+  useEffect(() => {
+    if (!customerId) {
+      setError("Customer ID not found.");
+      return;
+    }
+
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/orders/${customerId}`);
+
+        if (response.ok) {
+          const data = await response.json();
+          setOrders(data);
+          setIsLoaded(false);
+        } else {
+          setError(`Error fetching orders: ${response.statusText}`);
+          setIsLoaded(false);
+        }
+      } catch (err) {
+        setError(`Error fetching orders: ${err.message}`);
+        setIsLoaded(false);
+      }
+    };
+
+    fetchOrders();
+  }, [customerId]);
 
   const toggleOrderDetails = (index) => {
     setExpandedOrder(expandedOrder === index ? null : index);
   };
 
   const calculateTotalPrice = (order) => {
-    return order.reduce((total, product) => {
+    return order.line_items.reduce((total, product) => {
       const productPrice = Number(product.price);
-      const lensPrice = product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : Number(product.selectedLens.price)) : 0;
-      return total + (productPrice + lensPrice) * 1.18;
+      return total + productPrice * 1.18;
     }, 0);
   };
 
   return (
     <Box>
       <Navbar />
-      <Box
+      {isLoaded?(<Loadingimg/>):(<Box
         minHeight="635px"
         p={8}
         w={{ lg: "70%", md: "70%", sm: "98%", base: "98%" }}
@@ -54,7 +74,11 @@ const OrderHistory = () => {
           Order History
         </Heading>
         <br />
-        {orders.length === 0 ? (
+        {error ? (
+          <Text textAlign="center" fontSize="28px" color="red.500" mt="1%" fontWeight="bolder">
+            {error}
+          </Text>
+        ) : orders.length === 0 ? (
           <Text
             textAlign="center"
             fontSize="28px"
@@ -66,75 +90,77 @@ const OrderHistory = () => {
           </Text>
         ) : (
           <Stack spacing={4}>
-            {orders.map((order, index) => {
-              const totalPrice = calculateTotalPrice(order).toFixed(2);
-              return (
-                <Box key={index} borderRadius="20px" boxShadow="lg" p={4} bg="whiteAlpha.900">
-                  <Box onClick={() => toggleOrderDetails(index)} cursor="pointer">
-                    <Flex flexDirection={{base:"column",md:"row"}} justify="space-between">
-                      <Box>
-                        <Text fontWeight="bold">Order Date: {currentDate}</Text>
-                        <Text>Number of Products: {order.length}</Text>
-                        <Text>Total Price: ₹{Math.round(totalPrice)}.00</Text>
-                      </Box>
-                      <Box>
-                        <Text color="blue.500" fontWeight="bold">Click To See Details</Text>
-                      </Box>
-                    </Flex>
-                  </Box>
-                  <Collapse in={expandedOrder === index} animateOpacity>
-                    <Box mt={4}>
-                      {order.map((product) => (
-                        <Link to={`/products/${product.id}`} key={product.id} style={{ textDecoration: 'none' }}>
-                          <Grid
-                            templateColumns={{ base: "1fr", md: "1fr 1fr" }}
-                            gap={4}
-                            p={4}
-                            border="1px"
-                            borderColor="gray.200"
-                            borderRadius="10px"
-                            mb={2}
-                          >
-                            <Image
-                              src={product?.images[0]?.src}
-                              w="100px"
-                              h="100px"
-                              objectFit="cover"
-                              borderRadius="10px"
-                            />
-                            <Box>
-                              <Text fontWeight="bold">Product ID: {product.id}</Text>
-                              <Text fontSize="18px" fontWeight="bold">
-                                {product.name}
-                              </Text>
-                              <Text fontWeight="500" fontSize="17px">
-                                {product.selectedLens ? product.selectedLens.name : "No Lens"}
-                              </Text>
-                              <Text fontWeight="bold" fontSize="18px">
-                                Price: ₹{Math.round((Number(product.price) + Number(product.selectedLens ? (product.selectedLens.price === "Free" ? 0 : product.selectedLens.price) : 0)) * 1.18)}.00
-                              </Text>
-                              <Text fontWeight="500" fontSize="15px">
-                                Status : Completed
-                              </Text>
-                            </Box>
-                          </Grid>
-                        </Link>
-                      ))}
-                      <Button
-                        colorScheme="red"
-                        onClick={() => handleDeleteOrder(order[0].id)}
-                        alignSelf="center"
-                      >
-                        Delete Order
-                      </Button>
+            {orders
+              .sort((a, b) => new Date(b.date_created) - new Date(a.date_created))
+              .map((order, index) => {
+                const totalPrice = calculateTotalPrice(order).toFixed(2);
+                const orderDate = new Date(order.date_created).toLocaleDateString();
+                const statusColor = order.status === "pending" ? "yellow.500" : "green.500";
+                return (
+                  <Box key={order.id} borderRadius="20px" boxShadow="lg" p={4} bg="whiteAlpha.900">
+                    <Box onClick={() => toggleOrderDetails(index)} cursor="pointer">
+                      <Flex flexDirection={{ base: "column", md: "row" }} justify="space-between">
+                        <Box>
+                          <Text fontWeight="bold">Order Date: {orderDate}</Text>
+                          <Text>Number of Products: {order.line_items.length}</Text>
+                          <Text>Total Price: ₹{Math.round(totalPrice)}.00</Text>
+                          <Text>Payment Method: {order.payment_method_title}</Text>
+                        </Box>
+                        <Box>
+                          <Text color={statusColor} fontWeight="bold">
+                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                          </Text>
+                        </Box>
+                      </Flex>
                     </Box>
-                  </Collapse>
-                </Box>
-              );
-            })}
+                    <Collapse in={expandedOrder === index} animateOpacity>
+                      <Box mt={4}>
+                        {order.line_items.map((product) => (
+                          <Link to={`/products/${product.product_id}`} key={product.id} style={{ textDecoration: 'none' }}>
+                            <Grid
+                              templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+                              gap={4}
+                              p={4}
+                              border="1px"
+                              borderColor="gray.200"
+                              borderRadius="10px"
+                              mb={2}
+                            >
+                              <Image
+                                src={product?.image?.src}
+                                w="100px"
+                                h="100px"
+                                objectFit="cover"
+                                borderRadius="10px"
+                              />
+                              <Box>
+                                <Text fontWeight="bold">Product ID: {product.product_id}</Text>
+                                <Text fontSize="18px" fontWeight="bold">
+                                  {product.name}
+                                </Text>
+                                <Text fontWeight="bold" fontSize="18px">
+                                  Price: ₹{Math.round(Number(product.price) * 1.18)}.00
+                                </Text>
+                              </Box>
+                            </Grid>
+                          </Link>
+                        ))}
+                        <Box>
+                          <Text fontWeight="bold" mt={4}>Shipping Address:</Text>
+                          <Text>{order.shipping.first_name} {order.shipping.last_name}</Text>
+                          <Text>{order.shipping.address_1}</Text>
+                          <Text>{order.shipping.city}, {order.shipping.state} - {order.shipping.postcode}</Text>
+                          <Text>{order.shipping.country}</Text>
+                          <Text>Phone: {order.shipping.phone}</Text>
+                        </Box>
+                      </Box>
+                    </Collapse>
+                  </Box>
+                );
+              })}
           </Stack>
         )}
-      </Box>
+      </Box>)}
       <Footer />
     </Box>
   );

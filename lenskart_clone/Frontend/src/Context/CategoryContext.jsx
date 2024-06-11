@@ -10,7 +10,7 @@ export const CategoryProvider = ({ children }) => {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+          "http://localhost:5000/api/products/categories"
         );
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

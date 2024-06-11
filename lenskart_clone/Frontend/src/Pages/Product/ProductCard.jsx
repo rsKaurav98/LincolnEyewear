@@ -19,10 +19,10 @@ const ProductCard = ({ type }) => {
         const regularPrice = parseFloat(ele.regular_price);
         const currentPrice = parseFloat(ele.price);
         const salePrice = parseFloat(ele.sale_price);
-        
+
         const discountPercentage = Math.round(((regularPrice - currentPrice) / regularPrice) * 100);
-        const saleDiscountPercentage = salePrice 
-          ? Math.round(((regularPrice - salePrice) / regularPrice) * 100) 
+        const saleDiscountPercentage = salePrice
+          ? Math.round(((regularPrice - salePrice) / regularPrice) * 100)
           : 0;
 
         return (
@@ -50,6 +50,7 @@ const ProductCard = ({ type }) => {
                     _hover={{ transform: "scale(1.1)" }}
                     transition="0.25s"
                     borderRadius="3%"
+                    loading="lazy"
                   />
                   <br />
 
@@ -57,13 +58,14 @@ const ProductCard = ({ type }) => {
                     {/* Rating */}
                     <Flex justifyContent="space-between" alignItems="center">
                       <Flex
-                        w="25%"
+                        w={{ base: "50%", md: "25%" }} // Adjust width for mobile screens
                         borderRadius="20px"
                         alignItems="center"
                         gap="5px"
                         p="5px 10px"
                         bgColor="#eeeef5"
                         fontSize="15px"
+                        justifyContent="center" // Center content horizontally
                       >
                         <Text>
                           {ele.rating
@@ -77,6 +79,7 @@ const ProductCard = ({ type }) => {
                             : Math.floor(Math.random() * 999 + 1)}
                         </Text>
                       </Flex>
+
 
                       {/* Percentage off */}
                       <Box
@@ -113,7 +116,7 @@ const ProductCard = ({ type }) => {
                       color="gray.400"
                       fontSize="14px"
                     >
-                      {ele.slug?ele.slug:"eyewear"}{" "}
+                      {ele.slug ? ele.slug : "eyewear"}{" "}
                     </Text>
                     <Text
                       mt="5px"
