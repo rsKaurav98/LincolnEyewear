@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import {
   Box,
   Button,
@@ -7,11 +8,18 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import SelectLens from "../Lenses/SelectLens";
+import VirtualTryOn from "../../Components/Tryon/tryOn";  // Adjust the import path as necessary
 
 const ProdCard = ({
   type,
@@ -22,6 +30,8 @@ const ProdCard = ({
   totalPrice,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isTryOnOpen, onOpen: onTryOnOpen, onClose: onTryOnClose } = useDisclosure();
+  const tryOnRef = useRef(null);
   const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
   const navigate = useNavigate();
 
@@ -46,7 +56,14 @@ const ProdCard = ({
   };
 
   const handleTryOnClick = () => {
-    navigate('/tryon');
+    onTryOnOpen();
+  };
+
+  const handleTryOnClose = () => {
+    if (tryOnRef.current) {
+      tryOnRef.current.stopWebcam();
+    }
+    onTryOnClose();
   };
 
   return (
@@ -194,6 +211,31 @@ const ProdCard = ({
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
+
+      {/* Modal for Virtual Try-On */}
+      <Modal isOpen={isTryOnOpen} onClose={handleTryOnClose} size="xl">
+        <ModalOverlay />
+        <ModalContent
+         maxWidth={{ base: "110vw", md: "95vw" }}
+         maxHeight={{ base: "110vh", md: "95vh" }}
+         overflow="hidden"
+         mt={{ base: "5%", md: "5%" }}
+         mb="5%"
+         boxShadow="2xl"
+         bg="aliceblue"
+         display="flex"
+         flexDirection="column"
+         justifyContent="center"
+         alignItems="center">
+          <ModalCloseButton />
+          <ModalBody>
+            <VirtualTryOn ref={tryOnRef} isOpen={isTryOnOpen} onClose={onTryOnClose} />
+          </ModalBody>
+          <ModalFooter>
+          
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

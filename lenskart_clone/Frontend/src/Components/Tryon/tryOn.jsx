@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import Webcam from 'react-webcam';
 import * as THREE from 'three';
 import * as tf from '@tensorflow/tfjs-core';
@@ -6,13 +6,19 @@ import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
 import glassesSrc from '../../assets/images/sunglasses.png';
+import { Box, Text, Center } from '@chakra-ui/react';
 
-const VirtualTryOn = () => {
+const VirtualTryOn = forwardRef((props, ref) => {
+  const { isOpen, onClose } = props;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [model, setModel] = useState(null);
   const [glassesMesh, setGlassesMesh] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  useImperativeHandle(ref, () => ({
+    stopWebcam
+  }));
 
   useEffect(() => {
     const loadResources = async () => {
@@ -27,11 +33,7 @@ const VirtualTryOn = () => {
         await tf.setBackend('webgl');
         const loadedModel = await faceLandmarksDetection.load(
           faceLandmarksDetection.SupportedPackages.mediapipeFacemesh,
-          { shouldLoadIrisModel: true,
-            maxFaces: 1,
-            // returnTensors: false,
-            // predictIrises: false 
-        }
+          { shouldLoadIrisModel: true, maxFaces: 1 }
         );
         setModel(loadedModel);
 
@@ -48,12 +50,12 @@ const VirtualTryOn = () => {
         // Glasses Mesh
         const textureLoader = new THREE.TextureLoader();
         textureLoader.load(glassesSrc, (texture) => {
-          texture.colorSpace = THREE.SRGBColorSpace;
           const geometry = new THREE.PlaneGeometry(2, 1);
           const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true });
           const glasses = new THREE.Mesh(geometry, material);
           scene.add(glasses);
           setGlassesMesh(glasses);
+          setIsLoading(false);
         });
       } catch (error) {
         console.error("Initialization error:", error);
@@ -61,8 +63,14 @@ const VirtualTryOn = () => {
       }
     };
 
-    loadResources();
-  }, []);
+    if (isOpen) {
+      loadResources();
+    } else {
+      stopWebcam();
+    }
+
+    return () => stopWebcam();
+  }, [isOpen]);
 
   useEffect(() => {
     const detectAndPositionGlasses = async () => {
@@ -70,7 +78,7 @@ const VirtualTryOn = () => {
       const video = webcamRef.current.video;
       if (video.readyState !== 4) return;
 
-      const faceEstimates = await model.estimateFaces({input: video});
+      const faceEstimates = await model.estimateFaces({ input: video });
       if (faceEstimates.length > 0) {
         setIsLoading(false);
         // Face mesh keypoints
@@ -110,22 +118,54 @@ const VirtualTryOn = () => {
     return () => clearInterval(intervalId);
   }, [model, glassesMesh]);
 
+  const stopWebcam = () => {
+    if (webcamRef.current && webcamRef.current.srcObject) {
+      const stream = webcamRef.current.srcObject;
+      const tracks = stream.getTracks();
+
+      tracks.forEach(track => track.stop());
+      webcamRef.current.srcObject = null;
+    }
+  };
+
   return (
-    <>
-    <div style={{borderBottom: '1px solid rgba(0, 0, 0, 0.2)'}}>
-      <h1 style={{textAlign: 'center'}}>Virtual Try-On - 2D Image</h1>
-    </div>
-    <div style={{ position: 'relative', margin:'0 auto', width: '800px', height: '800px' }}>
-        {isLoading && (
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(255, 255, 255, 0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 2 }}>
-            <h3>Loading...</h3>
-          </div>
-        )}
-      <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '800px', height: '800px' }} mirrored={true} />
-      <canvas ref={canvasRef} style={{ width: '800px', height: '800px', position: 'absolute', top: 0, left: 0 }} />
-    </div>
-    </>
-  );
-};
+    <Center position="relative" width="80vw" height="80vh" bg="transparent">
+      <Box
+        maxWidth={{ base: "80vw", md: "85vw" }}
+        maxHeight={{ base: "80vh", md: "85vh" }}
+        width="100%"
+        height="100%"
+        mt={{ base: "5%", md: "5%" }}
+        mb="20px"
+        boxShadow="2xl"
+        bg="aliceblue"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        position="relative"
+        overflow="hidden"
+      >
+        <Center position="relative" width="100%" height="100%">
+          {isLoading && (
+            <Center position="absolute" top={0} left={0} width="100%" height="100%" bg="rgba(255, 255, 255, 0.5)" zIndex={2}>
+              <dotlottie-player
+                src="https://lottie.host/7a2ca4c0-d3bd-4292-b02e-10f9c056aeef/D5ZpetxOX1.json"
+                background="aliceblue"
+                speed="1"
+                style={{ width: "100%", height: "100%" }}
+                loop
+                autoplay
+              ></dotlottie-player>
+            </Center>
+          )}
+          <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
+          <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
+        </Center>
+  </Box>
+</Center>
+);
+});
 
 export default VirtualTryOn;
+
