@@ -1,19 +1,19 @@
-import express, { json } from "express";
-import { connection } from "./Configs/db";
-import { userRouter } from "./routes/user.routes";
-import { productRouter } from "./routes/product.routes";
-import { cartRouter } from "./routes/cart.routes";
-import cors from "cors";
+const express = require("express");
+const { connection } = require("./Configs/db");
+const { userRouter } = require("./routes/user.routes");
+const { productRouter } = require("./routes/product.routes");
+const { cartRouter } = require("./routes/cart.routes");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Enable CORS for all origins
+app.use(cors({
+  origin: '*',
+}));
 
-app.use(json());
+app.use(express.json());
 
-// Routes
 app.get("/", (req, res) => {
   res.send("Welcome Home Page");
 });
@@ -22,14 +22,7 @@ app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
-
-// Start server
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 app.listen(PORT, async () => {
   try {
     await connection;

@@ -1,17 +1,20 @@
-import {Flex} from "@chakra-ui/react";
+import { Spinner, Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Loadingimg = () => {
   return (
-    
-      <DotLottieReact
-      src="https://lottie.host/d84aad9e-f0e8-4e43-aa82-eb43fcf4f6fb/O0cCQ8iCJA.json"
-      loop
-      autoplay
-      speed="2"
-    />
-    
+    <Flex direction="column" align="center" justify="center" height="100vh" bg="gray.100">
+      <Text fontSize="2xl" mb="8" color="gray.700">
+        Getting Images, please wait...
+      </Text>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    </Flex>
   );
 };
 

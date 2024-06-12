@@ -14,8 +14,8 @@ import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
 import base64 from 'base-64';
 
-const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
+const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
@@ -29,6 +29,7 @@ const NewProduct = () => {
 
   const { selectedCategory, setSelectedCategory } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
@@ -50,25 +51,29 @@ const NewProduct = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`
+        `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`,
+        {
+          headers: {
+            'Authorization': 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
+          }
+        }
       );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.json();
-      setTotalPages(data.totalPages);
-      setTotalProducts(data.totalProducts);
-      setProducts(data);
+      const postData = await response.json();
+      const totalProductsCount = response.headers.get('X-WP-Total');
+      setTotalPages(Math.ceil(totalProductsCount / 15));
+      setTotalProducts(totalProductsCount);
+      setProducts(postData);
       setIsLoaded(false);
     } catch (error) {
       console.error('Fetch Error:', error);
       setIsLoaded(false);
     }
   };
-  
-  
 
   useEffect(() => {
     fetchProduct();
@@ -130,12 +135,10 @@ const NewProduct = () => {
                     handleCategoryChange={(value) => {
                       handleCategoryChange(value);
                       setSearchValue("");
-                      onClose();
                     }}
                     handleTagChange={(value) => {
                       handleTagChange(value);
                       setSearchValue("");
-                      onClose();
                     }}
                     selectedCategory={selectedCategory}
                     selectedTag={selectedTag}
@@ -199,7 +202,7 @@ const NewProduct = () => {
                 fontSize={{ base: "30px", md: "26px" }}
                 bg=""
                 ml={{ base: "0", md: "8px" }}
-                display={{base:"inherit",xl:"none"}}
+                display={{base:"inherit",md:"none"}}
               />
             </Flex>
 

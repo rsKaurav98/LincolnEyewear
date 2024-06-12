@@ -33,7 +33,7 @@ const ProdCard = ({
   };
 
   const handleTryOn = () => {
-    navigate("/tryon",'_blank');
+    navigate("/tryon");
   };
 
   const buttonStyles = {
