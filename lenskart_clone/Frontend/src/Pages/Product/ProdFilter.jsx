@@ -24,38 +24,60 @@ const ProdFilter = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
+    const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
+    const token = btoa(`${consumerKey}:${consumerSecret}`);
+
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50",
+          {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+          }
         );
+        
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        
         const data = await response.json();
-        setCategories(data);
+        return data;
       } catch (error) {
         console.error("Fetch Error:", error);
+        return [];
       }
     };
 
     const fetchTags = async () => {
       try {
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/tags?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+          "https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50",
+          {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+          }
         );
+        
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        
         const data = await response.json();
-        setTags(data);
+        return data;
       } catch (error) {
         console.error("Fetch Error:", error);
+        return [];
       }
     };
-
+    
     const fetchData = async () => {
-      await Promise.all([fetchCategories(), fetchTags()]);
+      const [categoriesData, tagsData] = await Promise.all([fetchCategories(), fetchTags()]);
+      setCategories(categoriesData);
+      setTags(tagsData);
       setLoading(false);
     };
 

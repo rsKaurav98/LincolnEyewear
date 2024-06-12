@@ -9,19 +9,31 @@ export const CategoryProvider = ({ children }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        // Base64 encode the consumer key and secret
+        const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
+        const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
+        const token = btoa(`${consumerKey}:${consumerSecret}`);
+    
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca&per_page=50"
+          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50",
+          {
+            headers: {
+              'Authorization': `Basic ${token}`
+            }
+          }
         );
+    
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+    
         const data = await response.json();
         setCategories(data);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
-
+    
     fetchCategories();
   }, []);
 
