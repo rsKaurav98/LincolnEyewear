@@ -90,18 +90,8 @@ const SingleProduct = () => {
   const fetchSingleProduct = async () => {
     setIsLoaded(true);
     try {
-      // Base64 encode the consumer key and secret
-      const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
-      const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
-      const token = btoa(`${consumerKey}:${consumerSecret}`);
-      
       const response = await axios.get(
-        `https://lincolneyewear.com/wp-json/wc/v3/products/${id}`,
-        {
-          headers: {
-            'Authorization': `Basic ${token}`
-          }
-        }
+        `https://lincolneyewear.com/wp-json/wc/v3/products/${id}?consumer_key=ck_a5217f627b385dde1c5d2392aae81f5244ce0af5&consumer_secret=cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca`
       );
       setData(response.data);
       setTotalPrice(response.data.sale_price);
@@ -111,7 +101,6 @@ const SingleProduct = () => {
       setIsLoaded(false);
     }
   };
-  
 
   useEffect(() => {
     fetchSingleProduct();
