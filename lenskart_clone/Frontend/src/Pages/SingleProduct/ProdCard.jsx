@@ -217,18 +217,19 @@ const ProdCard = ({
       <Modal isOpen={isTryOnOpen} onClose={handleTryOnClose} size="xl">
         <ModalOverlay />
         <ModalContent
-         maxWidth={{ base: "110vw", md: "95vw" }}
-         maxHeight={{ base: "110vh", md: "95vh" }}
+         maxWidth={{ base: "100vw", md: "95vw" }}
+         maxHeight={{ base: "100vh", md: "95vh" }}
          overflow="hidden"
          mt={{ base: "5%", md: "5%" }}
          mb="5%"
          boxShadow="2xl"
-         bg="aliceblue"
+         bg="transparent"
+         blur="50%"
          display="flex"
          flexDirection="column"
          justifyContent="center"
          alignItems="center">
-          <ModalCloseButton />
+          
           <ModalBody>
             <VirtualTryOn ref={tryOnRef} isOpen={isTryOnOpen} onClose={onTryOnClose} imageSrc={virtualTryOnImage} />
           </ModalBody>

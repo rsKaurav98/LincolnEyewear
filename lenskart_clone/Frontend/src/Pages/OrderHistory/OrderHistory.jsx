@@ -34,21 +34,15 @@ const OrderHistory = () => {
       try {
         const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
         const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
-        const token = btoa(`${consumerKey}:${consumerSecret}`);
     
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/orders?customer=${customerId}`,
-          {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
-          }
+          `https://lincolneyewear.com/wp-json/wc/v3/orders?customer=${customerId}&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
-
+    
         if (!response.ok) {
           throw new Error(`Error fetching orders: ${response.statusText}`);
         }
-
+    
         const data = await response.json();
         setOrders(data);
       } catch (err) {
@@ -57,6 +51,7 @@ const OrderHistory = () => {
         setLoading(false);
       }
     };
+    
 
     fetchOrders();
   }, [customerId]);
@@ -139,12 +134,24 @@ const OrderHistory = () => {
                             <Text>Number of Products: {order.line_items.length}</Text>
                             <Text>Total Price: ₹{Math.round(totalPrice)}.00</Text>
                             <Text>Payment Method: {order.payment_method_title}</Text>
+                            {order.payment_method !== "cod" && (
+                              <Text fontWeight="bold">
+                                Transaction ID:{" "}
+                                {order.transaction_id
+                                  ? order.transaction_id
+                                  : (
+                                    <Text as="span" color="red.500">Payment not completed</Text>
+                                  )}
+                              </Text>
+                            )}
                           </Box>
                           <Box>
                             <Text color={statusColor} fontWeight="bold">
                               {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                             </Text>
-                            <Text m="0.5rem" color="blue.500">click for more...</Text>
+                            <Text mt="0.5rem" mr="1rem" color="blue.500">
+                              click for more...
+                            </Text>
                           </Box>
                         </Flex>
                       </Box>

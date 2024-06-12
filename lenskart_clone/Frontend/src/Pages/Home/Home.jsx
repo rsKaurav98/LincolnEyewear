@@ -31,7 +31,7 @@ const Home = () => {
   return (
     <Box>
       <Navbar />
-      <HomeCard type={HomeDetails} />
+      {/* <HomeCard type={HomeDetails} /> */}
       <HomeCard1 type={HomeDetails1} />
       {/* <Link to="/products">
       <Image
@@ -40,10 +40,10 @@ const Home = () => {
         mt="10"
       />
       </Link> */}
-      <HomeCard2 type={HomeDetails2} src="https://i.imgur.com/Gry0Q5D.png" />
+      {/* <HomeCard2 type={HomeDetails2} src="https://i.imgur.com/Gry0Q5D.png" /> */}
       <br />
       <HomeCard4
-        text="As Seen on Shark Tank"
+        
         src="https://static1.lenskart.com/media/desktop/img/Dec22/1-Dec/Homepage-Banner-web.gif"
       />
       <br />
@@ -59,7 +59,7 @@ const Home = () => {
       <br />
       <br />
       <HomeCard4
-        text="As Seen On Kiara"
+        
         src="https://static1.lenskart.com/media/desktop/img/Nov22/23-Nov/Hompage-banner4.jpg"
       />
       <br />
@@ -69,7 +69,7 @@ const Home = () => {
       <br />
       <br />
       <HomeCard4
-        text="Aquacolor - Glam Up With Color Lenses"
+        
         src="https://static1.lenskart.com/media/desktop/img/Oct22/kiara/Refresh-Banner-Web.gif"
       />
       <br />
@@ -82,27 +82,27 @@ const Home = () => {
       <br />
       <br />
       <HomeCard4a
-        text="INTRODUCING OJOS Wear - SUBSCRIBE & SAVE"
+       
         src="https://static1.lenskart.com/media/desktop/img/May22/ojos-web.jpg"
       />
       <br />
       <br />
       <br />
       <br />
-      <HomeCard5a type={HomeDetails4} heading="CONTACT LENSES & MORE" />
+      {/* <HomeCard5a type={HomeDetails4} heading="CONTACT LENSES & MORE" /> */}
       <br />
       <br />
       <br />
       <br />
-      <HomeCard5b type={HomeDetails5} heading="BUY IT YOUR WAY" />
+      {/* <HomeCard5b type={HomeDetails5} heading="BUY IT YOUR WAY" /> */}
       <br />
       <br />
       <br />
       <br />
-      <HomeCard4b
+      {/* <HomeCard4b
         text="OUR BRANDS"
         src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/VC-Banner.jpg"
-      />
+      /> */}
       <br />
       <br />
       <br />

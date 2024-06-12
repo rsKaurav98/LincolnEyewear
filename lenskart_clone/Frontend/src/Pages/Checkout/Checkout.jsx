@@ -55,6 +55,9 @@ const Orders = () => {
 
       const data = await response.json();
       console.log("Payment success recorded:", data);
+      dispatch(addToOrder(cart));
+      dispatch(cartReset());
+      navigate("/ordersuccess");
     } catch (error) {
       console.error("Error in payment success processing:", error);
     }
@@ -312,7 +315,7 @@ const Orders = () => {
                 }}
                 gap={{ lg: "5", sm: "0", base: "0" }}
               >
-                <Flex>
+                {/* <Flex>
                   <Box fontSize={"15px"} fontWeight="400">
                     Order ID :
                   </Box>
@@ -324,7 +327,7 @@ const Orders = () => {
                   >
                     {Math.round(Math.random() * 1125452 + Math.random())}
                   </Box>
-                </Flex>
+                </Flex> */}
                 <Flex>
                   <Box fontSize={"15px"} fontWeight="400">
                     Order Date :

@@ -20,6 +20,7 @@ import TC from "./Footer/TC";
 import CR from "./Footer/CR";
 import SD from "./Footer/SD";
 
+
 const AllRoutes = () => {
   const location = useLocation();
 
@@ -89,6 +90,14 @@ const AllRoutes = () => {
         element={
           <Privateroutes>
             <Wishlist />
+          </Privateroutes>
+        }
+      />
+      <Route
+        path="/ordersuccess"
+        element={
+          <Privateroutes>
+            <Confirm />
           </Privateroutes>
         }
       />

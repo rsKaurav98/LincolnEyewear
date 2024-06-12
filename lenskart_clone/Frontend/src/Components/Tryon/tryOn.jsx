@@ -5,10 +5,11 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import { Box, Center } from '@chakra-ui/react';
+import { Box, Center, Button } from '@chakra-ui/react';
+import { CloseIcon } from '@chakra-ui/icons';
 
 const VirtualTryOn = forwardRef((props, ref) => {
-  const { isOpen, imageSrc } = props;
+  const { isOpen, imageSrc, onClose } = props;
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const [model, setModel] = useState(null);
@@ -22,13 +23,11 @@ const VirtualTryOn = forwardRef((props, ref) => {
   useEffect(() => {
     const loadResources = async () => {
       try {
-        // Camera Access
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (webcamRef.current) {
           webcamRef.current.srcObject = stream;
         }
 
-        // TensorFlow Model
         await tf.setBackend('webgl');
         const loadedModel = await faceLandmarksDetection.load(
           faceLandmarksDetection.SupportedPackages.mediapipeFacemesh,
@@ -36,7 +35,6 @@ const VirtualTryOn = forwardRef((props, ref) => {
         );
         setModel(loadedModel);
 
-        // Three.js Setup
         const width = canvasRef.current.clientWidth;
         const height = canvasRef.current.clientHeight;
         const scene = new THREE.Scene();
@@ -46,7 +44,6 @@ const VirtualTryOn = forwardRef((props, ref) => {
         renderer.setSize(width, height);
         renderer.setAnimationLoop(() => renderer.render(scene, camera));
 
-        // Glasses Mesh
         const textureLoader = new THREE.TextureLoader();
         const proxyUrl = 'https://api.allorigins.win/raw?url=';
         textureLoader.load(proxyUrl + imageSrc, (texture) => {
@@ -81,36 +78,30 @@ const VirtualTryOn = forwardRef((props, ref) => {
       const faceEstimates = await model.estimateFaces({ input: video });
       if (faceEstimates.length > 0) {
         setIsLoading(false);
-        // Face mesh keypoints
         const keypoints = faceEstimates[0].scaledMesh;
         const leftEye = keypoints[130];
         const rightEye = keypoints[359];
         const eyeCenter = keypoints[168];
 
-        // Eye distance for glasses scaling
         const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
         const scaleMultiplier = eyeDistance / 140;
 
-        // Glasses scaling and offset values
         const scaleX = -0.01;
         const scaleY = -0.01;
         const offsetX = 0.00;
         const offsetY = -0.01;
 
-        // Glasses positioning
         glassesMesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
         glassesMesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
         glassesMesh.scale.set(scaleMultiplier, scaleMultiplier, scaleMultiplier);
         glassesMesh.position.z = 1;
 
-        // Rotate glasses to align with eyes - rotation depth
         const eyeLine = new THREE.Vector2(rightEye[0] - leftEye[0], rightEye[1] - leftEye[1]);
         const rotationZ = Math.atan2(eyeLine.y, eyeLine.x);
         glassesMesh.rotation.z = rotationZ;
       }
     };
 
-    // Run detection and positioning every 120ms
     const intervalId = setInterval(() => {
       detectAndPositionGlasses();
     }, 120);
@@ -127,15 +118,16 @@ const VirtualTryOn = forwardRef((props, ref) => {
       webcamRef.current.srcObject = null;
     }
   };
+
   return (
-    <Center position="relative" width="80vw" height="80vh" bg="transparent">
+    <Center position="relative" width="100%" height="100vh" bg="transparent">
       <Box
-        maxWidth={{ base: "80vw", md: "85vw" }}
-        maxHeight={{ base: "80vh", md: "85vh" }}
+        maxWidth={{ base: "95vw", md: "85vw" }}
+        maxHeight={{ base: "95vh", md: "85vh" }}
         width="100%"
         height="100%"
-        mt={{ base: "5%", md: "5%" }}
-        mb="20px"
+        rounded="1rem"
+        mt={{ base: "2%", md: "2%" }}
         boxShadow="2xl"
         bg="aliceblue"
         display="flex"
@@ -161,10 +153,12 @@ const VirtualTryOn = forwardRef((props, ref) => {
           <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
           <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
         </Center>
-  </Box>
-</Center>
-);
+        <Button onClick={() => { onClose(); stopWebcam(); }} position="absolute" top="20px" right="20px" variant="ghost">
+          <CloseIcon />
+        </Button>
+      </Box>
+    </Center>
+  );
 });
 
 export default VirtualTryOn;
-

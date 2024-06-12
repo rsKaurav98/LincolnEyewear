@@ -7,7 +7,7 @@ import Footer from "../../Components/Footer/Footer";
 export const Confirm = () => {
   const navigate = useNavigate();
   setTimeout(() => {
-    // navigate("/orderhistory");
+    navigate("/orderhistory");
   }, 3000);
 
   return (
