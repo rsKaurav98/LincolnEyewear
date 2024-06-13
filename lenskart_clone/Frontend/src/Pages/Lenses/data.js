@@ -1,7 +1,7 @@
 export const data = {
   "Single Vision": [
     {
-      id: "sv1",
+      id: " 4604",
       name: "Anti-Glare Regular",
       features: [
         "Premium quality Anti reflective coated glass",
@@ -14,7 +14,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv2",
+      id: "4605",
       name: "Anti-Glare Pro",
       features: [
         "Ultra edge lenses with Anti reflective coating",
@@ -27,7 +27,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv3",
+      id: "4606",
       name: "BLU Essential",
       features: [
         "1 Year Warranty",
@@ -39,7 +39,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv4",
+      id: "4607",
       name: "Ultra BLU Thin",
       head:"MAXIMUM EYE PROTECTION",
       features: [
@@ -55,7 +55,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv5",
+      id: "4608",
       name: "Ultra BLU Thin",
       head:"MAXIMUM EYE PROTECTION (Premium)",
       features: [
@@ -73,7 +73,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv6",
+      id: "4609",
       name: "Owndays Shatterproof",
       head:"DESIGNED IN KOREA",
       features: [
@@ -89,7 +89,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sv7",
+      id: "4610",
       name: "Owndays Ultra Thin",
       head:"DESIGNED IN KOREA",
       features: [
@@ -107,7 +107,7 @@ export const data = {
   ],
   "Bifocal/ Progressive": [
     {
-      id: "bp1",
+      id: "4611",
       name: "Standard Bifocal",
       features: [
         "1 Year Warranty",
@@ -118,7 +118,7 @@ export const data = {
       src: "/images/0.jpg"
     },
     {
-      id: "bp2",
+      id: "4612",
       name: "Circular Bi-Focal KT",
       features: [
         "1 Year Warranty",
@@ -133,7 +133,7 @@ export const data = {
       src: "/images/1.jpg"
     },
     {
-      id: "bp3",
+      id: "4613",
       name: "Standard Progressive",
       features: [
         "1 Year Warranty",
@@ -144,7 +144,7 @@ export const data = {
       src: "/images/2.jpg"
     },
     {
-      id: "bp4",
+      id: "4615",
       name: "Normal Corridor Progressive",
       head:"MAXIMUM EYE PROTECTION",
       features: [
@@ -161,7 +161,7 @@ export const data = {
       src: "/images/3.jpg"
     },
     {
-      id: "bp5",
+      id: "4616",
       name: "Normal Corridor",
       head:"BLU Progressive: MAXIMUM EYE PROTECTION",
       features: [
@@ -178,7 +178,7 @@ export const data = {
       src: "/images/4.jpg"
     },
     {
-      id: "bp6",
+      id: "4617",
       name: "Digital Owndays",
       head:"Wide Corridor Progressive: DESIGNED IN KOREA",
       features: [
@@ -195,7 +195,7 @@ export const data = {
   ],
   "Zero Power": [
     {
-      id: "zp1",
+      id: "4619",
       name: "BLU Thin Zero Power",
       features: [
         "1 Year Warranty",
@@ -210,7 +210,7 @@ export const data = {
       src: ""
     },
     {
-      id: "zp2",
+      id: "4625",
       name: "Anti-Fog BLU Thin",
       head:"Zero Power",
       features: [
@@ -226,7 +226,7 @@ export const data = {
       src: ""
     },
     {
-      id: "zp3",
+      id: "4620",
       name: "Owndays Clear Vision",
       head:"Zero Power",
       subtitle: "DESIGNED IN KOREA",
@@ -245,7 +245,7 @@ export const data = {
   ],
   "Sunglasses Polarised": [
     {
-      id: "sp1",
+      id: "4621",
       name: "Brilliant Brown Sun block",
       features: [
         "1 Year Warranty",
@@ -258,7 +258,7 @@ export const data = {
       src: ""
     },
     {
-      id: "sp2",
+      id: "4622",
       name: "Gorgeous Grey Sun block",
       features: [
         "1 Year Warranty",
@@ -271,7 +271,7 @@ export const data = {
       src: "/images/10.jpg"
     },
     {
-      id: "sp3",
+      id: "4623",
       name: "Glorious Green Sun block",
       features: [
         "1 Year Warranty",
@@ -284,7 +284,7 @@ export const data = {
       src: "/images/11.jpg"
     },
     {
-      id: "sp4",
+      id: "4624",
       name: "Cool Blue Sun block",
       features: [
         "1 Year Warranty",
@@ -298,3 +298,5 @@ export const data = {
     },
   ],
 };
+
+

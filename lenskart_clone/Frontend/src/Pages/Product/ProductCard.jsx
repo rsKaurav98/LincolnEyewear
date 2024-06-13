@@ -16,9 +16,9 @@ const ProductCard = ({ type }) => {
       gap={6}
     >
       {type.map((ele) => {
-        const regularPrice = parseFloat(ele.regular_price);
-        const currentPrice = parseFloat(ele.price);
-        const salePrice = parseFloat(ele.sale_price);
+        const regularPrice = parseFloat(ele?.regular_price);
+        const currentPrice = parseFloat(ele?.price);
+        const salePrice = parseFloat(ele?.sale_price);
         
         const discountPercentage = Math.round(((regularPrice - currentPrice) / regularPrice) * 100);
         const saleDiscountPercentage = salePrice 
@@ -27,7 +27,7 @@ const ProductCard = ({ type }) => {
 
         return (
           <GridItem key={ele.id}>
-            <Link to={`/products/${ele.id}`}>
+            <Link to={`/products/${ele?.id}`}>
               <Box
                 position="relative"
                 border="1px solid"
@@ -45,7 +45,7 @@ const ProductCard = ({ type }) => {
                     mx="2rem"
                     mt="2rem"
                     width="80%"
-                    src={ele.images[0].src}
+                    src={ele.images[0]?.src}
                     alt="image"
                     _hover={{ transform: "scale(1.1)" }}
                     transition="0.25s"
@@ -66,14 +66,14 @@ const ProductCard = ({ type }) => {
                         fontSize="15px"
                       >
                         <Text>
-                          {ele.rating
-                            ? ele.rating
+                          {ele?.rating
+                            ? ele?.rating
                             : (Math.random() * (5 - 1) + 1).toFixed(1)}
                         </Text>
                         <AiFillStar size="15px" color="#0fbd95" />
                         <Text>
-                          {ele.userRated
-                            ? ele.userRated
+                          {ele?.userRated
+                            ? ele?.userRated
                             : Math.floor(Math.random() * 999 + 1)}
                         </Text>
                       </Flex>
@@ -91,7 +91,7 @@ const ProductCard = ({ type }) => {
                         fontWeight="bold"
                         zIndex="1"
                       >
-                        {ele.sale_price === ele.price
+                        {ele?.sale_price === ele?.price
                           ? `${discountPercentage}% OFF`
                           : `${saleDiscountPercentage}% OFF`}
                       </Box>
@@ -105,7 +105,7 @@ const ProductCard = ({ type }) => {
                       fontSize="15px"
                       textTransform="capitalize"
                     >
-                      {ele.name}{" "}
+                      {ele?.name}{" "}
                     </Text>
                     <Text
                       mt="5px"
@@ -113,13 +113,13 @@ const ProductCard = ({ type }) => {
                       color="gray.400"
                       fontSize="14px"
                     >
-                      {ele.slug?ele.slug:"eyewear"}{" "}
+                      {ele?.slug?ele.slug:"eyewear"}{" "}
                     </Text>
                     <Text
                       mt="5px"
                       fontWeight="400"
                       color={
-                        ele.stock_status === "instock" ? "lightgreen" : "crimson"
+                        ele?.stock_status === "instock" ? "lightgreen" : "crimson"
                       }
                       fontSize="14px"
                     >
@@ -131,7 +131,7 @@ const ProductCard = ({ type }) => {
                       color="#gray.700"
                       fontSize="15px"
                     >
-                      ₹{ele.price}{" "}
+                      ₹{ele?.price}{" "}
                       <span
                         style={{
                           fontSize: "15px",
@@ -140,7 +140,7 @@ const ProductCard = ({ type }) => {
                           textDecoration: "line-through",
                         }}
                       >
-                        ₹{ele.regular_price}
+                        ₹{ele?.regular_price}
                       </span>
                       <span
                         style={{
@@ -165,7 +165,7 @@ const ProductCard = ({ type }) => {
                   bgGradient="linear(to-r, lightgreen, white)"
                   display={ele.sale_price === ele.price ? "none" : "inherit"}
                 >
-                  SALE PRICE: ₹{ele.sale_price}
+                  SALE PRICE: ₹{ele?.sale_price}
                 </Box>
 
                 {/* Additional info box */}
