@@ -5,7 +5,7 @@ import ReactPlayer from "react-player";
 export const HomeCard5 = () => {
   return (
     <Box w="85%" m="auto">
-      <Text fontSize="30px" pb="7" fontWeight="500" textAlign="center">
+      <Text fontSize={{ base: "20px", md: "24px", lg: "30px" }}  p="7" fontWeight="500" textAlign="center">
         FIND THE PERFECT FIT
       </Text>
       <Grid
