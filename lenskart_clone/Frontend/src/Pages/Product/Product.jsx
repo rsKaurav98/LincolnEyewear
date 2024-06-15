@@ -14,8 +14,8 @@ import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
 import base64 from 'base-64';
 
-const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+// const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+// const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
@@ -32,6 +32,8 @@ const NewProduct = () => {
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
+      const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
+      const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
       let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
