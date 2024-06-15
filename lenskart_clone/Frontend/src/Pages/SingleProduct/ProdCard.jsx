@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import {
   Box,
   Button,
@@ -7,12 +8,18 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
 } from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
-import React from "react";
-import { FaRegEye } from "react-icons/fa";  // Importing an eye icon for the try on button
+import { useNavigate } from "react-router-dom";
 import SelectLens from "../Lenses/SelectLens";
-import { useNavigate } from "react-router-dom";  // Importing useNavigate for routing
+import VirtualTryOn from "../../Components/Tryon/tryOn";  // Adjust the import path as necessary
 
 const ProdCard = ({
   type,
@@ -21,19 +28,18 @@ const ProdCard = ({
   handleLensCart,
   selectedLens,
   totalPrice,
+  virtualTryOnImage
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isTryOnOpen, onOpen: onTryOnOpen, onClose: onTryOnClose } = useDisclosure();
+  const tryOnRef = useRef(null);
   const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
-  const navigate = useNavigate();  // Initializing useNavigate for navigation
+  const navigate = useNavigate();
 
   const handleLensClick = (lens) => {
     handleLensCart(lens);
     setSelectedLensName(lens.name);
     onClose();
-  };
-
-  const handleTryOn = () => {
-    navigate("/tryon",'_blank');
   };
 
   const buttonStyles = {
@@ -44,14 +50,21 @@ const ProdCard = ({
     color: "white",
     _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },
     textAlign: "center",
-    fontSize: { 
+    fontSize: {
       xs: 14,
       md: 16,
     },
   };
 
   const handleTryOnClick = () => {
-    navigate('/tryon');
+    onTryOnOpen();
+  };
+
+  const handleTryOnClose = () => {
+    if (tryOnRef.current) {
+      tryOnRef.current.stopWebcam();
+    }
+    onTryOnClose();
   };
 
   return (
@@ -134,29 +147,16 @@ const ProdCard = ({
         Add to Wishlist
       </Button>
 
-      <Button
-        sx={buttonStyles}
-        onClick={handleTryOn}
-        bgColor="#00bac6"
-        leftIcon={<FaRegEye />}  // Adding the eye icon
-        style={{
-          boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.3)",  // 3D effect
-          transform: "translateY(0)",
-          transition: "transform 0.2s",
-        }}
-        _hover={{
-          transform: "translateY(-2px)",
-        }}
-      >
-        3D Try On
+      <Button sx={buttonStyles} onClick={handleTryOnClick} bgColor="#00bac6">
+        Try On
       </Button>
 
       <Accordion allowMultiple defaultIndex={[0]}>
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Short Description
             </Box>
             <AccordionIcon />
@@ -169,8 +169,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Categories
             </Box>
             <AccordionIcon />
@@ -185,8 +185,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Tags
             </Box>
             <AccordionIcon />
@@ -201,8 +201,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               In Stock
             </Box>
             <AccordionIcon />
@@ -212,6 +212,30 @@ const ProdCard = ({
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
+
+      {/* Modal for Virtual Try-On */}
+      <Modal isOpen={isTryOnOpen} onClose={handleTryOnClose} size="xl">
+        <ModalOverlay />
+        <ModalContent
+          maxWidth={{ base: "100vw", md: "95vw" }}
+          maxHeight={{ base: "100vh", md: "95vh" }}
+          overflow="hidden"
+          mt={{ base: "5%", md: "5%" }}
+          mb="5%"
+          boxShadow="2xl"
+          bg="transparent"
+          blur="50%"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <ModalBody padding="10%">
+            <VirtualTryOn isOpen={isTryOnOpen} onClose={handleTryOnClose} imageSrc={virtualTryOnImage} />
+          </ModalBody>
+          <ModalFooter />
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

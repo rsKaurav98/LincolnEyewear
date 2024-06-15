@@ -50,8 +50,9 @@ const NewProduct = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/api/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`
+        `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
       );
+      
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
