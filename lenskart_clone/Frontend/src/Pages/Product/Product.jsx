@@ -15,8 +15,8 @@ import { useSearch } from "../../Context/SearchContext";
 import { useSearchParams } from "react-router-dom";
 import base64 from 'base-64';
 
-const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+// const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+// const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
