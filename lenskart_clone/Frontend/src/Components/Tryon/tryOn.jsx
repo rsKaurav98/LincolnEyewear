@@ -130,7 +130,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
         rounded="1rem"
         mt={{ base: "2%", md: "2%" }}
         boxShadow="2xl"
-        bg="485872"
+        bg="primary"
         display="flex"
         flexDirection="column"
         justifyContent="center"
@@ -143,7 +143,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
             <Center position="absolute" top={0} left={0} width="100%" height="100%" bg="rgba(255, 255, 255, 0.5)" zIndex={2}>
               <dotlottie-player
                 src="https://lottie.host/7a2ca4c0-d3bd-4292-b02e-10f9c056aeef/D5ZpetxOX1.json"
-                background="485872"
+                background="primary"
                 speed="1"
                 style={{ width: "100%", height: "100%" }}
                 loop

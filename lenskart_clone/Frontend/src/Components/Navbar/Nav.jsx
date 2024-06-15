@@ -53,7 +53,7 @@ function Nav() {
     <Box
       display={{ lg: "inherit", xl: "none" }}
       cursor="pointer"
-      bg="485872"
+      bg="primary"
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">
@@ -81,7 +81,7 @@ function Nav() {
         </Box>
 
         <Box>
-          <Button bg="#d4af37" color="white" p="0" onClick={onOpen}>
+          <Button bg="secondary" color="white" p="0" onClick={onOpen}>
             <HamburgerIcon fontSize="20px" />
           </Button>
           <Drawer
@@ -271,7 +271,7 @@ function Nav() {
                   <Button
                     mt="5%"
                     fontSize="18px"
-                    bg="#d4af37"
+                    bg="secondary"
                     color={"white"}
                     borderBottom="1px solid #526171"
                     p="6% 15%"

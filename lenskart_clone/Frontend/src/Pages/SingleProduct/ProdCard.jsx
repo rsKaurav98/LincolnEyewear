@@ -118,7 +118,7 @@ const ProdCard = ({
       </Text>
       <br />
 
-      <Button sx={buttonStyles} onClick={onOpen} bgColor="#00bac6">
+      <Button sx={buttonStyles} onClick={onOpen} bgColor="secondary">
         {selectedLensName}
       </Button>
       <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensClick} />
@@ -132,22 +132,22 @@ const ProdCard = ({
           m={{ lg: "10px 20px", base: "10px auto" }}
           w={{ lg: "90%", base: "100%" }}
           color="white"
-          bg="#d4af37"
+          bg="secondary"
           _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
         >
           Add to Cart - ₹{totalPrice}
         </Button>
       ) : (
-        <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor="#00bac6">
+        <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor="secondary">
           Purchase without Lenses
         </Button>
       )}
 
-      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor="#00bac6">
+      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor="secondary">
         Add to Wishlist
       </Button>
 
-      <Button sx={buttonStyles} onClick={handleTryOnClick} bgColor="#00bac6">
+      <Button sx={buttonStyles} onClick={handleTryOnClick} bgColor="secondary">
         Try On
       </Button>
 

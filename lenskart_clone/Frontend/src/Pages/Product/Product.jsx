@@ -15,8 +15,8 @@ import { useSearch } from "../../Context/SearchContext";
 import { useSearchParams } from "react-router-dom";
 import base64 from 'base-64';
 
-// const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-// const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
@@ -44,7 +44,7 @@ const NewProduct = () => {
     try {
       let categoryFilter = selectedCategory 
         ? `&category=${selectedCategory}` 
-        : "";
+        : "&category=52";
 
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
@@ -69,10 +69,14 @@ const NewProduct = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      
+      const totalProductsCount = response.headers.get('X-WP-Total');
+      const totalPages = Math.ceil(totalProductsCount / 15);
+
 
       const data = await response.json();
-      setTotalPages(data.totalPages);
-      setTotalProducts(data.totalProducts);
+      setTotalPages(totalPages);
+      setTotalProducts(totalProductsCount);
       setProducts(data);
       setIsLoaded(false);
     } catch (error) {

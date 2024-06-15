@@ -84,7 +84,7 @@ const OrderHistory = () => {
             mt="1%"
             textAlign="center"
             p="2"
-            bg="#d4af37"
+            bg="secondary"
             color="whiteAlpha.900"
             borderRadius="8px"
           >

@@ -37,7 +37,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
           transition="0.3s"
           boxShadow="md"
           cursor="pointer"
-          _hover={{ bg: "#d4af37", color: "white" }}
+          _hover={{ bg: "secondary", color: "white" }}
           onClick={() => handleLensClick(item)}
         >
           <Box w="80%">
@@ -77,7 +77,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
         overflowY={{ base: "auto", md: "hidden" }}
         mt={{ base: "20%", md: "0" }}
         boxShadow="2xl"
-        bg="485872"
+        bg="primary"
       >
         <Flex justify="center" fontWeight="400" fontSize={{ base: "6vw", md: "2.2vw" }} color="#333" m="10px">
           Choose Lens Package
@@ -106,7 +106,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                       p="10px"
                       h="11.5vh"
                       color="white"
-                      bg={selectedCategory === category ? "#d4af37" : "#00bac6"}
+                      bg={selectedCategory === category ? "secondary" : "secondary"}
                       fontWeight="400"
                       fontSize={{ base: "4vw", md: "1.3vw" }}
                       textAlign="left"

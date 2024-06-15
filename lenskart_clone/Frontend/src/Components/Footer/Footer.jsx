@@ -6,7 +6,7 @@ import { services, about, helps } from "./FooterDetails";
 const Footer = () => {
   return (
     <Box
-      bgColor="#d4af37"
+      bgColor="secondary"
       color="whiteAlpha.900"
       p={{ lg: "0", md: "5", base: "5" }}
     >

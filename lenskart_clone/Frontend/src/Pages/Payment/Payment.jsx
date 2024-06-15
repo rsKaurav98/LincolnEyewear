@@ -108,7 +108,7 @@ const Payment = () => {
               borderRadius="lg"
             >
               <Box
-                bg="#00bac6"
+                bg="secondary"
                 color={"white"}
                 fontWeight="700"
                 p="4px 0px 6px 6px "
