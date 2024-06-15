@@ -199,7 +199,7 @@ const Wishlist = () => {
                           color="gray.600"
                           textTransform="capitalize"
                         >
-                          Total : ₹ {parseFloat(item.sale_price) + parseFloat(item.selectedLens?.price || 0)}
+                          Total : ₹ {parseFloat(item.sale_price) + parseFloat(item.selectedLens?.price === "Free"?0:item.selectedLens?.price || 0)}
                         </Text>{" "}
                       </Box>
                     </Grid>

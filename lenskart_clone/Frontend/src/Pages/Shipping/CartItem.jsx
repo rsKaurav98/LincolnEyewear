@@ -145,12 +145,12 @@ export default function ShippingPage() {
             <Text fontWeight="medium">₹{getTotalPrice()}.00</Text>
           </Flex>
           <Divider h={2} mb={2} />
-          <Flex justifyContent={"space-between"} fontSize="15px" mb={2}>
+          {/* <Flex justifyContent={"space-between"} fontSize="15px" mb={2}>
             <Text fontWeight="bold">TAX COLLECTED</Text>
             <Text fontWeight="medium">
               + ₹{Math.round((getTotalPrice()) * 0.18)}.00
             </Text>
-          </Flex>
+          </Flex> */}
           <Divider mb={2} border="1px solid" />
           <Flex justifyContent={"space-between"} fontSize="16px">
             <Text fontWeight="bold">
@@ -159,12 +159,11 @@ export default function ShippingPage() {
                 style={{ fontSize: "14px", fontWeight: "500" }}
                 color="gray"
               >
-                (After Tax)
+                (Incl. taxes)
               </span>
             </Text>
             <Text fontWeight="medium">
-              ₹{Math.round(getTotalPrice() + getTotalPrice() * 0.18)}
-              .00
+              ₹{getTotalPrice()}.00
             </Text>
           </Flex>
 
@@ -179,10 +178,7 @@ export default function ShippingPage() {
               TOTAL PAYABLE
             </Text>
             <Text fontWeight="bold" fontSize="17px" color="#329BA9">
-              ₹
-              {Math.round(getTotalPrice() + getTotalPrice() * 0.18) -
-                (coupon || 0)}
-              .00
+            ₹{getTotalPrice()}.00
             </Text>
           </Flex>
         </Box>

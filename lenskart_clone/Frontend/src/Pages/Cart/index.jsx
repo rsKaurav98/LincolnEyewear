@@ -18,9 +18,11 @@ const CartPage = () => {
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.sale_price * item.quantity;
-      if (item.selectedLens && item.selectedLens?.id!="sv1") {
+      if (item.selectedLens && item.selectedLens.price !== "Free" ? item.selectedLens.price : 0) {
         itemPrice += item.selectedLens.price * item.quantity;
+        
       }
+      console.log(acc , itemPrice)
       return acc + itemPrice;
     }, 0);
     console.log(totalPrice)
@@ -100,9 +102,9 @@ const CartPage = () => {
               totalPrice={getTotalPrice()}
               discountPrice={getdiscountPrice()}
             />
-            <SaleBox />
+            {/* <SaleBox /> */}
 
-            <CouponBox />
+            {/* <CouponBox /> */}
             <Button
               backgroundColor={"#12daac"}
               color="#091e52"
