@@ -33,29 +33,36 @@ export const HomeDetails = [
 export const HomeDetails1 = [
   {
     img:TR,
-    caption: "Slide 1"
+    caption: "Slide 1",
+    slug:87
   },
   {
     img:Accetate,
-    caption: "Slide 2"
+    caption: "Slide 2",
+    slug:80
   },
   {
     img:
     Sunglasses,
-    caption: "Slide 3"
+    caption: "Slide 3",
+    slug:77
   },
   {
     img:TR,
-    caption: "Slide 4"
+    caption: "Slide 4",
+    slug:87
   },
   {
     img:Accetate,
-    caption: "Slide 5"
+    caption: "Slide 5",
+    slug:80
   },
   {
     img:
     Sunglasses,
-    caption: "Slide 1"
+    caption: "Slide 1",
+    slug:77
+
   },
 ];
 

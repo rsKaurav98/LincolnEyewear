@@ -4,7 +4,11 @@ import Pagination from "../../Components/Pagination";
 import ProductCard from "./ProductCard";
 import ProdFilter from "./ProdFilter";
 import { TbArrowsUpDown } from "react-icons/tb";
-import { Box, Flex, Text, Button, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react";
+import {
+  Box, Flex, Text, Button, IconButton, Drawer,
+  DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent,
+  DrawerCloseButton, useDisclosure
+} from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
@@ -29,7 +33,7 @@ const NewProduct = () => {
   const { searchValue, setSearchValue } = useSearch();
   const [searchParams] = useSearchParams();
 
-  const { selectedCategory, setSelectedCategory } = useContext(CategoryContext);
+  const { selectedCategory, setSelectedCategory, findCategoryNameById } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -69,10 +73,9 @@ const NewProduct = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      
+
       const totalProductsCount = response.headers.get('X-WP-Total');
       const totalPages = Math.ceil(totalProductsCount / 15);
-
 
       const data = await response.json();
       setTotalPages(totalPages);
@@ -106,6 +109,8 @@ const NewProduct = () => {
     setPage(1);
   };
 
+  const categoryName = selectedCategory ? findCategoryNameById(selectedCategory) : "EYEGLASSES & SUNGLASSES";
+
   return (
     <>
       <Navbar />
@@ -135,7 +140,7 @@ const NewProduct = () => {
             <hr />
           </Flex>
 
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
             <DrawerOverlay>
               <DrawerContent>
                 <DrawerCloseButton />
@@ -181,7 +186,7 @@ const NewProduct = () => {
             >
               <Flex alignItems="center" flex="1" flexWrap="wrap" justify="space-between">
                 <Text fontSize="18px" color="#2d3748" fontWeight="600" mr="10px">
-                  EYEGLASSES & SUNGLASSES
+                  {categoryName}
                 </Text>
                 <Flex alignItems="center">
                   <TbArrowsUpDown color="green" fontWeight="bold" />

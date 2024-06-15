@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import logo from '../../Images/logo.png'
 import { Accordion } from "@chakra-ui/react";
+import Login from "../../Pages/Login/Login";
+import Signup from "../../Pages/Signup/Signup";
 import {
   DrawerCloseButton,
   Button,
@@ -53,7 +55,7 @@ function Nav() {
     <Box
       display={{ lg: "inherit", xl: "none" }}
       cursor="pointer"
-      bg="primary"
+      bg="aliceblue"
       p={2.5}
     >
       <HStack m="auto" justifyContent="space-between">

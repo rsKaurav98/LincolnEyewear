@@ -3,7 +3,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 function Pagination({ current, totalPages, onChange }) {
   const buttonStyle = {
-    bg: "gray.600",
+    bg: "#485872",
     color: "white",
     fontWeight: "bold",
     borderRadius: "8px",

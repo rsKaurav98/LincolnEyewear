@@ -11,9 +11,9 @@ const HomeCard1 = ({ type }) => {
         <Slide>
           {type.map((i) => (
             <Flex key={i} align="center" justify="center">
-              <a href="/products">
+              <Link to={`/products?category=${i.slug}`}>
               <Image src={`${i.img}`} alt={i.caption} w="100%"  />
-              </a>
+              </Link>
             </Flex>
           ))}
         </Slide>

@@ -1,4 +1,3 @@
-// CategoryContext.js
 import React, { createContext, useState, useEffect } from "react";
 
 export const CategoryContext = createContext();
@@ -14,7 +13,6 @@ export const CategoryProvider = ({ children }) => {
         const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
         
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
           `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
 
@@ -41,9 +39,14 @@ export const CategoryProvider = ({ children }) => {
     return category ? category.id.toString() : null;
   };
 
+  const findCategoryNameById = (id) => {
+    const category = categories.find((cat) => cat.id === parseInt(id, 10));  // Ensure id is compared as a number
+    return category ? category.name : "EYEGLASSES & SUNGLASSES";
+  };
+
   return (
     <CategoryContext.Provider
-      value={{ categories, selectedCategory, setSelectedCategory, findCategoryIdBySlug }}
+      value={{ categories, selectedCategory, setSelectedCategory, findCategoryIdBySlug, findCategoryNameById }}
     >
       {children}
     </CategoryContext.Provider>

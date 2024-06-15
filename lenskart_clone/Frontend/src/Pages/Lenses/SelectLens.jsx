@@ -37,7 +37,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
           transition="0.3s"
           boxShadow="md"
           cursor="pointer"
-          _hover={{ bg: "secondary", color: "white" }}
+          _hover={{ bg: "secondary", color: "white", transform: "scale(1.02)" }}
           onClick={() => handleLensClick(item)}
         >
           <Box w="80%">
@@ -55,12 +55,22 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                 </Text>
               ))}
             </Box>
-            <Text mt="10px" fontWeight="400" fontSize={{ base: "15px", md: "20px" }} color={item.price === "Free" ? "#90EE90" : ""}>
+            <Text
+              mt="10px"
+              fontWeight="400"
+              fontSize={{ base: "15px", md: "20px" }}
+              color={item.price === "Free" ? "#90EE90" : ""}
+            >
               ₹{item.price}
             </Text>
           </Box>
           <Box width="20%">
-            <img width="200px" height="auto" src={item.src} style={{ borderRadius: "10px" }} />
+            <img
+              width="200px"
+              height="auto"
+              src={item.src}
+              style={{ borderRadius: "10px" }}
+            />
           </Box>
         </Box>
       ))}
@@ -75,17 +85,31 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
         maxWidth={{ base: "95%", md: "80%" }}
         maxHeight={{ base: "95vh", md: "80vh" }}
         overflowY={{ base: "auto", md: "hidden" }}
-        mt={{ base: "20%", md: "0" }}
         boxShadow="2xl"
-        bg="primary"
+        bg="white"
       >
-        <Flex justify="center" fontWeight="400" fontSize={{ base: "6vw", md: "2.2vw" }} color="#333" m="10px">
+        <Flex
+          justify="center"
+          fontWeight="400"
+          fontSize={{ base: "6vw", md: "2.2vw" }}
+          color="#333"
+          m="10px"
+        >
           Choose Lens Package
         </Flex>
-        <ModalCloseButton borderRadius="50%" bg="white" m="10px 10px 0px 0px" color="#333" boxShadow="md" />
+        <ModalCloseButton
+          borderRadius="50%"
+          bg="white"
+          m="10px 10px 0px 0px"
+          color="#333"
+          boxShadow="md"
+        />
         <ModalBody p="0px 0px" borderRadius="15px">
           <Box m={{ base: "20px", md: "34px 45px 50px 45px" }}>
-            <Flex flexDirection={{ base: "column", md: "row" }} width="100%">
+            <Flex
+              flexDirection={{ base: "column", md: "row" }}
+              width="100%"
+            >
               <Flex
                 flexDirection="column"
                 width={{ base: "100%", md: "23%" }}
@@ -106,20 +130,30 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                       p="10px"
                       h="11.5vh"
                       color="white"
-                      bg={selectedCategory === category ? "secondary" : "secondary"}
+                      bg={
+                        selectedCategory === category ? "#485872" : "secondary"
+                      }
                       fontWeight="400"
                       fontSize={{ base: "4vw", md: "1.3vw" }}
                       textAlign="left"
                       _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
                       onClick={() => setSelectedCategory(category)}
-                      transform={selectedCategory === category ? "scale(1.02)" : "scale(1.0)"}
+                      _focus={{ boxShadow: "none" }}
+                      transition="transform 0.2s"
+                      transform={
+                        selectedCategory === category ? "scale(1.02)" : "scale(1.0)"
+                      }
                     >
                       {category}
                     </Button>
                   </Box>
                 ))}
               </Flex>
-              <Box w={{ base: "100%", md: "77%" }} h="62vh" overflowY={{ base: "visible", md: "auto" }}>
+              <Box
+                w={{ base: "100%", md: "77%" }}
+                h="62vh"
+                overflowY={{ base: "visible", md: "auto" }}
+              >
                 {renderLensContent(selectedCategory)}
               </Box>
             </Flex>

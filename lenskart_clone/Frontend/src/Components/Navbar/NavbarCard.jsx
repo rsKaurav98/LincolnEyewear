@@ -95,15 +95,16 @@ export const NavbarCard2 = () => {
             <input
               type="text"
               placeholder="Search for Eyeglasses, Sunglasses and more.."
-              borderColor={"secondary"}
               style={{
-                border: `1px solid`,
+                borderWidth: "1px",
+                borderColor: "secondary", // Use theme-based secondary color
                 width: "95%",
                 backgroundColor: "white",
                 fontSize: "17px",
                 height: "45px",
-                paddingLeft:"4px",
-                borderRadius:"7px"
+                paddingLeft: "4px",
+                borderRadius: "7px",
+                outline:"none"
               }}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -124,11 +125,12 @@ export const NavbarCard2 = () => {
                     fontWeight={"600"}
                     fontSize="16px"
                     width="fit-content"
-      h="45px"
-      px="20px"
+                    h="45px"
+                    px="20px"
                     w="auto"
                     textAlign="center"
                     bg="white"
+                    border="1px solid black"
                     borderColor={"secondary"}
                     _hover={{ bg: "secondary", color: "white" }}
                   >
