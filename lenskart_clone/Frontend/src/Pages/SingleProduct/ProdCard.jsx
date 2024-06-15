@@ -50,7 +50,7 @@ const ProdCard = ({
     color: "white",
     _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },
     textAlign: "center",
-    fontSize: { 
+    fontSize: {
       xs: 14,
       md: 16,
     },
@@ -155,8 +155,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Short Description
             </Box>
             <AccordionIcon />
@@ -169,8 +169,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Categories
             </Box>
             <AccordionIcon />
@@ -185,8 +185,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               Tags
             </Box>
             <AccordionIcon />
@@ -201,8 +201,8 @@ const ProdCard = ({
         <AccordionItem>
           <AccordionButton>
             <Box flex="1" textAlign="left" my="10px"
-        fontWeight={"700"}
-        fontSize="lg">
+              fontWeight={"700"}
+              fontSize="lg">
               In Stock
             </Box>
             <AccordionIcon />
@@ -217,25 +217,23 @@ const ProdCard = ({
       <Modal isOpen={isTryOnOpen} onClose={handleTryOnClose} size="xl">
         <ModalOverlay />
         <ModalContent
-         maxWidth={{ base: "100vw", md: "95vw" }}
-         maxHeight={{ base: "100vh", md: "95vh" }}
-         overflow="hidden"
-         mt={{ base: "5%", md: "5%" }}
-         mb="5%"
-         boxShadow="2xl"
-         bg="transparent"
-         blur="50%"
-         display="flex"
-         flexDirection="column"
-         justifyContent="center"
-         alignItems="center">
-          
-          <ModalBody>
-            <VirtualTryOn ref={tryOnRef} isOpen={isTryOnOpen} onClose={onTryOnClose} imageSrc={virtualTryOnImage} />
+          maxWidth={{ base: "100vw", md: "95vw" }}
+          maxHeight={{ base: "100vh", md: "95vh" }}
+          overflow="hidden"
+          mt={{ base: "5%", md: "5%" }}
+          mb="5%"
+          boxShadow="2xl"
+          bg="transparent"
+          blur="50%"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <ModalBody padding="10%">
+            <VirtualTryOn isOpen={isTryOnOpen} onClose={handleTryOnClose} imageSrc={virtualTryOnImage} />
           </ModalBody>
-          <ModalFooter>
-          
-          </ModalFooter>
+          <ModalFooter />
         </ModalContent>
       </Modal>
     </Box>

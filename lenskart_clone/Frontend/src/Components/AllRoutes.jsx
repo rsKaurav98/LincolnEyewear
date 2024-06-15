@@ -11,7 +11,6 @@ import Payment from "../Pages/Payment/Payment";
 import Confirm from "../Pages/Confirm/Confirm";
 import OrderHistory from "../Pages/OrderHistory/OrderHistory";
 import Wishlist from "../Pages/Wishlist/Wishlist";
-import VirtualTryOn from "../Components/Tryon/tryOn"
 import Productlist from "../Pages/Admin/Productlist";
 import ProductPost from "../Pages/Admin/ProductPost";
 import EditProduct from "../Pages/Admin/EditProduct";
@@ -29,7 +28,6 @@ const AllRoutes = () => {
   }, [location.pathname]);
   return (
     <Routes>
-      <Route path="/tryon" element={<VirtualTryOn/>}/>
       <Route path="/PP" element={<PrivacyPolicy />} />
       <Route path="/TC" element={<TC />} />
       <Route path="/CR" element={<CR />} />

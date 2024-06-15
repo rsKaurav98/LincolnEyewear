@@ -32,7 +32,7 @@ const SingleProduct = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cartManager);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [selectedLens, setSelectedLens] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,7 +88,6 @@ const SingleProduct = () => {
   };
 
   const fetchSingleProduct = async () => {
-    setIsLoaded(true);
     try {
       const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
       const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
@@ -100,7 +99,7 @@ const SingleProduct = () => {
       setTotalPrice(response.data.sale_price);
       setIsLoaded(false);
     } catch (error) {
-      console.log(error);
+      console.error("Fetch Error:", error);
       setIsLoaded(false);
     }
   };
@@ -171,6 +170,7 @@ const SingleProduct = () => {
                             boxShadow="md"
                             bg="white"
                             onClick={() => handleImageClick(index)}
+                            loading="lazy"
                           />
                         </Zoom>
                       ))}

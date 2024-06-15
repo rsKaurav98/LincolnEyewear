@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import { Box, Center, Button } from '@chakra-ui/react';
+import { Box, Center, Button, useMediaQuery } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
 const VirtualTryOn = forwardRef((props, ref) => {
@@ -15,6 +15,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
   const [model, setModel] = useState(null);
   const [glassesMesh, setGlassesMesh] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   useImperativeHandle(ref, () => ({
     stopWebcam
@@ -150,8 +151,19 @@ const VirtualTryOn = forwardRef((props, ref) => {
               ></dotlottie-player>
             </Center>
           )}
-          <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
-          <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
+          <Box
+            width="90%"
+            height="90%"
+            padding="2%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            position="relative"
+            bg="transparent"
+          >
+            <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
+            <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
+          </Box>
         </Center>
         <Button onClick={() => { onClose(); stopWebcam(); }} position="absolute" top="20px" right="20px" variant="ghost">
           <CloseIcon />
