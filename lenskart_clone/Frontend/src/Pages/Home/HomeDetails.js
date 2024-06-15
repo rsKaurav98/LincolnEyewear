@@ -1,3 +1,7 @@
+
+import TR from "../../Images/TrGlasses.png"
+import Accetate from "../../Images/Accetate.jpeg"
+import  Sunglasses from "../../Images/Sunglasses.jpeg"
 export const HomeDetails = [
   {
     img: "https://static1.lenskart.com/media/desktop/img/Apr22/a2.png",
@@ -17,16 +21,7 @@ export const HomeDetails = [
     title: "Computer Glasses",
     slug:"eyeglasses"
   },
-  // {
-  //   img: "https://static1.lenskart.com/media/desktop/img/Apr22/d.png",
-  //   caption: "Slide 4",
-  //   title: "Contact lenses"
-  // },
-  // {
-  //   img: "https://static1.lenskart.com/media/desktop/img/Apr22/e2.png",
-  //   caption: "Slide 4",
-  //   title: "Power Sunglases"
-  // },
+
   {
     img: "https://static1.lenskart.com/media/desktop/img/June22/prog11.jpg",
     caption: "Slide 4",
@@ -37,62 +32,31 @@ export const HomeDetails = [
 
 export const HomeDetails1 = [
   {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    img:TR,
     caption: "Slide 1"
   },
   {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    img:Accetate,
     caption: "Slide 2"
   },
   {
     img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    Sunglasses,
     caption: "Slide 3"
   },
   {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    img:TR,
     caption: "Slide 4"
   },
   {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    img:Accetate,
     caption: "Slide 5"
   },
   {
     img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
+    Sunglasses,
     caption: "Slide 1"
   },
-  {
-    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 2"
-  },
-  {
-    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 3"
-  },
-  {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 4"
-  },
-  {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 5"
-  },
-  {
-    img: "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 1"
-  },
-  {
-    img:
-      "https://lincolneyewear.com/wp-content/uploads/2024/05/LINCOLN-COLLECTION-TEMPLATES-8-2048x1024.png",
-    caption: "Slide 2"
-  }
 ];
 
 export const HomeDetails2 = [

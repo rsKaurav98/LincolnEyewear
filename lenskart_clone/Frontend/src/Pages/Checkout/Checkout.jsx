@@ -116,144 +116,170 @@ const Orders = () => {
       console.error("Error in payment processing:", error);
     }
   }, [Razorpay, shippingDetails]);
-
+  console.log(cart)
   const handleOrderCreation = async (paymentMethod) => {
     const orderData = {
-      billing_address: {
-        first_name: shippingDetails?.first_name,
-        last_name: shippingDetails?.last_name,
-        company: "",
-        email: shippingDetails?.email,
-        phone: shippingDetails.phone,
-        address_1: shippingDetails.address,
-        address_2: "",
-        city: shippingDetails.city,
-        state: shippingDetails.state,
-        postcode: shippingDetails.pincode,
-        country: shippingDetails.country
-      },
-      shipping_address: {
-        first_name: shippingDetails?.first_name,
-        last_name: shippingDetails?.last_name,
-        company: "",
-        email: shippingDetails?.email,
-        phone: shippingDetails.phone,
-        address_1: shippingDetails.address,
-        address_2: "",
-        city: shippingDetails.city,
-        state: shippingDetails.state,
-        postcode: shippingDetails.pincode,
-        country: shippingDetails.country
-      },
-      products: cart.map(item => ({
-        id: item.id,
-        quantity: item.quantity,
+        billing_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        shipping_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        products: [],
+        customer_id: "",
+        shipping_method: {
+            title: "Free shipping",
+            id: "free_shipping:1",
+            total: 0
+        },
+        payment_method: paymentMethod,
+        order_status: "wc-completed",
         meta_data: {
-          LensData: item.selectedLens ? item.selectedLens.name : "No Lens",
-          LensPrice: item.selectedLens ? (item.selectedLens.price === "Free" ? 0 : item.selectedLens.price) : 0
+            my_custom_key: "value-1",
+            another_key: "another value"
         }
-      })),
-      customer_id: "",
-      shipping_method: {
-        title: "Free shipping",
-        id: "free_shipping:1",
-        total: 0
-      },
-      payment_method: paymentMethod,
-      order_status: "wc-completed",
-      meta_data: {
-        my_custom_key: "value-1",
-        another_key: "another value"
-      }
     };
+
+    // Add main products and selected lenses separately
+    cart.forEach(item => {
+        orderData.products.push({
+            id: item.id,
+            quantity: item.quantity,
+            meta_data: {}
+        });
+
+        if (item.selectedLens) {
+            orderData.products.push({
+                id: item.selectedLens.id,
+                quantity: item.quantity,
+                meta_data: {}
+            });
+        }
+    });
+
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(orderData)
-      });
-      const data = await response.json();
-      console.log("/createOrder response :", data);
-      return data;
+        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(orderData)
+        });
+        const data = await response.json();
+        console.log("/createOrder response :", data);
+        return data;
 
     } catch (error) {
-      console.error("Error creating order:", error);
-      throw error;
+        console.error("Error creating order:", error);
+        throw error;
     }
-  };
+};
+
 
   const handleOrderCreationCOD = async (paymentMethod) => {
     const orderData = {
-      billing_address: {
-        first_name: shippingDetails?.first_name,
-        last_name: shippingDetails?.last_name,
-        company: "",
-        email: shippingDetails?.email,
-        phone: shippingDetails.phone,
-        address_1: shippingDetails.address,
-        address_2: "",
-        city: shippingDetails.city,
-        state: shippingDetails.state,
-        postcode: shippingDetails.pincode,
-        country: shippingDetails.country
-      },
-      shipping_address: {
-        first_name: shippingDetails?.first_name,
-        last_name: shippingDetails?.last_name,
-        company: "",
-        email: shippingDetails?.email,
-        phone: shippingDetails.phone,
-        address_1: shippingDetails.address,
-        address_2: "",
-        city: shippingDetails.city,
-        state: shippingDetails.state,
-        postcode: shippingDetails.pincode,
-        country: shippingDetails.country
-      },
-      products: cart.map(item => ({
-        id: item.id,
-        quantity: item.quantity,
+        billing_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        shipping_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        products: [],
+        customer_id: "",
+        shipping_method: {
+            title: "Free shipping",
+            id: "free_shipping:1",
+            total: 0
+        },
+        payment_method: paymentMethod,
+        order_status: "wc-completed",
         meta_data: {
-          LensData: item.selectedLens ? item.selectedLens.name : "No Lens",
-          LensPrice: item.selectedLens ? (item.selectedLens.price === "Free" ? 0 : item.selectedLens.price) : 0
+            my_custom_key: "value-1",
+            another_key: "another value"
         }
-      })),
-      customer_id: "",
-      shipping_method: {
-        title: "Free shipping",
-        id: "free_shipping:1",
-        total: 0
-      },
-      payment_method: paymentMethod,
-      order_status: "wc-completed",
-      meta_data: {
-        my_custom_key: "value-1",
-        another_key: "another value"
-      }
     };
+
+    // Add main products and selected lenses separately
+    cart.forEach(item => {
+        orderData.products.push({
+            id: item.id,
+            quantity: item.quantity,
+            meta_data: {}
+        });
+
+        if (item.selectedLens) {
+            orderData.products.push({
+                id: item.selectedLens.id,
+                quantity: item.quantity,
+                meta_data: {}
+            });
+        }
+    });
+
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(orderData)
-      });
-      const data = await response.json();
-      console.log("Order created successfully:", data);
+        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(orderData)
+        });
+        const data = await response.json();
+        console.log("/createOrder response :", data);
+        return data;
 
     } catch (error) {
-      console.error("Error creating order:", error);
+        console.error("Error creating order:", error);
+        throw error;
     }
-  };
+};
+
 
   const handlePayNow = async () => {
     try {

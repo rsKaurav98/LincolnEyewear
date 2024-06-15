@@ -26,17 +26,16 @@ const ProdFilter = ({
   useEffect(() => {
     const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
     const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
-    const token = btoa(`${consumerKey}:${consumerSecret}`);
 
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50",
-          {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
-          }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
+          // {
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   }
+          // }
         );
         
         if (!response.ok) {
@@ -54,12 +53,12 @@ const ProdFilter = ({
     const fetchTags = async () => {
       try {
         const response = await fetch(
-          "https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50",
-          {
-            headers: {
-              'Authorization': `Basic ${token}`
-            }
-          }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
+          // {
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   }
+          // }
         );
         
         if (!response.ok) {
