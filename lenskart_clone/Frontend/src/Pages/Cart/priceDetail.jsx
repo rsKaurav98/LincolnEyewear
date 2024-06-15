@@ -6,11 +6,11 @@ function PriceDetail({ totalPrice = 0, discountPrice = 0 }) {
   const { coupon } = useSelector((state) => state.cartManager);
 
   const totalDiscount = totalPrice - discountPrice;
-  const tax = (totalPrice * 0.18).toFixed(2);
+  // const tax = (totalPrice * 0.18).toFixed(2);
   console.log(totalPrice)
   
-  const totalAfterTax = (totalPrice + parseFloat(tax)).toFixed(2);
-  const totalPayable = (totalAfterTax - (coupon || 0)).toFixed(2);
+  // const totalAfterTax = (totalPrice + parseFloat(tax)).toFixed(2);
+  const totalPayable = (totalPrice - (coupon || 0)).toFixed(2);
   console.log(totalPayable)
 
   return (
@@ -73,75 +73,6 @@ function PriceDetail({ totalPrice = 0, discountPrice = 0 }) {
           </Heading>
         </Flex> */}
         {/* <Box border={"1px dashed #CECEDF"}></Box> */}
-        <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
-          <Heading
-            as="p"
-            fontSize={"16px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-          >
-            Total{" "}
-            <span style={{ fontSize: "14px", fontWeight: "500" }} color="gray">
-              (Before Tax)
-            </span>
-          </Heading>
-          <Heading
-            as="p"
-            fontSize={"15px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-            justifyContent="flex-end"
-          >
-            ₹ {discountPrice.toFixed(2)}
-          </Heading>
-        </Flex>
-        <Box border={"1px dashed #CECEDF"}></Box>
-        <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
-          <Heading
-            as="p"
-            fontSize={"16px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-          >
-            Tax Collected{" "}
-            <span style={{ fontSize: "14px", fontWeight: "500" }} color="gray">
-              (18%)
-            </span>
-          </Heading>
-          <Heading
-            as="p"
-            fontSize={"15px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-            justifyContent="flex-end"
-          >
-            + ₹ {tax}
-          </Heading>
-        </Flex>
-        <Box border={"1px dashed #CECEDF"}></Box>
-        <Flex gap="50px" border="0px solid blue" justifyContent="space-between">
-          <Heading
-            as="p"
-            fontSize={"16px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-          >
-            Total{" "}
-            <span style={{ fontSize: "14px", fontWeight: "500" }} color="gray">
-              (After Tax)
-            </span>
-          </Heading>
-          <Heading
-            as="p"
-            fontSize={"15px"}
-            fontWeight="500"
-            fontFamily={"Inter"}
-            justifyContent="flex-end"
-          >
-            ₹ {totalAfterTax}
-          </Heading>
-        </Flex>
-        <Box border={"1px dashed #CECEDF"}></Box>
         <Flex
           gap="50px"
           border="0px solid grey"

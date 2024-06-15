@@ -1,10 +1,11 @@
 // CategoryContext.js
-import React, { createContext, useState, useEffect, useContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -13,26 +14,22 @@ export const CategoryProvider = ({ children }) => {
         const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
         
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
-          // {
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   }
-          // }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
-    
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    
+
         const data = await response.json();
-        setCategories(data);
+        // Filter out the category with name "Lenses"
+        const filteredCategories = data.filter(category => category.name.toLowerCase() !== "lenses");
+        setCategories(filteredCategories);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
-    
-    
+
     fetchCategories();
   }, []);
 
@@ -40,8 +37,6 @@ export const CategoryProvider = ({ children }) => {
     const category = categories.find((cat) => cat.slug === slug);
     return category ? category.id.toString() : null;
   };
-
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <CategoryContext.Provider

@@ -172,13 +172,20 @@ const OrderHistory = () => {
                                 borderRadius="10px"
                                 mb={2}
                               >
-                                <Image
-                                  src={product?.image?.src}
-                                  w="100px"
-                                  h="100px"
-                                  objectFit="cover"
-                                  borderRadius="10px"
-                                />
+                                {product?.image?.src ? (
+                                  <Image
+                                    src={product.image.src}
+                                    w="100px"
+                                    h="100px"
+                                    objectFit="cover"
+                                    borderRadius="10px"
+                                  />
+                                ) : (
+                                  <Text fontWeight="bold" fontSize="18px">
+                                    {product.name}
+                                     (Lens)
+                                  </Text>
+                                )}
                                 <Box>
                                   <Text fontWeight="bold">Product ID: {product.product_id}</Text>
                                   <Text fontSize="18px" fontWeight="bold">

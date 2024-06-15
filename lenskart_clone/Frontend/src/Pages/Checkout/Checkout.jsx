@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
@@ -9,7 +9,9 @@ import { ShippingContext } from '../../Context/shippingContext';
 import { useCallback } from "react";
 import useRazorpay from "react-razorpay";
 import {
-  Box, Button, Flex, HStack, Image, Text, Grid
+  Box, Button, Flex, HStack, Image, Text, Grid,
+  Center,
+  Spinner
 } from "@chakra-ui/react";
 
 const Orders = () => {
@@ -17,6 +19,7 @@ const Orders = () => {
   const [Razorpay, isLoaded] = useRazorpay();
   const navigate = useNavigate();
   const { cart, coupon } = useSelector((state) => state.cartManager);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const getTotalPrice = () => {
@@ -170,7 +173,7 @@ const Orders = () => {
 
         if (item.selectedLens) {
             orderData.products.push({
-                id: item.selectedLens.id,
+                id: Number(item.selectedLens.id),
                 quantity: item.quantity,
                 meta_data: {}
             });
@@ -282,18 +285,22 @@ const Orders = () => {
 
 
   const handlePayNow = async () => {
+    setLoading(true);
     try {
       const orderData = await handleOrderCreation({
         id: "razorpay",
         title: "Credit/Debit card"
       });
-      handlePayment(orderData); // pass the order data to handlePayment
+      handlePayment(orderData); 
     } catch (error) {
       console.error("Error during Pay Now process:", error);
+    }finally {
+      setLoading(false);
     }
   };
 
   const handleCOD = async () => {
+    setLoading(true);
     try {
       await handleOrderCreationCOD({
         id: "cod",
@@ -304,6 +311,8 @@ const Orders = () => {
       navigate("/ordersuccess");
     } catch (error) {
       console.error("Error during COD process:", error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -398,7 +407,7 @@ const Orders = () => {
                     Total Price :{" "}
                     <strong>
                       ₹
-                      {Math.round(getTotalPrice() + getTotalPrice() * 0.18) -
+                      {Math.round(getTotalPrice()) -
                         (coupon || 0)}
                       .00
                     </strong>
@@ -443,7 +452,7 @@ const Orders = () => {
                     letterSpacing="1.5px"
                     fontWeight={"500"}
                   >
-                    ₹{Math.round(getTotalPrice() + getTotalPrice() * 0.18)}.00
+                    ₹{Math.round(getTotalPrice() )}.00
                   </Box>
                 </Flex>
               )}
@@ -489,28 +498,41 @@ const Orders = () => {
                 w="100%"
                 m="auto"
               >
-                <Button
-                  fontSize={"15px"}
-                  bg="#3bb3a9"
-                  color={"white"}
-                  borderRadius="4px"
-                  p="15px 35px"
-                  _hover={{ backgroundColor: "teal" }}
-                  onClick={handlePayNow}
-                >
-                  PAY NOW
-                </Button>
-                <Button
-                  fontSize={"15px"}
-                  bg="#3bb3a9"
-                  color={"white"}
-                  borderRadius="4px"
-                  p="15px 35px"
-                  _hover={{ backgroundColor: "teal" }}
-                  onClick={handleCOD}
-                >
-                  CASH ON DELIVERY
-                </Button>
+                {loading ? (
+                  <Center>
+                    <Spinner size="xl" margin="0.5rem" />
+                    <Flex>
+                      <Text>
+                        Placing order ...
+                      </Text>
+                    </Flex>
+                  </Center>
+                ) : (
+                  <>
+                    <Button
+                      fontSize={"15px"}
+                      bg="#3bb3a9"
+                      color={"white"}
+                      borderRadius="4px"
+                      p="15px 35px"
+                      _hover={{ backgroundColor: "teal" }}
+                      onClick={handlePayNow}
+                    >
+                      PAY NOW
+                    </Button>
+                    <Button
+                      fontSize={"15px"}
+                      bg="#3bb3a9"
+                      color={"white"}
+                      borderRadius="4px"
+                      p="15px 35px"
+                      _hover={{ backgroundColor: "teal" }}
+                      onClick={handleCOD}
+                    >
+                      CASH ON DELIVERY
+                    </Button>
+                  </>
+                )}
               </Grid>
             </Grid>
           </Box>
@@ -597,7 +619,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                     ₹{Math.round((Number(el.sale_price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0))*1.18)}.00
+                     ₹{Math.round((Number(el.sale_price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0)))}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">
