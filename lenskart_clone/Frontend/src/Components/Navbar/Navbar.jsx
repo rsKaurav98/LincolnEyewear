@@ -35,7 +35,7 @@ const Navbar = () => {
         display={{ base: "none", xl: "inherit" }}
         color="blackAlpha.800"
         padding="1rem"
-        bg="aliceblue"
+        bg="485872"
       >
         <NavbarCard2  />
         <NavbarCard4 />

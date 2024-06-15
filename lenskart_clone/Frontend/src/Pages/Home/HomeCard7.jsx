@@ -6,7 +6,7 @@ const HomeCard7 = () => {
     <Box
       w="100%"
       m="auto"
-      bgColor="#455666"
+      bgColor="#d4af37"
       color="whiteAlpha.900"
       pt={9}
       pl={9}

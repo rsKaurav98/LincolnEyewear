@@ -132,7 +132,7 @@ const ProdCard = ({
           m={{ lg: "10px 20px", base: "10px auto" }}
           w={{ lg: "90%", base: "100%" }}
           color="white"
-          bg="#455666"
+          bg="#d4af37"
           _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
         >
           Add to Cart - ₹{totalPrice}

@@ -59,7 +59,7 @@ const Wishlist = () => {
           fontSize="25px"
           textAlign="center"
           p="2"
-          bg="#455666"
+          bg="#d4af37"
           color="whiteAlpha.900"
           w={{ lg: "80%", md: "90%", sm: "90%", base: "95%" }}
           m="auto"

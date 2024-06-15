@@ -17,7 +17,7 @@ const HomeCard = ({ type }) => {
   };
 
   return (
-    <Box mb="2" cursor="pointer" bgColor="aliceblue" p="4" w="100%" className="glasses">
+    <Box mb="2" cursor="pointer" bgColor="485872" p="4" w="100%" className="glasses">
       <Grid
         templateColumns={{
           base: "repeat(2,1fr)",
@@ -40,7 +40,7 @@ const HomeCard = ({ type }) => {
             bgColor="white"
             p="1"
             pb="2.5"
-            _hover={{ bg: "#455666", color: "white" }}
+            _hover={{ bg: "#d4af37", color: "white" }}
             transition={"0.3s"}
             onClick={() => handleCategoryClick(i.slug)}
           >

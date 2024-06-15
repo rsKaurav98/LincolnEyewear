@@ -101,8 +101,8 @@ export const NavbarCard2 = () => {
               bg="whiteAlpha.900"
               fontSize="15px"
               fontWeight="600"
-              border="1px solid #455666"
-              _hover={{ bg: "#455666", color: "white" }}
+              border="1px solid #d4af37"
+              _hover={{ bg: "#d4af37", color: "white" }}
               transition={"0.3s"}
               onClick={() => navigate("/orderhistory")}
 
@@ -169,9 +169,9 @@ export const NavbarCard2 = () => {
               bg="whiteAlpha.900"
               fontSize="15px"
               fontWeight="600"
-              border="1px solid #455666"
+              border="1px solid #d4af37"
               onClick={() => navigate("/wishlist")}
-              _hover={{ bg: "#455666", color: "white" }}
+              _hover={{ bg: "#d4af37", color: "white" }}
               transition={"0.3s"}
             >
               Wishlist
@@ -185,8 +185,8 @@ export const NavbarCard2 = () => {
                 bg="whiteAlpha.900"
                 fontSize="15px"
                 fontWeight="600"
-                border="1px solid #455666"
-                _hover={{ bg: "#455666", color: "white" }}
+                border="1px solid #d4af37"
+                _hover={{ bg: "#d4af37", color: "white" }}
                 transition={"0.3s"}
               >
                 Cart
@@ -201,7 +201,7 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer" marginTop="1rem" bg="#455666" borderRadius="8" display="flex" justifyContent="center">
+    <Box cursor="pointer" marginTop="1rem" bg="#d4af37" borderRadius="8" display="flex" justifyContent="center">
       <Flex py={2} px={5}>
         <NavbarCard5 />
         {/* <HStack w="20%" ml="5%" justifyContent="right">

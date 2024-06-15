@@ -169,7 +169,7 @@ function Shipping() {
               id="ships"
               textAlign="center"
               p="2"
-              bg="#455666"
+              bg="#d4af37"
               fontWeight="bold"
               color="whiteAlpha.900"
               fontSize="22px"
@@ -417,7 +417,7 @@ function Shipping() {
               ) : (
                 <Button
                  
-                  bg="455666"
+                  bg="d4af37"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"

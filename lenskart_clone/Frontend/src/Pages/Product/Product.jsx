@@ -12,6 +12,7 @@ import { CategoryContext } from "../../Context/CategoryContext";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
+import { useSearchParams } from "react-router-dom";
 import base64 from 'base-64';
 
 const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
@@ -26,13 +27,25 @@ const NewProduct = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
   const { searchValue, setSearchValue } = useSearch();
+  const [searchParams] = useSearchParams();
 
   const { selectedCategory, setSelectedCategory } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const categoryFromParams = searchParams.get("category");
+    if (categoryFromParams) {
+      setSelectedCategory(categoryFromParams);
+    }
+  }, [searchParams, setSelectedCategory]);
+
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
-      let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
+      let categoryFilter = selectedCategory 
+        ? `&category=${selectedCategory}` 
+        : "";
+
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
 
@@ -52,7 +65,6 @@ const NewProduct = () => {
       const response = await fetch(
         `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
       );
-      
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -68,8 +80,6 @@ const NewProduct = () => {
       setIsLoaded(false);
     }
   };
-  
-  
 
   useEffect(() => {
     fetchProduct();

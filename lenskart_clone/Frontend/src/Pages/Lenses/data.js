@@ -115,7 +115,7 @@ export const data = {
         "Non Anti-Glare",
       ],
       price: "1100",
-      src: "/images/0.jpg"
+      src: ""
     },
     {
       id: "4612",
@@ -130,7 +130,7 @@ export const data = {
         "Power Range: SPH (+/-3 to +/-6) & CYL (+/-4) * For any other combination, opt either Bifocal-D or Progressives"
       ],
       price: "2100",
-      src: "/images/1.jpg"
+      src: "/images/0.jpg"
     },
     {
       id: "4613",

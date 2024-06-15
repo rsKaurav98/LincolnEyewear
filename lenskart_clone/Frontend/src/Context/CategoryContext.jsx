@@ -13,12 +13,7 @@ export const CategoryProvider = ({ children }) => {
         const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
         
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
-          // {
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   }
-          // }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
     
         if (!response.ok) {
@@ -26,12 +21,15 @@ export const CategoryProvider = ({ children }) => {
         }
     
         const data = await response.json();
-        setCategories(data);
+        
+        // Filter out category with ID 100
+        const filteredData = data.filter(category => category.id !== 100);
+        
+        setCategories(filteredData);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
-    
     
     fetchCategories();
   }, []);
