@@ -18,6 +18,7 @@ import PrivacyPolicy from "./Footer/PP";
 import TC from "./Footer/TC";
 import CR from "./Footer/CR";
 import SD from "./Footer/SD";
+import Signup from "../Pages/Signup/Signup";
 
 
 const AllRoutes = () => {
@@ -28,6 +29,7 @@ const AllRoutes = () => {
   }, [location.pathname]);
   return (
     <Routes>
+      <Route path="/signup" element={<Signup />} />
       <Route path="/PP" element={<PrivacyPolicy />} />
       <Route path="/TC" element={<TC />} />
       <Route path="/CR" element={<CR />} />

@@ -31,6 +31,7 @@ const HomeCard = ({ type }) => {
         m="auto"
       >
         {type.map((i) => (
+          <Link to={`/products?category=${i.slug}`}>
           <Box
             key={i.slug}
             border="1px"
@@ -45,9 +46,7 @@ const HomeCard = ({ type }) => {
             onClick={() => handleCategoryClick(i.slug)}
           >
             <Center>
-              <Link to="/products">
                 <Image src={i.img} alt={i.name} w="100%" />
-              </Link>
             </Center>
             <Center>
               <Text fontSize="16px" fontWeight="500" p="1">
@@ -55,6 +54,7 @@ const HomeCard = ({ type }) => {
               </Text>
             </Center>
           </Box>
+              </Link>
         ))}
       </Grid>
     </Box>

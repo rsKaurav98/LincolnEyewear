@@ -16,6 +16,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import Login from "../Login/Login";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const init = {
@@ -178,9 +180,14 @@ const Signup = () => {
 
               <Center mt="14px" fontSize="15px" gap="2">
                 Have an account?{" "}
-                <Center fontWeight="500" textDecoration="underline">
-                  Sign In
-                </Center>
+                <Link
+                  fontSize={"15px"}
+                  fontWeight="500"
+                  textDecoration={"underline"}
+                  onClick={onclose}
+                >
+                  <Login/>
+                </Link>
               </Center>
             </Box>
           </ModalBody>
