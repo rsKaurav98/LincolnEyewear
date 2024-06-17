@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
+import { ShippingContext } from '../../Context/shippingContext';
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
 import {
   Box,
   Text,
@@ -17,6 +20,7 @@ import {
 import "../../App.css";
 
 function Shipping() {
+  const { setShippingDetails } = useContext(ShippingContext);
   const navigate = useNavigate();
 
   const init = {
@@ -42,6 +46,7 @@ function Shipping() {
   const [cities, setCities] = useState();
   const [countries, setCountries] = useState();
   const [statess, setStatess] = useState();
+  const [Razorpay] = useRazorpay();
 
   const Required = (props) => {
     return (
@@ -133,6 +138,16 @@ function Shipping() {
     }
   };
 
+  const handleShipping = () => {
+    setShippingDetails(userData);
+    navigate('/checkout');
+  };
+  const handleCheckout = useCallback(() =>{
+
+   
+  
+}, []);
+
   return (
     <>
       <Navbar />
@@ -152,11 +167,13 @@ function Shipping() {
           <Box id="addres">
             <Text
               id="ships"
-              bg="teal.400"
+              textAlign="center"
               p="2"
+              bg="#455666"
               fontWeight="bold"
               color="whiteAlpha.900"
               fontSize="22px"
+              borderRadius="8px"
             >
               Shipping Address
             </Text>
@@ -383,21 +400,8 @@ function Shipping() {
               userData.country.length >= 1 &&
               userData.state.length >= 1 ? (
                 <Button
-                  onClick={() => navigate("/checkout")}
-                  bg="#00b9c6"
-                  p="25px 20px"
-                  color="#fff"
-                  textAlign="center"
-                  fontWeight="bold"
-                  borderRadius="5px"
-                  fontSize="18px"
-                  ml={{ lg: "80%", sm: "70%", base: "50%" }}
-                >
-                  CONTINUE
-                </Button>
-              ) : (
-                <Button
-                  bg="#cccccc"
+                   onClick={handleShipping}
+                  bg="teal"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"
@@ -405,6 +409,24 @@ function Shipping() {
                   borderRadius="5px"
                   fontSize="18px"
                   ml={{ lg: "80%", md: "72%", sm: "60%", base: "40%" }}
+                  
+                  
+                >
+                  CONTINUE
+                </Button>
+              ) : (
+                <Button
+                 
+                  bg="455666"
+                  p="25px 20px"
+                  color="#fff"
+                  textAlign="center"
+                  fontWeight="bold"
+                  borderRadius="5px"
+                  fontSize="18px"
+                  ml={{ lg: "80%", sm: "70%", base: "50%" }}
+                  onClick={handleShipping}
+                   
                 >
                   CONTINUE
                 </Button>

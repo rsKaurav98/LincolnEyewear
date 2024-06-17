@@ -7,10 +7,8 @@ const AuthProvider = ({ children }) => {
   const [isAuth, setisAuth] = useState(false);
   const [Authdata, setAuthData] = useState();
 
-  console.log(`is Auth `, isAuth);
-  console.log( `is Auth data ` ,Authdata);
-  if(localStorage.getItem("res") && !isAuth){
-    var res1=JSON.parse(localStorage.getItem("res"));
+  if(localStorage.getItem("user") && !isAuth){
+    var res1=JSON.parse(localStorage.getItem("user"));
     setisAuth(true);
     setAuthData(res1);
   }

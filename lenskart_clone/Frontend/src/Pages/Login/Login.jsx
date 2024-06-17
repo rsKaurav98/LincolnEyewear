@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import {
   Checkbox,
   useDisclosure,
@@ -20,52 +21,40 @@ import {
   Flex,
   Center,
   InputGroup,
-  InputRightElement
+  InputRightElement,
+  useToast // Import useToast hook
 } from "@chakra-ui/react";
 
-const Login = ({ isSignUpOpen }) => {
+const Login = () => {
   const [loading, setLoading] = useState(false);
-  const [btn, setBtn] = useState();
-  const [loginData, setLoginData] = useState({ email: "", password: "" });
+  const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [pass, setPass] = useState(false);
   const [show, setShow] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setisAuth, setAuthData } = useContext(AuthContext);
+  const { isAuth,setisAuth, setAuthData ,} = useContext(AuthContext);
+  
   const [incorrect, setIncorrect] = useState(false);
   const navigate = useNavigate();
-  let res1 = [];
-
-  useEffect(() => {
-    if (!isSignUpOpen) {
-      onOpen();
-    }
-  }, [isSignUpOpen, onOpen]);
+  const toast = useToast(); 
 
   const handleChange = (e) => {
     setIncorrect(false);
     const { name, value } = e.target;
     setLoginData({ ...loginData, [name]: value });
-
-    const button = (
-      <Box
-        fontSize={"14px"}
-        mt="5px"
-        color={"#ff1f1f"}
-        fontWeight="500"
-        letterSpacing={"-0.4px"}
-      >
-        Please enter a valid Email or Mobile Number.
-      </Box>
-    );
-    setBtn(button);
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth]);
 
   const getData = async () => {
     try {
       setLoading(true);
       setIncorrect(false);
-      if (loginData.email && loginData.password) {
-        const res = await fetch("http://localhost:8000/token", {
+      if (loginData.username && loginData.password) {
+        const res = await fetch("https://lincolneyewear.com/wp-json/jwt-auth/v1/token", {
           method: "POST",
           body: JSON.stringify(loginData),
           headers: {
@@ -79,31 +68,26 @@ const Login = ({ isSignUpOpen }) => {
 
         const data = await res.json();
         if (data.token) {
-          const credentialRes = await fetch("http://localhost:8000/me?with=permissions", {
-            method: "GET",
-            headers: {
-              "Authorization": `Bearer ${data.token}`
-            }
-          });
-
-          if (credentialRes.status !== 200) {
-            throw new Error(`HTTP status ${credentialRes.status}`);
-          }
-
-          const cred = await credentialRes.json();
-          console.log(cred)
-
+          const token = data.token
+         const decoded = jwtDecode(token);
+         
+          localStorage.setItem("customerData", JSON.stringify(decoded.data.user));
           localStorage.setItem("token", data.token);
-            if (cred.email === loginData.email) {
-          res1 = [cred]; // Convert the object to an array with one element
-          localStorage.setItem("res", JSON.stringify(res1));}
-
+          localStorage.setItem("user", JSON.stringify(data));
           setisAuth(true);
-          setAuthData(res1);
-          navigate("/");
+          setAuthData(data);
+          
 
           onClose();
           setLoading(false);
+          // Display toast for successful login
+          toast({
+            title: "Login Successful",
+            description: "You have been successfully logged in.",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
         } else {
           setLoading(false);
           setIncorrect(true);
@@ -130,7 +114,7 @@ const Login = ({ isSignUpOpen }) => {
 
   return (
     <div>
-      <Center onClick={onOpen} fontWeight={"400"} fontSize="15px" w="80px">
+      <Center onClick={onOpen} fontWeight={"600"} fontSize="16px" w="60px">
         Sign In
       </Center>
 
@@ -150,7 +134,7 @@ const Login = ({ isSignUpOpen }) => {
 
           <ModalBody p={"0px 0px "} borderRadius={"15px 15px 15px 15px "}>
             <Image
-              src="https://static1.lenskart.com/media/desktop/img/DesignStudioIcons/DesktopLoginImage.svg"
+              src="https://images.unsplash.com/photo-1581239125393-67d48d3dd429?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="pic"
               borderRadius={"10px 10px 0px 0px "}
             />
@@ -166,16 +150,30 @@ const Login = ({ isSignUpOpen }) => {
               </Heading>
 
               {pass === false ? (
-                <Input
-                  name="email"
-                  placeholder="Email"
-                  h={"50px"}
-                  fontSize="16px"
-                  focusBorderColor="rgb(206, 206, 223)"
-                  borderColor={"rgb(206, 206, 223)"}
-                  onChange={handleChange}
-                  rounded="2xl"
-                />
+                <Box>
+                  <Input
+                    name="username"
+                    placeholder="Username"
+                    h={"50px"}
+                    fontSize="16px"
+                    focusBorderColor="rgb(206, 206, 223)"
+                    borderColor={"rgb(206, 206, 223)"}
+                    onChange={handleChange}
+                    rounded="2xl"
+                  />
+                  <Button
+                    mt="20px"
+                    onClick={() => setPass(true)}
+                    bgColor={"#11daac"}
+                    width="100%"
+                    borderRadius={"35px/35px"}
+                    h="50px"
+                    fontSize="18px"
+                    _hover={{ backgroundColor: "#11daac" }}
+                  >
+                    Next
+                  </Button>
+                </Box>
               ) : (
                 <Box>
                   <Box fontSize={"17px"} color="#66668e">
@@ -188,7 +186,7 @@ const Login = ({ isSignUpOpen }) => {
                     mb="22px"
                     color={"#000042"}
                   >
-                    <Box fontSize="18px">{loginData.email}</Box>
+                    <Box fontSize="18px">{loginData.username}</Box>
                     <Box
                       fontSize={"14px"}
                       textDecoration="underline"
@@ -234,59 +232,26 @@ const Login = ({ isSignUpOpen }) => {
                       ml="2"
                       letterSpacing={"-0.4px"}
                     >
-                      Wrong email or password
+                      Wrong username or password
                     </Box>
                   )}
+
+                  <Button
+                    mt="20px"
+                    isLoading={loading}
+                    onClick={handleSign}
+                    bgColor={"#11daac"}
+                    width="100%"
+                    borderRadius={"35px/35px"}
+                    h="50px"
+                    fontSize="18px"
+                    _hover={{ backgroundColor: "#11daac" }}
+                  >
+                    Sign In
+                  </Button>
                 </Box>
               )}
-              <Box
-                textDecoration={"underline"}
-                m="15px 0px 0px 0px"
-                color="#000042"
-                fontSize="15px"
-              >
-                Forget Password
-              </Box>
-              {loginData.email.includes("@") && loginData.email.includes(".com")
-                ? ""
-                : btn}
-
-              <HStack fontSize="16px">
-                <Checkbox mb={"20px"} mt="20px" size="sm">
-                  Get Update on WhatsApp
-                </Checkbox>
-                <Image
-                  src="https://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
-                  w={"22px"}
-                  h="22px"
-                />
-              </HStack>
-              {loginData.email.includes("@") && loginData.email.includes(".com") ? (
-                <Button
-                  isLoading={loading}
-                  onClick={handleSign}
-                  bgColor={"#11daac"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  h="50px"
-                  fontSize="18px"
-                  _hover={{ backgroundColor: "#11daac" }}
-                >
-                  Sign In
-                </Button>
-              ) : (
-                <Button
-                  bgColor={"#cccccc"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  fontSize="18px"
-                  h="50px"
-                  _hover={{ backgroundColor: "#cccccc" }}
-                >
-                  Sign In
-                </Button>
-              )}
-
+              
               <HStack spacing={"0px"} mt="19px" gap="2">
                 <Box fontSize={"14px"}> New member?</Box>
                 <Link

@@ -1,39 +1,319 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { cartReset } from "../../redux/CartPage/action";
 import { addToOrder } from "../../redux/order/order.actions";
+import { ShippingContext } from '../../Context/shippingContext';
+import { useCallback } from "react";
+import useRazorpay from "react-razorpay";
 import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Image,
-  Spacer,
-  Switch,
-  Text,
-  Grid
+  Box, Button, Flex, HStack, Image, Text, Grid,
+  Center,
+  Spinner
 } from "@chakra-ui/react";
 
 const Orders = () => {
+  const { shippingDetails } = useContext(ShippingContext);
+  const [Razorpay, isLoaded] = useRazorpay();
   const navigate = useNavigate();
-  const { cart, coupon } = useSelector((state) => state.CartReducer);
+  const { cart, coupon } = useSelector((state) => state.cartManager);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.sale_price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price == "Free" ? 0 : item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 
-  const handleClick = () => {
-    dispatch(addToOrder(cart));
-    navigate("/confirm");
-    dispatch(cartReset());
+  const handlePaymentSuccess = async (order_id, razorpay_payment_id, razorpay_signature) => {
+    const token = localStorage.getItem("token");
+
+    const body = {
+      order_id: order_id,
+      razorpay_payment_id: razorpay_payment_id,
+      razorpay_signature: razorpay_signature
+    };
+
+    try {
+      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentSuccess`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to record payment success');
+      }
+
+      const data = await response.json();
+      console.log("Payment success recorded:", data);
+      dispatch(addToOrder(cart));
+      dispatch(cartReset());
+      navigate("/ordersuccess");
+    } catch (error) {
+      console.error("Error in payment success processing:", error);
+    }
+  };
+
+  const handlePayment = useCallback(async (orderData) => {
+    const token = localStorage.getItem("token");
+    console.log(orderData);
+    try {
+      const paymentResponse = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      if (!paymentResponse.ok) {
+        throw new Error('Failed to initiate payment');
+      }
+
+      const paymentData = await paymentResponse.json();
+      console.log(paymentData)
+
+      const options = {
+        key: "rzp_test_oxZqK1EarM2jYY",
+        amount: paymentData.amount,
+        currency: "INR",
+        name: "Lincoln Eyewear",
+        description: "Test Transaction",
+        image: "https://example.com/your_logo",
+        order_id: paymentData.order_id,
+        handler: (res) => {
+          console.log("Razorpay payment response:", res);
+          handlePaymentSuccess(orderData.order_id, res.razorpay_payment_id, res.razorpay_signature);
+        },
+        prefill: {
+          name: `${shippingDetails?.first_name} ${shippingDetails?.last_name}`,
+          email: shippingDetails?.email,
+          contact: shippingDetails.phone,
+        },
+        notes: {
+          address: shippingDetails.address,
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      console.log(options);
+
+      const rzpay = new Razorpay(options);
+      rzpay.open();
+    } catch (error) {
+      console.error("Error in payment processing:", error);
+    }
+  }, [Razorpay, shippingDetails]);
+  console.log(cart)
+  const handleOrderCreation = async (paymentMethod) => {
+    const orderData = {
+        billing_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        shipping_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        products: [],
+        customer_id: "",
+        shipping_method: {
+            title: "Free shipping",
+            id: "free_shipping:1",
+            total: 0
+        },
+        payment_method: paymentMethod,
+        order_status: "wc-completed",
+        meta_data: {
+            my_custom_key: "value-1",
+            another_key: "another value"
+        }
+    };
+
+    // Add main products and selected lenses separately
+    cart.forEach(item => {
+        orderData.products.push({
+            id: item.id,
+            quantity: item.quantity,
+            meta_data: {}
+        });
+
+        if (item.selectedLens) {
+            orderData.products.push({
+                id: Number(item.selectedLens.id),
+                quantity: item.quantity,
+                meta_data: {}
+            });
+        }
+    });
+
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(orderData)
+        });
+        const data = await response.json();
+        console.log("/createOrder response :", data);
+        return data;
+
+    } catch (error) {
+        console.error("Error creating order:", error);
+        throw error;
+    }
+};
+
+
+  const handleOrderCreationCOD = async (paymentMethod) => {
+    const orderData = {
+        billing_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        shipping_address: {
+            first_name: shippingDetails?.first_name,
+            last_name: shippingDetails?.last_name,
+            company: "",
+            email: shippingDetails?.email,
+            phone: shippingDetails.phone,
+            address_1: shippingDetails.address,
+            address_2: "",
+            city: shippingDetails.city,
+            state: shippingDetails.state,
+            postcode: shippingDetails.pincode,
+            country: shippingDetails.country
+        },
+        products: [],
+        customer_id: "",
+        shipping_method: {
+            title: "Free shipping",
+            id: "free_shipping:1",
+            total: 0
+        },
+        payment_method: paymentMethod,
+        order_status: "wc-completed",
+        meta_data: {
+            my_custom_key: "value-1",
+            another_key: "another value"
+        }
+    };
+
+    // Add main products and selected lenses separately
+    cart.forEach(item => {
+        orderData.products.push({
+            id: item.id,
+            quantity: item.quantity,
+            meta_data: {}
+        });
+
+        if (item.selectedLens) {
+            orderData.products.push({
+                id: item.selectedLens.id,
+                quantity: item.quantity,
+                meta_data: {}
+            });
+        }
+    });
+
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify(orderData)
+        });
+        const data = await response.json();
+        console.log("/createOrder response :", data);
+        return data;
+
+    } catch (error) {
+        console.error("Error creating order:", error);
+        throw error;
+    }
+};
+
+
+  const handlePayNow = async () => {
+    setLoading(true);
+    try {
+      const orderData = await handleOrderCreation({
+        id: "razorpay",
+        title: "Credit/Debit card"
+      });
+      handlePayment(orderData); 
+    } catch (error) {
+      console.error("Error during Pay Now process:", error);
+    }finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCOD = async () => {
+    setLoading(true);
+    try {
+      await handleOrderCreationCOD({
+        id: "cod",
+        title: "Cash on Delivery (COD)"
+      });
+      dispatch(addToOrder(cart));
+      dispatch(cartReset());
+      navigate("/ordersuccess");
+    } catch (error) {
+      console.error("Error during COD process:", error);
+    }finally {
+      setLoading(false);
+    }
   };
 
   const today = new Date();
@@ -47,17 +327,6 @@ const Orders = () => {
       <Navbar />
       <Box w="90%" m="auto">
         <HStack spacing={"100px"} mt="15px" mb="20px" w="100%" gap="2">
-          <HStack>
-            <Image
-              src="http://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
-              boxSize="30px"
-            />
-            <Box fontSize={{ lg: "16px", base: "sm" }} fontWeight="400">
-              Get Orders Updates on Whatsapp
-            </Box>
-            <Switch size="md" />
-            <Spacer />
-          </HStack>
         </HStack>
         <Box border={"1px"} borderColor="gray.300">
           <Box p={"10px 10px 10px 10px "} m="15px 0px 0px 15px" w="97%">
@@ -81,11 +350,10 @@ const Orders = () => {
                 }}
                 gap={{ lg: "5", sm: "0", base: "0" }}
               >
-                <Flex>
+                {/* <Flex>
                   <Box fontSize={"15px"} fontWeight="400">
                     Order ID :
                   </Box>
-
                   <Box
                     fontSize={"14px"}
                     ml="3px"
@@ -94,8 +362,7 @@ const Orders = () => {
                   >
                     {Math.round(Math.random() * 1125452 + Math.random())}
                   </Box>
-                </Flex>
-
+                </Flex> */}
                 <Flex>
                   <Box fontSize={"15px"} fontWeight="400">
                     Order Date :
@@ -140,12 +407,11 @@ const Orders = () => {
                     Total Price :{" "}
                     <strong>
                       ₹
-                      {Math.round(getTotalPrice() + getTotalPrice() * 0.18) -
+                      {Math.round(getTotalPrice()) -
                         (coupon || 0)}
                       .00
                     </strong>
                   </Box>
-
                   <Flex
                     justifyContent={{
                       lg: "left",
@@ -180,14 +446,13 @@ const Orders = () => {
                   <Box fontSize={"16px"} fontWeight="400" textAlign="right">
                     Total Price :
                   </Box>
-
                   <Box
                     fontSize={"17px"}
                     ml="3px"
                     letterSpacing="1.5px"
                     fontWeight={"500"}
                   >
-                    ₹{Math.round(getTotalPrice() + getTotalPrice() * 0.18)}.00
+                    ₹{Math.round(getTotalPrice() )}.00
                   </Box>
                 </Flex>
               )}
@@ -233,28 +498,41 @@ const Orders = () => {
                 w="100%"
                 m="auto"
               >
-                <Button
-                  fontSize={"15px"}
-                  bg="#3bb3a9"
-                  color={"white"}
-                  borderRadius="4px"
-                  p="15px 35px"
-                  _hover={{ backgroundColor: "teal" }}
-                  onClick={() => navigate("/payment")}
-                >
-                  PAY NOW
-                </Button>
-                <Button
-                  fontSize={"15px"}
-                  bg="#3bb3a9"
-                  color={"white"}
-                  borderRadius="4px"
-                  p="15px 35px"
-                  _hover={{ backgroundColor: "teal" }}
-                  onClick={handleClick}
-                >
-                  CASH ON DELIVERY
-                </Button>
+                {loading ? (
+                  <Center>
+                    <Spinner size="xl" margin="0.5rem" />
+                    <Flex>
+                      <Text>
+                        Placing order ...
+                      </Text>
+                    </Flex>
+                  </Center>
+                ) : (
+                  <>
+                    <Button
+                      fontSize={"15px"}
+                      bg="#3bb3a9"
+                      color={"white"}
+                      borderRadius="4px"
+                      p="15px 35px"
+                      _hover={{ backgroundColor: "teal" }}
+                      onClick={handlePayNow}
+                    >
+                      PAY NOW
+                    </Button>
+                    <Button
+                      fontSize={"15px"}
+                      bg="#3bb3a9"
+                      color={"white"}
+                      borderRadius="4px"
+                      p="15px 35px"
+                      _hover={{ backgroundColor: "teal" }}
+                      onClick={handleCOD}
+                    >
+                      CASH ON DELIVERY
+                    </Button>
+                  </>
+                )}
               </Grid>
             </Grid>
           </Box>
@@ -291,7 +569,7 @@ const Orders = () => {
                 textAlign={{ md: "left", sm: "center", base: "center" }}
               >
                 <Image
-                  src={el.imageTsrc}
+                  src={el?.images?.[0]?.src}
                   w={"200px"}
                   h="100px"
                   m={{
@@ -309,10 +587,19 @@ const Orders = () => {
                     color="gray.500"
                     fontWeight="bold"
                   >
-                    {el.productRefLink || "Vincent Chase Eyeglasses"}
+                    {el?.name || "Vincent Chase Eyeglasses"}
+                  </Box>
+                  <Box
+                    m="10px 5px 5px 0px"
+                    fontSize="17px"
+                    textTransform="capitalize"
+                    color="gray.500"
+                    fontWeight="bold"
+                  >
+                    {el.selectedLens ? el.selectedLens.name : "No Lens"}
                   </Box>
                   <Box fontSize="15px" mb="4px" fontWeight="500">
-                    + Hydrophobic Anti-Glare
+
                   </Box>
                   <Box
                     fontSize="14px"
@@ -320,7 +607,7 @@ const Orders = () => {
                     color={"gray"}
                     fontWeight={"500"}
                   >
-                    Sold by Lenskart Pvt Ltd.
+                    Sold by Lincoln Eyewear.
                   </Box>
                   <Flex
                     fontWeight={"500"}
@@ -332,7 +619,7 @@ const Orders = () => {
                     }}
                   >
                     <Text fontSize="18px">
-                      ₹{Math.round(el.price + el.price * 0.18)}.00
+                     ₹{Math.round((Number(el.sale_price)+Number(el.selectedLens?(el.selectedLens.price==="Free"?0:el.selectedLens.price):0)))}.00
                     </Text>
 
                     <Text fontSize="sm" mt="1">

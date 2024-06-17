@@ -1,5 +1,6 @@
 {
-  "name": "lenskart_clone",
+  "name": "lincoln-eyewear",
+  "homepage": "https://final.lincolneyewear.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,34 +8,49 @@
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@lottiefiles/dotlottie-react": "^0.6.4",
+    "@mediapipe/face_mesh": "^0.4.1633559619",
     "@reduxjs/toolkit": "^1.9.3",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@tensorflow-models/face-landmarks-detection": "^0.0.3",
+    "@tensorflow/tfjs-backend-webgl": "^3.6.0",
+    "@tensorflow/tfjs-converter": "^3.6.0",
+    "@tensorflow/tfjs-core": "^3.6.0",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.2.3",
+    "@tweenjs/tween.js": "^23.1.1",
+    "axios": "^1.7.2",
+    "base-64": "^1.0.0",
     "bcrypt": "^5.1.0",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "framer-motion": "^8.4.3",
     "jsonwebtoken": "^9.0.0",
+    "jwt-decode": "^4.0.0",
+    "lottie-react": "^2.4.0",
     "mongoose": "^6.8.3",
     "nodemon": "^2.0.20",
     "payment": "^2.4.6",
     "react": "^18.2.0",
-    "react-credit-cards": "^0.8.3",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
+    "react-medium-image-zoom": "^5.2.4",
     "react-player": "^2.11.0",
+    "react-razorpay": "^2.0.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "react-slideshow-image": "^4.1.1",
     "react-spinners": "^0.13.8",
+    "react-webcam": "^7.2.0",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "styled-components": "^5.3.6",
     "swiper": "^8.4.6",
+    "three": "^0.165.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -42,12 +58,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
@@ -62,6 +72,7 @@
     ]
   },
   "devDependencies": {
+    "file-loader": "^6.2.0",
     "tailwindcss": "^3.2.7"
   }
 }

@@ -1,142 +1,98 @@
 import React, { useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
+  Box,
+  Button,
   Center,
   Heading,
-  HStack,
+  Input,
   InputGroup,
-  InputLeftAddon,
-  useDisclosure,
-  Image,
+  InputRightElement,
   Modal,
-  ModalOverlay,
-  ModalContent,
   ModalBody,
   ModalCloseButton,
-  Button,
-  Box,
-  Input,
-  Checkbox,
-  InputRightElement,
-  Text
+  ModalContent,
+  ModalOverlay,
+  Text,
+  useToast,
 } from "@chakra-ui/react";
-import Login from "../Login/Login";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-const Signup = ({setIsSignUpOpen}) => {
+const Signup = () => {
   const init = {
-    Name: "",
+    username: "",
     email: "",
-    password: ""
+    password: "",
   };
 
   const [userData, setUserData] = useState(init);
-  const [first, setFirst] = useState();
-  const [mail, setMail] = useState();
-  const [pass, setPass] = useState();
-  const [flag , setFlag]=useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-  const [Auth, setAuth] = useState();
   const [exist, setExist] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  
-
-  const Required = (props) => {
-    return (
-      <Box
-        fontSize={"14px"}
-        m="3px 0px 3px 0px"
-        color={"#ff1f1f"}
-        fontWeight="500"
-        letterSpacing={"-0.4px"}
-      >
-        {props.info}
-      </Box>
-    );
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const toast = useToast();
 
   const handleChange = (e) => {
-    setExist(false);
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
-
-    switch (name) {
-      case "Name":
-        setFirst(
-          value === "" ? <Required info="This is a required feild" /> : ""
-        );
-        break;
-
-      case "email":
-        setMail(
-          value === "" ? (
-            <Required info="This is a required feild" />
-          ) : (
-            <Required info="Please enter a valid email address e.g. johndoe@domain.com." />
-          )
-        );
-        break;
-
-      case "password":
-        setPass(
-          value === "" ? (
-            <Required info="This is a required feild" />
-          ) : (
-            <Required info="Password should be more than 6 characters." />
-          )
-        );
-        break;
-
-      default:
-        break;
+    if (name === "username") {
+      setUsernameError(value.trim() === "");
+    } else if (name === "email") {
+      setEmailError(!/\S+@\S+\.\S+/.test(value));
+    } else if (name === "password") {
+      setPasswordError(value.length < 6);
     }
   };
 
   const handleClose = () => {
-    setExist(false);
-    onClose();
+    setIsOpen(false);
   };
+
   const handleRegister = async () => {
-    var formdata = new FormData();
-    formdata.append("name", userData.Name);
-    formdata.append("email", userData.email);
-    formdata.append("password", userData.password);
-    
-    var requestOptions = {
-      method: 'POST',
-      body: formdata,
-      redirect: 'follow'
+    setLoading(true);
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
     };
-    
+
     try {
-      var response = await fetch("http://localhost:8000/register", requestOptions);
-      if (response.status === 422) {
-        var resText = await response.text();
-        var resJson = JSON.parse(resText);
-        if (resJson?.email?.[0].includes("taken")) {
-          setExist(true);
-          
-        } 
-      } else if (response.status === 200){
-        setExist(false)
-        setIsSignUpOpen(false);
-        onClose();
-      }
-      else {
-        var resText = await response.text();
-        console.log(resText);
+      const response = await fetch(
+        "https://lincolneyewear.com/wp-json/custom/v1/register",
+        requestOptions
+      );
+
+      if (response.ok) {
+        // Handle successful registration
+        toast({
+          title: "User Registered",
+          description: "You have been successfully registered.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        setIsOpen(false);
+      } else if (response.status === 422) {
+        // Handle validation errors
+        const data = await response.json();
+        setExist(true); // Email already exists
+      } else {
+        // Handle other errors
+        console.error("Registration failed:", response.statusText);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
-    
-    
-    
+
+    setLoading(false);
   };
 
   return (
     <div>
-      <Center onClick={onOpen} fontWeight={"400"} fontSize="15px" w="60px">
+      <Center onClick={() => setIsOpen(true)} fontWeight="600" fontSize="16px" w="60px">
         Sign Up
       </Center>
 
@@ -145,15 +101,9 @@ const Signup = ({setIsSignUpOpen}) => {
         <ModalContent w="lg" pt="5" rounded="3xl">
           <ModalCloseButton />
 
-          <ModalBody p={"0px 0px "}>
-            <Box m={"5px 45px 20px 45px"}>
-              <Heading
-                fontFamily={" Times, serif"}
-                fontWeight="100"
-                fontSize={"26px"}
-                mb="20px"
-                color={"#333368"}
-              >
+          <ModalBody p="0px 0px ">
+            <Box m="5px 45px 20px 45px">
+              <Heading fontFamily="Times, serif" fontWeight="100" fontSize="26px" mb="20px" color="#333368">
                 Create an Account
               </Heading>
 
@@ -161,101 +111,38 @@ const Signup = ({setIsSignUpOpen}) => {
                 type="text"
                 fontSize="16px"
                 onChange={handleChange}
-                focusBorderColor="rgb(206, 206, 223)"
-                name="Name"
-                placeholder="First Name*"
-                h={"45px"}
-                borderColor={"rgb(206, 206, 223)"}
-                m={"8px 0px 15px 0px"}
+                name="username"
+                placeholder="Username*"
+                h="45px"
+                borderColor={usernameError ? "red.500" : "rgb(206, 206, 223)"}
+                m="8px 0px 15px 0px"
                 rounded="2xl"
               />
-
-              <Text mt="-2%" ml="2%">
-                {first}
-              </Text>
-
-              {/* <Input
-                fontSize="16px"
-                onChange={handleChange}
-                name="last_name"
-                type="text"
-                placeholder="Last Name"
-                h={"45px"}
-                focusBorderColor="rgb(206, 206, 223)"
-                borderColor={"rgb(206, 206, 223)"}
-                m={"8px 0px 25px 0px"}
-                rounded="2xl"
-              /> */}
-              {/* <Text mt="-2%" ml="2%">
-                {last}
-              </Text> */}
-
-              {/* <InputGroup
-                w="100%"
-                h="50px"
-                fontSize="18px"
-                borderRadius="xl"
-                mb="14px"
-              >
-                <InputLeftAddon
-                  children="+91"
-                  h="45px"
-                  fontSize="18px"
-                  rounded="2xl"
-                  bg="whiteAlpha.900"
-                />
-
-                <Input
-                  onChange={handleChange}
-                  type="number"
-                  name="ph_no"
-                  placeholder=" Mobile*"
-                  w="100%"
-                  h="45px"
-                  fontSize="16px"
-                  focusBorderColor="rgb(206, 206, 223)"
-                  borderColor={"rgb(206, 206, 223)"}
-                  rounded="2xl"
-                />
-              </InputGroup>
-              <Text mt="-2%" ml="2%">
-                {userData.ph_no.length === 10 ? "" : ph}
-              </Text> */}
+              {usernameError && <Text color="red.500">Username is required</Text>}
 
               <Input
                 onChange={handleChange}
                 fontSize="16px"
                 name="email"
                 placeholder="Email*"
-                h={"45px"}
-                focusBorderColor="rgb(206, 206, 223)"
-                borderColor={"rgb(206, 206, 223)"}
-                m={"8px 0px 18px 0px"}
+                h="45px"
+                borderColor={emailError ? "red.500" : "rgb(206, 206, 223)"}
+                m="8px 0px 18px 0px"
                 rounded="2xl"
               />
-              <Text mt="-2%" ml="2%">
-                {userData.email.includes("@") && userData.email.includes(".com")
-                  ? ""
-                  : mail}
-              </Text>
-              {exist === true ? (
-                <Required info="Email Id already exists" />
-              ) : (
-                ""
-              )}
-             
+              {emailError && <Text color="red.500">Please enter a valid email address</Text>}
+              {exist && <Text color="red.500">Email already exists</Text>}
 
               <InputGroup mb="15px">
                 <Input
                   onChange={handleChange}
                   fontSize="16px"
-                  type={show ? "text" : "password"}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Password*"
-                  h={"45px"}
-                  focusBorderColor="rgb(206, 206, 223)"
-                  borderColor={"rgb(206, 206, 223)"}
-                  m={"8px 0px 8px 0px"}
+                  h="45px"
+                  borderColor={passwordError ? "red.500" : "rgb(206, 206, 223)"}
+                  m="8px 0px 8px 0px"
                   rounded="2xl"
                 />
 
@@ -264,97 +151,34 @@ const Signup = ({setIsSignUpOpen}) => {
                     size="md"
                     borderRadius="3xl"
                     mt="20%"
-                    onClick={() => setShow(!show)}
+                    onClick={() => setShowPassword(!showPassword)}
                     bg="white"
                   >
-                    {show ? <ViewOffIcon /> : <ViewIcon />}
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
-              {userData.password.length >= 6 ? "" : pass}
+              {passwordError && <Text color="red.500">Password should be at least 6 characters long</Text>}
 
-              {/* <HStack>
-                <Box
-                  textDecoration={"underline"}
-                  fontFamily={" sans-serif"}
-                  color={"#333368"}
-                  fontSize="14px"
-                >
-                  Got a Referral code?
-                </Box>
+              <Button
+                isLoading={loading}
+                onClick={handleRegister}
+                bgColor="#11daac"
+                width="100%"
+                borderRadius="35px/35px"
+                h="50px"
+                _hover={{ backgroundColor: "#11daac" }}
+                fontFamily="sans-serif"
+                fontWeight="300"
+                fontSize="18px"
+                disabled={usernameError || emailError || passwordError || loading}
+              >
+                Create an Account
+              </Button>
 
-                <Box fontFamily={" sans-serif"} color={"#333368"}>
-                  (Optional)
-                </Box>
-              </HStack> */}
-
-              {/* <HStack>
-                <Checkbox
-                  mb={"20px"}
-                  mt="20px"
-                  size="sm"
-                  fontFamily={" sans-serif"}
-                >
-                  Get Update on whatsapp
-                </Checkbox>
-                <Image
-                  src="https://static.lenskart.com/media/desktop/img/25-July-19/whatsapp.png"
-                  w={"22px"}
-                  h="22px"
-                />
-              </HStack> */}
-              
-
-              <HStack spacing={"3px"} mb="10px">
-                <Box
-                  fontSize={"14px"}
-                  fontFamily={" sans-serif"}
-                  fontWeight="100"
-                  letterSpacing={"-0.4px"}
-                >
-                  By creating this account, you agree to our
-                </Box>
-                <Box fontSize={"15px"} textDecoration="underline">
-                  Privacy Policy
-                </Box>
-              </HStack>
-
-              {userData.email.includes("@") &&
-              userData.email.includes(".com") &&
-              userData.Name.length >= 1 &&
-              userData.password.length >= 6 ?
-               (
-                <Button
-                  isLoading={loading}
-                  onClick={handleRegister}
-                  bgColor={"#11daac"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  h="50px"
-                  _hover={{ backgroundColor: "#11daac" }}
-                  fontFamily={" sans-serif"}
-                  fontWeight="300"
-                  fontSize="18px"
-                >
-                  Create an Account and SignIn
-                </Button>
-              ) : (
-                <Button
-                  bgColor={"#cccccc"}
-                  width="100%"
-                  borderRadius={"35px/35px"}
-                  h="50px"
-                  fontFamily={" sans-serif"}
-                  fontWeight="300"
-                  fontSize="18px"
-                >
-                  Create an Account
-                </Button>
-              )}
-
-              <Center mt={"14px"} fontSize="15px" gap="2">
+              <Center mt="14px" fontSize="15px" gap="2">
                 Have an account?{" "}
-                <Center fontWeight={"500"} textDecoration="underline">
+                <Center fontWeight="500" textDecoration="underline">
                   Sign In
                 </Center>
               </Center>
@@ -363,7 +187,6 @@ const Signup = ({setIsSignUpOpen}) => {
         </ModalContent>
       </Modal>
     </div>
-    
   );
 };
 

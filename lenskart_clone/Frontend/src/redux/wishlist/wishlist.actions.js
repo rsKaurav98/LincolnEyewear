@@ -7,12 +7,13 @@ export const addToWishlist = (product) => {
   };
 };
 
-export const removeFromWishlist = (item) => {
-  return {
-    type: REMOVE_FROM_WISHLIST,
-    payload: item
-  };
-};
+export const removeFromWishlist = (itemId, selectedLensId) => ({
+  type: REMOVE_FROM_WISHLIST,
+  payload: {
+    itemId,
+    selectedLensId
+  }
+});
 
 export const WishlistReset = (id) => {
   return {

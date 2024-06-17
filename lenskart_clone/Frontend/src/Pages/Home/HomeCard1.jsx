@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image,Flex } from "@chakra-ui/react";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
+import { Link } from "react-router-dom";
 
 const HomeCard1 = ({ type }) => {
   return (
@@ -9,9 +10,11 @@ const HomeCard1 = ({ type }) => {
       <Box>
         <Slide>
           {type.map((i) => (
-            <Box key={i}>
-              <Image src={`${i.img}`} alt={i.caption} w="100%" />
-            </Box>
+            <Flex key={i} align="center" justify="center">
+              <a href="/products">
+              <Image src={`${i.img}`} alt={i.caption} w="100%"  />
+              </a>
+            </Flex>
           ))}
         </Slide>
       </Box>

@@ -1,19 +1,74 @@
-import React from "react";
-import ProdDetails from "./ProdDetails";
-import { ProdImage1 } from "./ProdImage";
-import { Button, Image, Text, Flex, Box } from "@chakra-ui/react";
+import React, { useRef } from 'react';
+import {
+  Box,
+  Button,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure
+} from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import SelectLens from "../Lenses/SelectLens";
+import VirtualTryOn from "../../Components/Tryon/tryOn";  // Adjust the import path as necessary
 
-const ProdCard = ({ type, handleCart, handleWishlist }) => {
- 
+const ProdCard = ({
+  type,
+  handleCart,
+  handleWishlist,
+  handleLensCart,
+  selectedLens,
+  totalPrice,
+  virtualTryOnImage
+}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isTryOnOpen, onOpen: onTryOnOpen, onClose: onTryOnClose } = useDisclosure();
+  const tryOnRef = useRef(null);
+  const [selectedLensName, setSelectedLensName] = React.useState("Select Lens");
+  const navigate = useNavigate();
+
+  const handleLensClick = (lens) => {
+    handleLensCart(lens);
+    setSelectedLensName(lens.name);
+    onClose();
+  };
+
+  const buttonStyles = {
+    mt: 2,
+    p: { lg: 7, base: 0 },
+    m: { lg: "10px 20px", base: "10px auto" },
+    w: { lg: "90%", base: "100%" },
+    color: "white",
+    _hover: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" },
+    textAlign: "center",
+    fontSize: {
+      xs: 14,
+      md: 16,
+    },
+  };
+
+  const handleTryOnClick = () => {
+    onTryOnOpen();
+  };
+
+  const handleTryOnClose = () => {
+    if (tryOnRef.current) {
+      tryOnRef.current.stopWebcam();
+    }
+    onTryOnClose();
+  };
+
   return (
     <Box>
-      <Text
-        color="gray.500"
-        fontSize="md"
-        textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      >  
-        {type.name}
-      </Text>
       <Text
         my="10px"
         fontWeight={"700"}
@@ -21,7 +76,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         textTransform="capitalize"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        {type.productRefLink}
+        {type.name}
       </Text>
       <Text
         my="10px"
@@ -30,7 +85,7 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         fontSize="15px"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        Size : Medium
+        Size : Standard
       </Text>
       <Text
         my="10px"
@@ -39,97 +94,148 @@ const ProdCard = ({ type, handleCart, handleWishlist }) => {
         color="teal.500"
         textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
       >
-        ₹{type.max_price - ((10/100)*type.max_price)}{" "}
+        ₹{type.sale_price}{" "}
         <span
           style={{
             fontSize: "18px",
             fontWeight: "lighter",
             color: "#727297",
             textDecoration: "line-through",
-            marginRight: "2%"
+            marginRight: "2%",
           }}
         >
-          {"  "}₹{type.max_price }{" "}
+          {"  "}₹{type.regular_price}{" "}
         </span>
         <span
           style={{
             fontSize: "14px",
             fontWeight: "lighter",
-            color: "black"
+            color: "black",
           }}
         >
-          {"  "}(₹{type.max_price - ((10/100)*type.max_price)} with GST)
+          {" "}(₹{(type.sale_price * 1.18).toFixed(2)} with GST)
         </span>
       </Text>
-      <Text
-        mt="-4"
-        textAlign={{ lg: "left", md: "left", sm: "center", base: "center" }}
-      >
-      
-      </Text>
       <br />
 
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        color="white"
-        bgColor="#00bac6"
-        onClick={handleCart}
-      >
-        <Flex
-          flexDir="column"
-          flexWrap="wrap"
-          justifyContent="center"
-          gap="1"
-          w={{ lg: "100%", sm: "50%", base: "50%" }}
-        >
-          <Text
-            textAlign="center"
-            fontSize={{ lg: "md", md: "md", base: "sm" }}
-          >
-            Click To Choose Lens
-          </Text>
-
-          <Text fontSize="12px">(with 1 Year Warranty & 14 day Return)</Text>
-        </Flex>
+      <Button sx={buttonStyles} onClick={onOpen} bgColor="#00bac6">
+        {selectedLensName}
       </Button>
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        color="white"
-        bgColor="#00bac6"
-        onClick={handleWishlist}
-        fontSize={{ lg: "md", md: "md", base: "sm" }}
-      >
+      <SelectLens isOpen={isOpen} onClose={onClose} handleLensCart={handleLensClick} />
+
+      {selectedLens ? (
+        <Button
+          sx={buttonStyles}
+          mt={2}
+          onClick={() => handleCart(type)}
+          p={{ lg: 7, base: 0 }}
+          m={{ lg: "10px 20px", base: "10px auto" }}
+          w={{ lg: "90%", base: "100%" }}
+          color="white"
+          bg="#455666"
+          _hover={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
+        >
+          Add to Cart - ₹{totalPrice}
+        </Button>
+      ) : (
+        <Button sx={buttonStyles} onClick={() => handleCart(type)} bgColor="#00bac6">
+          Purchase without Lenses
+        </Button>
+      )}
+
+      <Button sx={buttonStyles} onClick={() => handleWishlist(type)} bgColor="#00bac6">
         Add to Wishlist
       </Button>
-      <Button
-        p={{ lg: 7, base: 0 }}
-        m={{ lg: "10px 20px", base: "10px auto" }}
-        w={{ lg: "90%", base: "100%" }}
-        bg="whiteAlpha.900"
-        border="1px"
-        borderColor="gray.400"
-      >
-        <Text ml="20" fontSize={{ lg: "md", md: "md", base: "sm" }}>
-          Purchase without lens
-        </Text>
-        <Image
-          src="https://static.lenskart.com/media/desktop/img/pdp/try_on_model.png"
-          alt="img"
-          ml="20"
-        />
+
+      <Button sx={buttonStyles} onClick={handleTryOnClick} bgColor="#00bac6">
+        Try On
       </Button>
-      <br />
-      <br />
 
-      <ProdDetails type={type} />
+      <Accordion allowMultiple defaultIndex={[0]}>
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+              fontWeight={"700"}
+              fontSize="lg">
+              Short Description
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <div dangerouslySetInnerHTML={{ __html: type.description }} />
+          </AccordionPanel>
+        </AccordionItem>
 
-      {ProdImage1.map((ele, i) => (
-        <Image src={ele.src} key={i} />
-      ))}
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+              fontWeight={"700"}
+              fontSize="lg">
+              Categories
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            {type.categories?.map((category) => (
+              <Text key={category.id}>{category.name}</Text>
+            )) || <Text>No categories available</Text>}
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+              fontWeight={"700"}
+              fontSize="lg">
+              Tags
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            {type.tags?.map((tag) => (
+              <Text key={tag.id}>{tag.name}</Text>
+            )) || <Text>No tags available</Text>}
+          </AccordionPanel>
+        </AccordionItem>
+
+        <AccordionItem>
+          <AccordionButton>
+            <Box flex="1" textAlign="left" my="10px"
+              fontWeight={"700"}
+              fontSize="lg">
+              In Stock
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+          <AccordionPanel pb={4}>
+            <Text>{type.stock_status === "instock" ? "In Stock" : "Out of Stock"}</Text>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+
+      {/* Modal for Virtual Try-On */}
+      <Modal isOpen={isTryOnOpen} onClose={handleTryOnClose} size="xl">
+        <ModalOverlay />
+        <ModalContent
+          maxWidth={{ base: "100vw", md: "95vw" }}
+          maxHeight={{ base: "100vh", md: "95vh" }}
+          overflow="hidden"
+          mt={{ base: "5%", md: "5%" }}
+          mb="5%"
+          boxShadow="2xl"
+          bg="transparent"
+          blur="50%"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <ModalBody padding="10%">
+            <VirtualTryOn isOpen={isTryOnOpen} onClose={handleTryOnClose} imageSrc={virtualTryOnImage} />
+          </ModalBody>
+          <ModalFooter />
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

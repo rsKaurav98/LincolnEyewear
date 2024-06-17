@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   removeFromCart,
   decrement,
-  increment
+  increment,
+  cartReset
 } from "../../redux/CartPage/action";
 import {
   Flex,
@@ -12,36 +13,56 @@ import {
   Image,
   Text,
   Box,
-  Grid
+  Grid,
+  IconButton,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "@chakra-ui/react";
+import { FaTrash } from "react-icons/fa";
 
 const CartItem = () => {
   const dispatch = useDispatch();
-  const { cart } = useSelector((state) => state.CartReducer);
-  console.log(cart)
+  const { cart } = useSelector((state) => state.cartManager);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isDeletingAll, setIsDeletingAll] = useState(false);
 
-  const handleDelete = (item) => {
-    dispatch(removeFromCart(item));
+  const handleDelete = (id, selectedLens) => {
+    dispatch(removeFromCart({ id, selectedLens }));
   };
 
-  const handleDecrementChange = (id, qty) => {
-    if (qty < 1) {
-      dispatch(removeFromCart(id));
+  const handleDecrementChange = (id, selectedLens, qty) => {
+    if (qty <= 1) {
+      dispatch(removeFromCart({ id, selectedLens }));
     } else {
-      dispatch(decrement(id));
+      dispatch(decrement({ id, selectedLens }));
     }
   };
 
-  const handleIncrementChange = (id) => {
-    dispatch(increment(id));
+  const handleIncrementChange = (id, selectedLens) => {
+    dispatch(increment({ id, selectedLens }));
+  };
+
+  const handleReset = () => {
+    dispatch(cartReset());
+    onClose();
+  };
+
+  const handleDeleteAll = () => {
+    setIsDeletingAll(true);
+    onOpen();
   };
 
   return (
     <Box>
       {cart &&
-        cart &&
         cart.map((item) => (
           <Grid
+            key={item.id}
             templateColumns={{
               lg: "20% 80%",
               md: "20% 80%",
@@ -72,20 +93,14 @@ const CartItem = () => {
                 xl: "unset",
                 "2xl": "unset"
               }}
-              src={item.imageTsrc}
+              src={item.images?.[0]?.src}
+              alt={item.name}
             />
             <Flex
               flexDirection={"column"}
               border={"0px solid blue"}
               gap="4"
-              width={{
-                base: "90%",
-                sm: "90%",
-                md: "90%",
-                lg: "90%",
-                xl: "90%",
-                "2xl": "90%"
-              }}
+              width="90%"
               margin={{
                 base: "auto",
                 sm: "auto",
@@ -109,14 +124,33 @@ const CartItem = () => {
                   letterSpacing="-0.32px"
                   fontWeight={500}
                 >
-                  {item.productRefLink}
+                  {item.name}
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.mPrice}
+                    ₹{item.sale_price}
                   </Text>
                 </Flex>
               </Flex>
+              <Box border={"1px dashed #CECEDF"} display={item.selectedLens?"inherit":"none"}></Box>
+              {item.selectedLens && (
+                <Flex justifyContent={"space-between"}>
+                  <Heading
+                    as="h1"
+                    fontSize={"18px"}
+                    lineHeight="22px"
+                    textTransform={"capitalize"}
+                    fontWeight={500}
+                  >
+                    Lens: {item.selectedLens.name}
+                  </Heading>
+                  <Flex gap={"2"}>
+                    <Text fontSize={"18px"} fontWeight="500" color="gray.600">
+                      ₹{item.selectedLens.price}
+                    </Text>
+                  </Flex>
+                </Flex>
+              )}
               <Box border={"1px dashed #CECEDF"}></Box>
               <Flex justifyContent={"space-between"}>
                 <Heading
@@ -130,7 +164,7 @@ const CartItem = () => {
                 </Heading>
                 <Flex gap={"2"}>
                   <Text fontSize={"18px"} fontWeight="500" color="gray.600">
-                    ₹{item.mPrice}
+                    ₹{parseFloat(item.sale_price) + parseFloat(item.selectedLens?.price === "Free"?0:item.selectedLens?.price || 0)}
                   </Text>
                 </Flex>
               </Flex>
@@ -146,7 +180,7 @@ const CartItem = () => {
                   textDecoration="underline"
                   fontSize={"18"}
                   ml="-1.5"
-                  onClick={() => handleDelete(item._id)}
+                  onClick={() => handleDelete(item.id,item.selectedLens)}
                 >
                   Remove
                 </Button>
@@ -163,7 +197,7 @@ const CartItem = () => {
                     borderRadius="50%"
                     fontSize="20px"
                     onClick={() =>
-                      handleDecrementChange(item.id, item.quantity)
+                      handleDecrementChange(item.id,item.selectedLens, item.quantity)
                     }
                   >
                     -
@@ -175,7 +209,7 @@ const CartItem = () => {
                     borderRadius="50%"
                     fontSize="20px"
                     size="md"
-                    onClick={() => handleIncrementChange(item.id)}
+                    onClick={() => handleIncrementChange(item.id,item.selectedLens)}
                   >
                     +
                   </Button>
@@ -184,6 +218,33 @@ const CartItem = () => {
             </Flex>
           </Grid>
         ))}
+
+      <IconButton
+        icon={<FaTrash />}
+        aria-label="Delete all items"
+        onClick={handleDeleteAll}
+        mt={4}
+        colorScheme="red"
+        display={cart.length > 1?"flex":"none" }
+      />
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Delete All Items</ModalHeader>
+          <ModalBody>
+            Are you sure you want to delete all the items from the cart?
+          </ModalBody>
+          <ModalFooter>
+            <Button variant="ghost" onClick={onClose}>
+              No
+            </Button>
+            <Button colorScheme="red" onClick={handleReset} ml={3}>
+              Proceed
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

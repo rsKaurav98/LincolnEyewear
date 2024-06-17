@@ -1,14 +1,17 @@
 import { Box, Flex, Text, Image, Divider, Grid } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-export default function CartItem() {
-  const { cart, coupon } = useSelector((state) => state.CartReducer);
+export default function ShippingPage() {
+  const { cart, coupon } = useSelector((state) => state.cartManager);
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.sale_price * item.quantity;
+      if (item.selectedLens) {
+        itemPrice += item.selectedLens.price==="Free"?0:item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 
@@ -31,7 +34,7 @@ export default function CartItem() {
         </Box>
         <Box border="1px solid #ccc">
           {cart.map((el) => (
-            <Box>
+            <Box key={el.id}>
               <Grid
                 templateColumns={{
                   base: "repeat(1,1fr)",
@@ -63,7 +66,7 @@ export default function CartItem() {
                       xl: "100%",
                       "2xl": "100%"
                     }}
-                    src={el.imageTsrc}
+                    src={el?.images?.[0]?.src}
                     m="auto"
                   />
                 </Box>
@@ -97,17 +100,42 @@ export default function CartItem() {
                       textAlign={{ lg: "left", sm: "center", base: "center" }}
                     >
                       <Text color="#9999b3" fontWeight="500" fontSize="16px">
-                        <s>{"₹" + el.mPrice}</s>
+                        <s>{"₹" + el.sale_price}</s>
                       </Text>
                       <Text color="#000042" fontWeight="700">
-                        {"₹" + el.price}
+                        {"₹" + el.sale_price}
                       </Text>
                     </Flex>
                   </Box>
                 </Grid>
               </Grid>
 
-              <Divider h={2} mb={2} />
+             
+
+              {/* Display Lens Name and Price if available */}
+              {el.selectedLens && (
+                <Flex justifyContent="space-between" alignItems="center" m="4">
+                  <Text fontSize="md" fontWeight="bold">
+                    Lens:{el.selectedLens.name}
+                  </Text>
+                  <Text fontSize="md" fontWeight="bold" ml={2} >
+                    ₹{el.selectedLens.price}
+                  </Text>
+                </Flex>
+              )}
+
+              {/* Display "No Lens" if no lens is selected */}
+              {!el.selectedLens && (
+                <Flex justifyContent="space-between" alignItems="center" m="4">
+                  <Text fontSize="md" fontWeight="bold">
+                    No Lens
+                  </Text>
+                  <Text fontSize="md" fontWeight="bold" ml={2}>
+                    ₹0
+                  </Text>
+                </Flex>
+              )}
+                <Divider h={2} mb={2} />
             </Box>
           ))}
         </Box>
@@ -117,12 +145,12 @@ export default function CartItem() {
             <Text fontWeight="medium">₹{getTotalPrice()}.00</Text>
           </Flex>
           <Divider h={2} mb={2} />
-          <Flex justifyContent={"space-between"} fontSize="15px" mb={2}>
+          {/* <Flex justifyContent={"space-between"} fontSize="15px" mb={2}>
             <Text fontWeight="bold">TAX COLLECTED</Text>
             <Text fontWeight="medium">
-              + ₹{Math.round((getTotalPrice() - (coupon || 0)) * 0.18)}.00
+              + ₹{Math.round((getTotalPrice()) * 0.18)}.00
             </Text>
-          </Flex>
+          </Flex> */}
           <Divider mb={2} border="1px solid" />
           <Flex justifyContent={"space-between"} fontSize="16px">
             <Text fontWeight="bold">
@@ -131,12 +159,11 @@ export default function CartItem() {
                 style={{ fontSize: "14px", fontWeight: "500" }}
                 color="gray"
               >
-                (After Tax)
+                (Incl. taxes)
               </span>
             </Text>
             <Text fontWeight="medium">
-              ₹{Math.round(getTotalPrice() + getTotalPrice() * 0.18)}
-              .00
+              ₹{getTotalPrice()}.00
             </Text>
           </Flex>
 
@@ -151,10 +178,7 @@ export default function CartItem() {
               TOTAL PAYABLE
             </Text>
             <Text fontWeight="bold" fontSize="17px" color="#329BA9">
-              ₹
-              {Math.round(getTotalPrice() + getTotalPrice() * 0.18) -
-                (coupon || 0)}
-              .00
+            ₹{getTotalPrice()}.00
             </Text>
           </Flex>
         </Box>
