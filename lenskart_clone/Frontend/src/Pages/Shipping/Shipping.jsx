@@ -401,7 +401,7 @@ function Shipping() {
               userData.state.length >= 1 ? (
                 <Button
                    onClick={handleShipping}
-                  bg="teal"
+                  bg="secondary"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"
@@ -417,7 +417,7 @@ function Shipping() {
               ) : (
                 <Button
                  
-                  bg="secondary"
+                  bg="lightgrey"
                   p="25px 20px"
                   color="#fff"
                   textAlign="center"
@@ -425,7 +425,6 @@ function Shipping() {
                   borderRadius="5px"
                   fontSize="18px"
                   ml={{ lg: "80%", sm: "70%", base: "50%" }}
-                  onClick={handleShipping}
                    
                 >
                   CONTINUE

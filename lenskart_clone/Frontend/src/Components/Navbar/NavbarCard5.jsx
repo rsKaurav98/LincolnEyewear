@@ -130,7 +130,7 @@ const NavbarCard5 = () => {
 
       <Menu>
         <MenuButton {...menuButtonStyles}>
-          SUN GLASSES
+          SUNGLASSES
         </MenuButton>
         <Link to="/products">
           <MenuList

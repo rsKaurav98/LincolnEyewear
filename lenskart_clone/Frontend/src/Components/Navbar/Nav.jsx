@@ -225,7 +225,7 @@ function Nav() {
                     COMPUTER GLASSES
                   </Text>
                   <Text pb="2" borderBottom="1px solid white" onClick={() => handleCategoryClick(53)}>
-                    SUN GLASSES
+                    SUNGLASSES
                   </Text>
                 </Box>
                 <Heading mt="15%" color="black" fontSize="15px" mb="5%">

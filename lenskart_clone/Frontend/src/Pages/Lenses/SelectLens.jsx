@@ -153,6 +153,13 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
                 w={{ base: "100%", md: "77%" }}
                 h="62vh"
                 overflowY={{ base: "visible", md: "auto" }}
+                sx={
+                  { 
+                 '::-webkit-scrollbar':{
+                        display:'none'
+                    }
+                 }
+               }
               >
                 {renderLensContent(selectedCategory)}
               </Box>

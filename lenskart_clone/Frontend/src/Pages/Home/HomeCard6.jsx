@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Image, Square, Link } from "@chakra-ui/react";
+import { Box, Image, Square } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { Navigation, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -18,7 +19,9 @@ const HomeCard6 = ({ type, heading }) => {
       pb="7"
       fontWeight="400"
     >
+      <Link to={heading==="SUNGLASSES"?(heading==="TR EYEGLASSES"?"/products?category=87":"/products?category=53"):"/products?category=80"}>
       {heading}
+      </Link>
       <hr />
       <Box mt="1">
         <Swiper
@@ -51,7 +54,7 @@ const HomeCard6 = ({ type, heading }) => {
           {type.map((i) => (
             <Box key={i}>
               <SwiperSlide>
-                <Link to={i.linked}>
+              <Link to={`/products/${i?.id}`}>
                   <Square m="auto">
                     <Image
                       src={`${i.img}`}

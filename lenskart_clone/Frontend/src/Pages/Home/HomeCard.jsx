@@ -46,7 +46,7 @@ const HomeCard = ({ type }) => {
             onClick={() => handleCategoryClick(i.slug)}
           >
             <Center>
-                <Image src={i.img} alt={i.name} w="100%" />
+                <Image src={i.img} alt={i.name} w="" />
             </Center>
             <Center>
               <Text fontSize="16px" fontWeight="500" p="1">
