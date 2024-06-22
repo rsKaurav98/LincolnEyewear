@@ -85,11 +85,11 @@ const VirtualTryOn = forwardRef((props, ref) => {
         const eyeCenter = keypoints[168];
 
         const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
-        const scaleMultiplier = eyeDistance / 140;
+        const scaleMultiplier = eyeDistance / 140; // Adjusted scale multiplier
 
         const scaleX = -0.01;
         const scaleY = -0.01;
-        const offsetX = 0.00;
+        const offsetX = 0.01;
         const offsetY = -0.01;
 
         glassesMesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;

@@ -259,7 +259,7 @@ const SingleProduct = () => {
                   handleLensCart={handleLensCart}
                   selectedLens={selectedLens}
                   totalPrice={totalPrice}
-                  virtualTryOnImage={isDataLoaded ? data.images[1].src : null}
+                  virtualTryOnImage={isDataLoaded ? data.images[0].src : null}
                 />
               </Box>
             </Grid>
