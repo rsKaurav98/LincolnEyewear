@@ -85,12 +85,12 @@ const VirtualTryOn = forwardRef((props, ref) => {
         const eyeCenter = keypoints[168];
 
         const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
-        const scaleMultiplier = eyeDistance / 140; // Adjusted scale multiplier
+        const scaleMultiplier = isMobile ? eyeDistance / 340 : eyeDistance / 140; // Adjusted scale multiplier for mobile
 
         const scaleX = -0.01;
         const scaleY = -0.01;
-        const offsetX = 0.01;
-        const offsetY = -0.01;
+        const offsetX = isMobile ? 0.10 : 0.01; // Different horizontal offset for mobile
+        const offsetY = isMobile ? -0.10 : -0.01; // Different vertical offset for mobile
 
         glassesMesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
         glassesMesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
@@ -108,7 +108,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
     }, 120);
 
     return () => clearInterval(intervalId);
-  }, [model, glassesMesh]);
+  }, [model, glassesMesh, isMobile]);
 
   const stopWebcam = () => {
     if (webcamRef.current && webcamRef.current.srcObject) {
