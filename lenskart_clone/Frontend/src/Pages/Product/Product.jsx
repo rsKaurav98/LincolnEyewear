@@ -4,7 +4,11 @@ import Pagination from "../../Components/Pagination";
 import ProductCard from "./ProductCard";
 import ProdFilter from "./ProdFilter";
 import { TbArrowsUpDown } from "react-icons/tb";
-import { Box, Flex, Text, Button, IconButton, Drawer, DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure } from "@chakra-ui/react";
+import {
+  Box, Flex, Text, Button, IconButton, Drawer,
+  DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent,
+  DrawerCloseButton, useDisclosure
+} from "@chakra-ui/react";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
@@ -12,10 +16,11 @@ import { CategoryContext } from "../../Context/CategoryContext";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
+import { useSearchParams } from "react-router-dom";
 import base64 from 'base-64';
 
-// const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-// const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
+const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 const NewProduct = () => {
   const [products, setProducts] = useState([]);
@@ -26,15 +31,25 @@ const NewProduct = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
   const { searchValue, setSearchValue } = useSearch();
+  const [searchParams] = useSearchParams();
 
-  const { selectedCategory, setSelectedCategory } = useContext(CategoryContext);
+  const { selectedCategory, setSelectedCategory, findCategoryNameById } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const categoryFromParams = searchParams.get("category");
+    if (categoryFromParams) {
+      setSelectedCategory(categoryFromParams);
+    }
+  }, [searchParams, setSelectedCategory]);
+
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
-      const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
-      const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
-      let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "";
+      let categoryFilter = selectedCategory 
+        ? `&category=${selectedCategory}` 
+        : "&category=52";
+
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
 
@@ -54,15 +69,17 @@ const NewProduct = () => {
       const response = await fetch(
         `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
       );
-      
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      const totalProductsCount = response.headers.get('X-WP-Total');
+      const totalPages = Math.ceil(totalProductsCount / 15);
+
       const data = await response.json();
-      setTotalPages(data.totalPages);
-      setTotalProducts(data.totalProducts);
+      setTotalPages(totalPages);
+      setTotalProducts(totalProductsCount);
       setProducts(data);
       setIsLoaded(false);
     } catch (error) {
@@ -70,8 +87,6 @@ const NewProduct = () => {
       setIsLoaded(false);
     }
   };
-  
-  
 
   useEffect(() => {
     fetchProduct();
@@ -93,6 +108,8 @@ const NewProduct = () => {
     setSearchValue("");
     setPage(1);
   };
+
+  const categoryName = selectedCategory ? findCategoryNameById(selectedCategory) : "EYEGLASSES & SUNGLASSES";
 
   return (
     <>
@@ -123,7 +140,7 @@ const NewProduct = () => {
             <hr />
           </Flex>
 
-          <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+          <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
             <DrawerOverlay>
               <DrawerContent>
                 <DrawerCloseButton />
@@ -169,7 +186,7 @@ const NewProduct = () => {
             >
               <Flex alignItems="center" flex="1" flexWrap="wrap" justify="space-between">
                 <Text fontSize="18px" color="#2d3748" fontWeight="600" mr="10px">
-                  EYEGLASSES & SUNGLASSES
+                  {categoryName}
                 </Text>
                 <Flex alignItems="center">
                   <TbArrowsUpDown color="green" fontWeight="bold" />

@@ -30,12 +30,7 @@ const ProdFilter = ({
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
-          // {
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   }
-          // }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
         
         if (!response.ok) {
@@ -43,7 +38,7 @@ const ProdFilter = ({
         }
         
         const data = await response.json();
-        return data;
+        return data.filter(category => category.id !== 100); // Filter out the category with ID 100
       } catch (error) {
         console.error("Fetch Error:", error);
         return [];
@@ -53,12 +48,7 @@ const ProdFilter = ({
     const fetchTags = async () => {
       try {
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
-          // {
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   }
-          // }
+          `https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
         
         if (!response.ok) {
@@ -105,9 +95,6 @@ const ProdFilter = ({
           <AccordionPanel pb={4} color="gray.500" p="2">
             <RadioGroup onChange={handleCategoryChange} value={selectedCategory}>
               <Stack direction="column" gap="2">
-                <Radio value="" key="all">
-                  All Categories
-                </Radio>
                 {categories.map((category) => (
                   <Radio value={category.id.toString()} key={category.id}>
                     {category.name}

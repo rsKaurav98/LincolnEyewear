@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
+import { AuthContext } from "../../ContextApi/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import logotop from '../../Images/logotop.png'
+import { Accordion } from "@chakra-ui/react";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
-import { AuthContext } from "../../ContextApi/AuthContext";
-import { Link, Navigate } from "react-router-dom";
-import { HamburgerIcon } from "@chakra-ui/icons";
-import logo from '../../Images/logo.png'
 import {
   DrawerCloseButton,
   Button,
@@ -22,23 +23,13 @@ import {
   Heading,
   Avatar,
   Text,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Flex
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { useSearch } from '../../Context/SearchContext';
-
-
 
 function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const firstField = React.useRef();
-  // const {isLoginOpen,onLoginOpen,onLoginClose}= useDisclosure();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
   const { setSearchValue, searchValue } = useSearch();
@@ -48,12 +39,17 @@ function Nav() {
       navigate(`/products?search=${searchValue}`);
     }
   }
+
   const scrollToContact = () => {
     const contactDetails = document.getElementById("contact-details");
     if (contactDetails) {
       contactDetails.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  const handleCategoryClick = (category) => {
+    navigate(`/products?category=${category}`);
+  }
 
   return (
     <Box
@@ -66,9 +62,9 @@ function Nav() {
         <Box w="20%">
           <Link to="/">
             <Image
-              src={logo}
+              src={logotop}
               alt="logo"
-            // w={{ lg: "75%", md: "75%", sm: "75%", base: "75%" }}
+              width="200px"
             />
           </Link>
         </Box>
@@ -88,7 +84,7 @@ function Nav() {
         </Box>
 
         <Box>
-          <Button bg="#455666" color="white" p="0" onClick={onOpen}>
+          <Button bg="secondary" color="white" p="0" onClick={onOpen}>
             <HamburgerIcon fontSize="20px" />
           </Button>
           <Drawer
@@ -123,24 +119,10 @@ function Nav() {
                         alignItems="flex-start"
                       >
                         <Text mt="10px" fontSize="20px" color="blackAlpha.900">
-
                           {Authdata.user_display_name}
                         </Text>
-                        {/* <Text color="gray.500" mt="5%" fontSize="sm">
-                          Enjoy Buy 1 Get 1 offer for 365 days
-                        </Text> */}
                       </Flex>
                     </Flex>
-                    {/* <Button
-                      w="100%"
-                      h="35px"
-                      mt="5%"
-                      colorScheme="blue"
-                      fontSize="15px"
-                      _hover={{ bg: "blue.400" }}
-                    >
-                      GET GOLD MEMBERSHIP
-                    </Button> */}
                   </Flex>
                 ) : (
                   <Box
@@ -237,104 +219,16 @@ function Nav() {
                   SHOP NOW
                 </Heading>
                 <Box display="flex" flexDirection="column" fontSize="16px">
-                <Link to="/products?category=52">
-                  <Text pb="2" borderBottom="1px solid white">EYEGLASSES</Text>
-                  </Link>
-                  <Link to="/products?category=52">
-                  <Text pb="2" borderBottom="1px solid white">COMPUTER GLASSES</Text>
-                  </Link>
-                  {/* <Text pb="2">CONTACT LENSES</Text> */}
-                  <Link to="/products?category=52">
-                  <Text pb="2" borderBottom="1px solid white">SUN GLASSES</Text>
-                  </Link>
+                  <Text pb="2" borderBottom="1px solid white" onClick={() => handleCategoryClick(52)}>
+                    EYEGLASSES
+                  </Text>
+                  <Text pb="2" borderBottom="1px solid white" onClick={() => handleCategoryClick(52)}>
+                    COMPUTER GLASSES
+                  </Text>
+                  <Text pb="2" borderBottom="1px solid white" onClick={() => handleCategoryClick(53)}>
+                    SUNGLASSES
+                  </Text>
                 </Box>
-                {/* <Heading mt="15%" color="black" fontSize="15px" mb="5%">
-                  Our Services
-                </Heading>
-                <Box display="flex" flexDirection="column" fontSize="16px">
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      fontSize="15px"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                    >
-                      Free Home Trail
-                    </Box>
-                  </Link>
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Home Eye check-up
-                    </Box>
-                  </Link>
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Store Locator
-                    </Box>
-                  </Link>
-                </Box>
-                <Heading mt="15%" color="black" mb="5%" fontSize="15px">
-                  HIGHLIGHTS
-                </Heading>
-                <Box display="flex" flexDirection="column" fontSize="16px">
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Check Frame Size
-                    </Box>
-                  </Link>
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Gold Membership
-                    </Box>
-                  </Link>
-                  <Link>
-                    <Box
-                      borderBottom="0.1px solid gray"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Try Frames in 3D
-                    </Box>
-                  </Link>
-                  <Link>
-                    <Box
-                      borderBottom="1px solid white"
-                      p="5% 0%"
-                      color="black"
-                      _hover={{ fontWeight: "bold" }}
-                      fontSize="15px"
-                    >
-                      Dowloads Apps
-                    </Box>
-                  </Link>
-                </Box> */}
                 <Heading mt="15%" color="black" fontSize="15px" mb="5%">
                   FAQ's & POLICIES
                 </Heading>
@@ -380,7 +274,7 @@ function Nav() {
                   <Button
                     mt="5%"
                     fontSize="18px"
-                    bg="#455666"
+                    bg="secondary"
                     color={"white"}
                     borderBottom="1px solid #526171"
                     p="6% 15%"
@@ -389,7 +283,7 @@ function Nav() {
                       setisAuth(false);
                       localStorage.removeItem("user")
                       localStorage.removeItem("token")
-                      localStorage.removeItem("customerData",decoded.data.user );
+                      localStorage.removeItem("customerData", decoded.data.user);
                       return <Navigate to="/" />;
                     }}
                   >

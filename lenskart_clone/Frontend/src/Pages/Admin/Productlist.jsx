@@ -117,8 +117,8 @@ const Productlist = () => {
             bg="whiteAlpha.900"
           >
             <option value="">All Glasses</option>
-            <option value="sunglasses">Sun Glasses</option>
-            <option value="eyeglasses">Eye Glasses</option>
+            <option value="sunglasses">SunGlasses</option>
+            <option value="eyeglasses">EyeGlasses</option>
           </Select>
         </GridItem>
         <GridItem>

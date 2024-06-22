@@ -17,7 +17,7 @@ const HomeCard = ({ type }) => {
   };
 
   return (
-    <Box mb="2" cursor="pointer" bgColor="aliceblue" p="4" w="100%" className="glasses">
+    <Box mb="2" cursor="pointer" bgColor="" p="4" w="100%" className="glasses">
       <Grid
         templateColumns={{
           base: "repeat(2,1fr)",
@@ -31,6 +31,7 @@ const HomeCard = ({ type }) => {
         m="auto"
       >
         {type.map((i) => (
+          <Link to={`/products?category=${i.slug}`}>
           <Box
             key={i.slug}
             border="1px"
@@ -40,14 +41,12 @@ const HomeCard = ({ type }) => {
             bgColor="white"
             p="1"
             pb="2.5"
-            _hover={{ bg: "#455666", color: "white" }}
+            _hover={{ bg: "secondary", color: "white" }} // Use 'secondary' color here
             transition={"0.3s"}
             onClick={() => handleCategoryClick(i.slug)}
           >
             <Center>
-              <Link to="/products">
-                <Image src={i.img} alt={i.name} w="100%" />
-              </Link>
+                <Image src={i.img} alt={i.name} w="" />
             </Center>
             <Center>
               <Text fontSize="16px" fontWeight="500" p="1">
@@ -55,6 +54,7 @@ const HomeCard = ({ type }) => {
               </Text>
             </Center>
           </Box>
+              </Link>
         ))}
       </Grid>
     </Box>

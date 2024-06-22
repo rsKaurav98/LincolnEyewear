@@ -30,7 +30,7 @@ const NavbarCard5 = () => {
     }
   };
   const menuButtonStyles = {
-    bg: "#455666",
+    bg: "secondary",
     fontSize: "15px",
     fontWeight: "600",
     fontFamily: "sans-serif",
@@ -42,7 +42,7 @@ const NavbarCard5 = () => {
   };
 
   return (
-    <Flex bg="#455666" cursor="pointer" gap="8" h="7" justifyContent="space-between">
+    <Flex bg="secondary" cursor="pointer" gap="8" h="7" justifyContent="space-between">
       <Menu>
         <MenuButton {...menuButtonStyles}>
           EYEGLASSES
@@ -130,7 +130,7 @@ const NavbarCard5 = () => {
 
       <Menu>
         <MenuButton {...menuButtonStyles}>
-          SUN GLASSES
+          SUNGLASSES
         </MenuButton>
         <Link to="/products">
           <MenuList

@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Text, Image, Grid } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 
 export const HomeCard5 = () => {
@@ -18,33 +19,43 @@ export const HomeCard5 = () => {
         }}
       >
         <Box>
+          <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/eye-square10.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=53">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/power-sun-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
         </Box>
         <Box>
+        <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/ce-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=53">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/sun-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Nov20/25-Nov/Banner03_TileDesktop.jpg"
             alt="img"
             p="2"
           />
+          </Link>
         </Box>
       </Grid>
     </Box>

@@ -63,7 +63,7 @@ const OrderHistory = () => {
   const calculateTotalPrice = (order) => {
     return order.line_items.reduce((total, product) => {
       const productPrice = Number(product.price);
-      return total + productPrice * 1.18;
+      return total + productPrice
     }, 0);
   };
 
@@ -84,7 +84,7 @@ const OrderHistory = () => {
             mt="1%"
             textAlign="center"
             p="2"
-            bg="#455666"
+            bg="secondary"
             color="whiteAlpha.900"
             borderRadius="8px"
           >
@@ -192,7 +192,7 @@ const OrderHistory = () => {
                                     {product.name}
                                   </Text>
                                   <Text fontWeight="bold" fontSize="18px">
-                                    Price: ₹{Math.round(Number(product.price) * 1.18)}.00
+                                    Price: ₹{Math.round(Number(product.price))}.00
                                   </Text>
                                 </Box>
                               </Grid>

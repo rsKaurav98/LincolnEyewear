@@ -24,6 +24,7 @@ import {
   InputRightElement,
   useToast // Import useToast hook
 } from "@chakra-ui/react";
+import Signup from "../Signup/Signup";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -258,8 +259,9 @@ const Login = () => {
                   fontSize={"15px"}
                   fontWeight="500"
                   textDecoration={"underline"}
+                  onClick={onclose}
                 >
-                  Create an Account
+                  <Signup/>
                 </Link>
               </HStack>
             </Box>

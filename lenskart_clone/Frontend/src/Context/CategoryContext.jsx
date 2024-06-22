@@ -1,4 +1,3 @@
-// CategoryContext.js
 import React, { createContext, useState, useEffect } from "react";
 
 export const CategoryContext = createContext();
@@ -22,14 +21,16 @@ export const CategoryProvider = ({ children }) => {
         }
 
         const data = await response.json();
-        // Filter out the category with name "Lenses"
-        const filteredCategories = data.filter(category => category.name.toLowerCase() !== "lenses");
-        setCategories(filteredCategories);
+        
+        // Filter out category with ID 100
+        const filteredData = data.filter(category => category.id !== 100);
+        
+        setCategories(filteredData);
       } catch (error) {
         console.error("Fetch Error:", error);
       }
     };
-
+    
     fetchCategories();
   }, []);
 
@@ -38,9 +39,14 @@ export const CategoryProvider = ({ children }) => {
     return category ? category.id.toString() : null;
   };
 
+  const findCategoryNameById = (id) => {
+    const category = categories.find((cat) => cat.id === parseInt(id, 10));  // Ensure id is compared as a number
+    return category ? category.name : "EYEGLASSES & SUNGLASSES";
+  };
+
   return (
     <CategoryContext.Provider
-      value={{ categories, selectedCategory, setSelectedCategory, findCategoryIdBySlug }}
+      value={{ categories, selectedCategory, setSelectedCategory, findCategoryIdBySlug, findCategoryNameById }}
     >
       {children}
     </CategoryContext.Provider>

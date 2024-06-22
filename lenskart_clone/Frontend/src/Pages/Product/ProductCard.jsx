@@ -5,14 +5,13 @@ import { AiFillStar } from "react-icons/ai";
 const ProductCard = ({ type }) => {
   return (
     <Grid
-      m="20px 10px"
+      m="10px"
       templateColumns={{
         base: "repeat(1, 1fr)",
         sm: "repeat(1, 1fr)",
         md: "repeat(2, 1fr)",
         lg: "repeat(3, 1fr)",
       }}
-      height="100vh"
       gap={6}
     >
       {type.map((ele) => {
@@ -116,7 +115,7 @@ const ProductCard = ({ type }) => {
                       color="gray.400"
                       fontSize="14px"
                     >
-                      {ele?.slug?ele.slug:"eyewear"}{" "}
+                      {ele?.slug ? ele.slug : "eyewear"}{" "}
                     </Text>
                     <Text
                       mt="5px"
