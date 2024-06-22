@@ -9,7 +9,8 @@ import { FiPhoneCall } from "react-icons/fi";
 import { CiHeart } from "react-icons/ci";
 import { CgShoppingCart } from "react-icons/cg";
 import { TriangleDownIcon } from "@chakra-ui/icons";
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logo.png';
+import logotop from '../../Images/logotop.png'
 import {
   Box,
   Text,
@@ -81,7 +82,7 @@ export const NavbarCard2 = () => {
       <HStack m="auto">
         <Box w="20%">
           <Link to="/">
-            <Image src={logo} alt="logo" />
+            <Image src={logotop} alt="logo" width="200px"/>
           </Link>
         </Box>
         <HStack w="80%" m="auto" display="flex" justify="space-between">

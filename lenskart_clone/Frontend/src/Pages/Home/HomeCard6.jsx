@@ -61,6 +61,8 @@ const HomeCard6 = ({ type, heading }) => {
                       alt={i.caption}
                       boxSize="160px"
                       w="80%"
+                      transition="transform 0.3s ease-in-out"
+                      _hover={{ transform: "scale(1.1)" }}
                     />
                   </Square>
                 </Link>

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import logo from '../../Images/logo.png'
+import logotop from '../../Images/logotop.png'
 import { Accordion } from "@chakra-ui/react";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
@@ -62,8 +62,9 @@ function Nav() {
         <Box w="20%">
           <Link to="/">
             <Image
-              src={logo}
+              src={logotop}
               alt="logo"
+              width="200px"
             />
           </Link>
         </Box>

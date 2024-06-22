@@ -79,7 +79,7 @@ const Footer = () => {
           </Flex>
           <Flex align="center" mb="2">
             <Icon as={FaEnvelope} mr="2" />
-            <Text fontSize="sm">info@lincolneyewear.com</Text>
+            <Text fontSize="sm">info.lincolneyewear@gmail.com</Text>
           </Flex>
           <Flex align="center" mb="2">
             <Icon as={FaMapMarkerAlt} mr="2" />
@@ -98,8 +98,7 @@ const Footer = () => {
           ))}
         </Flex>
         </Flex>
-
-        <Flex>
+        <Flex mt="10">
         <Link
             href="https://www.google.com/maps/search/Lincoln+Eyewear+3-H,+patel+Industrial+estate,Pratap+nagar,+dabhoi+road,+Vadodara,+Gujarat+390004+,India/@22.2831522,73.2140548,15z?entry=ttu"
             target="_blank"

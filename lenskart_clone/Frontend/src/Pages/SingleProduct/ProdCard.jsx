@@ -106,7 +106,7 @@ const ProdCard = ({
         >
           {"  "}₹{type.regular_price}{" "}
         </span>
-        <span
+        {/* <span
           style={{
             fontSize: "14px",
             fontWeight: "lighter",
@@ -114,7 +114,7 @@ const ProdCard = ({
           }}
         >
           {" "}(₹{(type.sale_price * 1.18).toFixed(2)} with GST)
-        </span>
+        </span> */}
       </Text>
       <br />
 
