@@ -1,181 +1,211 @@
-import { React, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
-  Avatar,
-  Image,
-  Heading,
-  Box,
-  Button,
-  Flex,
   Text,
-  Grid,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Divider
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+  Box,
 } from "@chakra-ui/react";
 import { CategoryContext } from "../../Context/CategoryContext";
 import { useSearch } from "../../Context/SearchContext";
 
 const NavbarCard5 = () => {
-  const { setSelectedCategory, findCategoryIdBySlug, selectedCategory ,categories} = useContext(CategoryContext);
+  const { setSelectedCategory, findCategoryIdBySlug, selectedCategory, categories } = useContext(CategoryContext);
   const { setSearchValue } = useSearch();
 
   const handleCategoryClick = (slug) => {
     const categoryId = findCategoryIdBySlug(slug);
     if (categoryId) {
       setSelectedCategory(categoryId);
-      setSearchValue(""); // Clear the search value
+      setSearchValue("");
     }
   };
+
   const menuButtonStyles = {
-    bg: "secondary",
     fontSize: "15px",
     fontWeight: "600",
     fontFamily: "sans-serif",
     color: "white",
-    _hover: {
-      borderBottom: "2px solid white",
-    },
-    px: "4",
+    _hover: { borderBottom: "2px solid white" },
+    display:"flex",
+    alignItems:"center"
   };
 
   return (
-    <Flex bg="secondary" cursor="pointer" gap="8" h="7" justifyContent="space-between">
-      <Menu>
-        <MenuButton {...menuButtonStyles}>
-          EYEGLASSES
-        </MenuButton>
-        <Link to="/products">
-          <MenuList
-            color="blackAlpha.900"
-            bg="whiteAlpha.900"
-            w="600px"
-            p="4"
-            borderRadius="md"
-            boxShadow="lg"
-            maxH="600px"
-            overflowY="auto"
-            css={{
-              '&::-webkit-scrollbar': { display: 'none' },
-              '-ms-overflow-style': 'none',
-              scrollbarWidth: 'none',
-            }}
-            display="flex"
+    <Flex bg="secondary" cursor="pointer" gap="100" h="7" justifyContent="space-between" align>
+      <Popover trigger="hover" placement="bottom-start">
+        <PopoverTrigger>
+          <Text
+            as={Link}
+            to="/products"
+            {...menuButtonStyles}
+            onClick={() => handleCategoryClick("eyeglasses")}
           >
+            EYEGLASSES
+          </Text>
+        </PopoverTrigger>
+        <PopoverContent bg="whiteAlpha.900" w="600px" p="4" borderRadius="md" boxShadow="lg" maxH="600px" overflowY="auto" css={{
+          '&::-webkit-scrollbar': { display: 'none' },
+          '-ms-overflow-style': 'none',
+          scrollbarWidth: 'none',
+        }}>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverBody display="flex">
             <div style={{ flex: 1 }}>
-              <MenuItem
+            <Link to="/products">
+              <Box
                 fontSize="lg"
                 mb="3"
                 w="100%"
-                bg={selectedCategory === findCategoryIdBySlug("acetate-eyeglasses") ? "gray.200" : "transparent"}
-                _hover={{ bg: "gray.200" }}
+                bg={selectedCategory === findCategoryIdBySlug("acetate-eyeglasses") ? "secondary" : "transparent"}
+                color={selectedCategory === findCategoryIdBySlug("tr-eyeglases") ? "white" : ""}
+                _hover={{ bg: "secondary",color:"white" }}
                 onClick={() => handleCategoryClick("acetate-eyeglasses")}
+                rounded={10}
+                paddingX={3}
               >
                 ACETATE EYEGLASSES
-              </MenuItem>
+              </Box>
+              </Link>
               {[
                 "hawk", "chariot", "poseidon", "eagle", "king", "leo", "oliver", "august",
                 "carter", "zeus", "alexa", "frank", "hogan", "samantha", "austin"
               ].map((slug) => (
-                <MenuItem
+                <Link to="/products">
+                <Box
                   key={slug}
-                  bg={selectedCategory === findCategoryIdBySlug(slug) ? "gray.200" : "transparent"}
-                  _hover={{ bg: "gray.200" }}
+                  bg={selectedCategory === findCategoryIdBySlug(slug) ? "secondary" : "transparent"}
+                  color={selectedCategory === findCategoryIdBySlug(slug) ? "white" : ""}
+                  _hover={{ bg: "secondary",color:"white" }}
                   onClick={() => handleCategoryClick(slug)}
                   w="100%"
+                  rounded={10}
+                paddingX={3}
                 >
                   {slug.replace(/-/g, " ").toUpperCase()}
-                </MenuItem>
+                </Box>
+                </Link>
               ))}
             </div>
             <div style={{ flex: 1 }}>
-              <MenuItem
+            <Link to="/products">
+              <Box
                 fontSize="lg"
                 mb="3"
                 w="100%"
-                bg={selectedCategory === findCategoryIdBySlug("tr-eyeglases") ? "gray.200" : "transparent"}
-                _hover={{ bg: "gray.200" }}
+                bg={selectedCategory === findCategoryIdBySlug("tr-eyeglases") ? "secondary" : "transparent"}
+                color={selectedCategory === findCategoryIdBySlug("tr-eyeglases") ? "white" : ""}
+                _hover={{ bg: "secondary",color:"white" }}
                 onClick={() => handleCategoryClick("tr-eyeglases")}
+                rounded={10}
+                paddingX={3}
               >
                 TR EYEGLASSES
-              </MenuItem>
+              </Box>
+              </Link>
               {[
                 "urban-edge-series", "lens-luxury-eyewear", "trufocus-tr-frames", "techtrend-tr-series",
                 "vintage-charm-collection"
               ].map((slug) => (
-                <MenuItem
+                <Link to="/products">
+                <Box
                   key={slug}
-                  bg={selectedCategory === findCategoryIdBySlug(slug) ? "gray.200" : "transparent"}
-                  _hover={{ bg: "gray.200" }}
+                  bg={selectedCategory === findCategoryIdBySlug(slug) ? "secondary" : "transparent"}
+                  color={selectedCategory === findCategoryIdBySlug(slug) ? "white" : ""}
+                  _hover={{ bg: "secondary",color:"white" }}
                   onClick={() => handleCategoryClick(slug)}
                   w="100%"
+                  rounded={10}
+                paddingX={3}
                 >
                   {slug.replace(/-/g, " ").toUpperCase()}
-                </MenuItem>
+                </Box>
+                </Link>
               ))}
             </div>
-          </MenuList>
-        </Link>
-      </Menu>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
 
-      <Menu>
-        <Link to="/products">
-          <MenuButton {...menuButtonStyles} onClick={() => handleCategoryClick("eyeglasses")}>
-            COMPUTER GLASSES
-          </MenuButton>
-        </Link>
-      </Menu>
-
-      <Menu>
-        <MenuButton {...menuButtonStyles}>
-          SUNGLASSES
-        </MenuButton>
-        <Link to="/products">
-          <MenuList
-            color="blackAlpha.900"
-            bg="whiteAlpha.900"
-            w="100%"
-            p="4"
-            borderRadius="md"
-            BoxShadow="lg"
-            maxH="700px"
-            overflowY="auto"
-            css={{
-              '&::-webkit-scrollbar': {
-                display: 'none',
-              },
-              '-ms-overflow-style': 'none',
-              scrollbarWidth: 'none',
-            }}
+      {/* Computer Glasses Popover */}
+      <Popover trigger="hover" placement="bottom-start">
+        <PopoverTrigger>
+          <Text
+            as={Link}
+            to="/products"
+            {...menuButtonStyles}
+            onClick={() => handleCategoryClick("computer-glasses")}
           >
+            COMPUTER GLASSES
+          </Text>
+        </PopoverTrigger>
+      </Popover>
+
+      {/* Sunglasses Popover */}
+      <Popover trigger="hover" placement="bottom-start">
+        <PopoverTrigger>
+          <Text
+            as={Link}
+            to="/products"
+            {...menuButtonStyles}
+            onClick={() => handleCategoryClick("sunglasses")}
+          >
+            SUNGLASSES
+          </Text>
+        </PopoverTrigger>
+        <PopoverContent bg="whiteAlpha.900" w="100%" p="4" borderRadius="md" boxShadow="lg" maxH="700px" overflowY="auto" css={{
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          '-ms-overflow-style': 'none',
+          scrollbarWidth: 'none',
+        }}>
+          <PopoverArrow />
+          <PopoverCloseButton />
+          <PopoverBody>
             {categories.map((category) => (
               (category.slug === "acetate-sunglasses" ||
                 category.slug === "metal-sunglasses" ||
                 category.slug === "tr-sunglasses") && (
-                <MenuItem
+                  <Link to="/products">
+                <Box
                   key={category.id}
                   onClick={() => handleCategoryClick(category.slug)}
-                  bg={selectedCategory === category.id.toString() ? "gray.200" : "transparent"}
-                  _hover={{ bg: "gray.200" }}
+                  bg={selectedCategory === category.id.toString() ? "secondary" : "transparent"}
+                  color={selectedCategory === category.id.toString() ? "white" : ""}
+                  _hover={{ bg: "secondary",color:"white" }}
+                  rounded={10}
+                paddingX={3}
                 >
                   {category.name}
-                </MenuItem>
+                </Box>
+                </Link>
               )
             ))}
-          </MenuList>
-        </Link>
-      </Menu>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
 
-      <Menu>
-        <Link to="/products">
-          <MenuButton {...menuButtonStyles} onClick={() => handleCategoryClick("eyeglasses")}>
+      <Popover trigger="hover" placement="bottom-start">
+        <PopoverTrigger>
+          <Text
+            as={Link}
+            to="/products"
+            {...menuButtonStyles}
+            onClick={() => handleCategoryClick("progressive-glasses")}
+          >
             PROGRESSIVE GLASSES
-          </MenuButton>
-        </Link>
-      </Menu>
+          </Text>
+        </PopoverTrigger>
+      </Popover>
     </Flex>
   );
-}
+};
+
 export default NavbarCard5;

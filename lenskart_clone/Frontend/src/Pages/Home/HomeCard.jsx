@@ -31,31 +31,31 @@ const HomeCard = ({ type }) => {
         m="auto"
       >
         {type.map((i) => (
-          <Link to={`/products?category=${i.slug}`}>
-          <Box
-            key={i.slug}
-            border="1px"
-            borderColor="white"
-            flexDirection="column"
-            borderRadius="md"
-            bgColor="white"
-            p="1"
-            pb="2.5"
-            _hover={{ bg: "secondary", color: "white" }} // Use 'secondary' color here
-            transition={"0.3s"}
-            onClick={() => handleCategoryClick(i.slug)}
-          >
-            <Center>
+          <Link key={i.slug} to={`/products?category=${i.slug}`}>
+            <Box
+              border="1px"
+              borderColor="white"
+              flexDirection="column"
+              borderRadius="md"
+              bgColor="white"
+              p="1"
+              pb="2.5"
+              _hover={{ bg: "secondary", color: "white" }}
+              transition={"0.3s"}
+              onClick={() => handleCategoryClick(i.slug)}
+            >
+              <Center>
                 <Image src={i.img} alt={i.name} w="" />
-            </Center>
-            <Center>
-              <Text fontSize="16px" fontWeight="500" p="1">
-                {i.title}
-              </Text>
-            </Center>
-          </Box>
-              </Link>
+              </Center>
+              <Center>
+                <Text fontSize="16px" fontWeight="500" p="1">
+                  {i.title}
+                </Text>
+              </Center>
+            </Box>
+          </Link>
         ))}
+
       </Grid>
     </Box>
   );

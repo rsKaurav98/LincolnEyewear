@@ -58,7 +58,7 @@ const StyledButton = ({
 
 export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate();
   const { setSearchValue, searchValue } = useSearch();
 
@@ -97,19 +97,20 @@ export const NavbarCard2 = () => {
               type="text"
               placeholder="Search for Eyeglasses, Sunglasses and more.."
               style={{
-                borderWidth: "1px",
-                borderColor: "secondary", // Use theme-based secondary color
+                border: isFocused ? "1px solid green" : "1px solid #616569",
                 width: "95%",
                 backgroundColor: "white",
                 fontSize: "17px",
                 height: "45px",
                 paddingLeft: "4px",
                 borderRadius: "7px",
-                outline:"none"
+                outline:"none",
               }}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onKeyDown={handleKeyDown}
+              onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
             />
           </Box>
           <Box w="20%"></Box>
