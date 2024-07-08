@@ -20,13 +20,13 @@ import CR from "./Footer/CR";
 import SD from "./Footer/SD";
 import Signup from "../Pages/Signup/Signup";
 
-
 const AllRoutes = () => {
   const location = useLocation();
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/signup" element={<Signup />} />

@@ -17,15 +17,18 @@ import Loadingimg from "../SingleProduct/loadingimg";
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isLogin , setIsLogin] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [error, setError] = useState(null);
 
+
   const customerData = JSON.parse(localStorage.getItem("customerData"));
+  
   const customerId = customerData?.id;
 
   useEffect(() => {
     if (!customerId) {
-      setError("Customer ID not found.");
+      setError("Either login and Refresh OR Check Email for Order details .");
       setLoading(false);
       return;
     }

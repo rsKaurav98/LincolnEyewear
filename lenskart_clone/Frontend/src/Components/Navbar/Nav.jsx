@@ -283,8 +283,8 @@ function Nav() {
                       setisAuth(false);
                       localStorage.removeItem("user")
                       localStorage.removeItem("token")
-                      localStorage.removeItem("customerData", decoded.data.user);
-                      return <Navigate to="/" />;
+                      localStorage.removeItem("customerData");
+                      navigate("/");;
                     }}
                   >
                     Sign Out
