@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'https://lincolneyewear.com',
+      target: '${process.env.REACT_APP_API_ENDPOINT}',
       changeOrigin: true,
       secure: false,  
     })

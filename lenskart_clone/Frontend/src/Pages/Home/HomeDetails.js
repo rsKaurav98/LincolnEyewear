@@ -12,8 +12,9 @@ const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
 const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 
+
 const fetchProductData = async (category) => {
-  const url = `https://lincolneyewear.com/wp-json/wc/v3/products?category=${category}&per_page=10&page=2&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
+  const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=2&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
   try {
     const response = await axios.get(url);
     return response.data.map(product => ({

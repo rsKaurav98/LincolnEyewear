@@ -63,7 +63,7 @@ const Signup = () => {
 
     try {
       const response = await fetch(
-        "https://lincolneyewear.com/wp-json/custom/v1/register",
+        `${process.env.REACT_APP_API_ENDPOINT}/wp-json/custom/v1/register`,
         requestOptions
       );
 

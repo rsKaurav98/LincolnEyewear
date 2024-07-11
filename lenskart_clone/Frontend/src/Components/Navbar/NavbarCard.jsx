@@ -160,7 +160,7 @@ export const NavbarCard2 = () => {
                         setisAuth(false);
                         localStorage.removeItem("user");
                         localStorage.removeItem("token");
-                        localStorage.removeItem("customerData", decoded.data.user);
+                        localStorage.removeItem("customerData");
                         navigate("/");
                       }}
                       _hover={{ fontWeight: "bold" }}

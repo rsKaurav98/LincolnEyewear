@@ -43,7 +43,7 @@ const Orders = () => {
     };
 
     try {
-      const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentSuccess`, {
+      const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/custom/v1/paymentSuccess`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const Orders = () => {
     const token = localStorage.getItem("token");
     console.log(orderData);
     try {
-      const paymentResponse = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/paymentOrder`, {
+      const paymentResponse = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/custom/v1/paymentOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -183,7 +183,7 @@ const Orders = () => {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+        const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/custom/v1/createOrder`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -265,7 +265,7 @@ const Orders = () => {
     const token = localStorage.getItem("token");
 
     try {
-        const response = await fetch(`https://lincolneyewear.com/wp-json/custom/v1/createOrder`, {
+        const response = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/custom/v1/createOrder`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -55,7 +55,7 @@ const Login = () => {
       setLoading(true);
       setIncorrect(false);
       if (loginData.username && loginData.password) {
-        const res = await fetch("https://lincolneyewear.com/wp-json/jwt-auth/v1/token", {
+        const res = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/jwt-auth/v1/token`, {
           method: "POST",
           body: JSON.stringify(loginData),
           headers: {

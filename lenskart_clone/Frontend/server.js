@@ -22,7 +22,7 @@ app.get('/api/orders/:customerId', async (req, res) => {
   const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
   try {
-    const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/orders?customer=${customerId}`, {
+    const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/orders?customer=${customerId}`, {
       headers: {
         Authorization: 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
       }
@@ -41,7 +41,7 @@ app.get('/api/products/:id', async (req, res) => {
     const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
   
     try {
-      const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/${id}`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/${id}`, {
         headers: {
           Authorization: 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
         }
@@ -59,7 +59,7 @@ app.get('/api/products/:id', async (req, res) => {
     const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
   
     try {
-      const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/categories`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/categories`, {
         headers: {
           Authorization: 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
         }
@@ -76,7 +76,7 @@ app.get('/api/products/:id', async (req, res) => {
     const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
   
     try {
-      const response = await axios.get(`https://lincolneyewear.com/wp-json/wc/v3/products/tags`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/tags`, {
         headers: {
           Authorization: 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)
         }
@@ -104,7 +104,7 @@ app.get('/api/products/:id', async (req, res) => {
 
     try {
         const response = await fetch(
-        `https://lincolneyewear.com/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`,
+        `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?per_page=15&page=${page}${categoryFilter}${tagFilter}${sortQuery}&search=${encodeURIComponent(searchValue)}`,
         {
           headers: {
             'Authorization': 'Basic ' + base64.encode(`${consumerKey}:${consumerSecret}`)

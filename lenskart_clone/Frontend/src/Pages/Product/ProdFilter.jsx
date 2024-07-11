@@ -30,7 +30,7 @@ const ProdFilter = ({
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+          `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/categories?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
         
         if (!response.ok) {
@@ -48,7 +48,7 @@ const ProdFilter = ({
     const fetchTags = async () => {
       try {
         const response = await fetch(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/tags?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+          `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/tags?per_page=50&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
         
         if (!response.ok) {

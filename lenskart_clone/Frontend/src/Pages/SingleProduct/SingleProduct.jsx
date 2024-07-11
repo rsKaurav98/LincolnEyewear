@@ -96,7 +96,7 @@ const SingleProduct = () => {
       const consumerSecret = "cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca";
 
       const response = await axios.get(
-        `https://lincolneyewear.com/wp-json/wc/v3/products/${id}?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+        `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/${id}?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
       );
       setData(response.data);
       setTotalPrice(response.data.sale_price);
@@ -114,7 +114,7 @@ const SingleProduct = () => {
       const consumerSecret = "cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca";
       const relatedProductsRequests = relatedIds.map((relatedId) =>
         axios.get(
-          `https://lincolneyewear.com/wp-json/wc/v3/products/${relatedId}?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
+          `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products/${relatedId}?consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         )
       );
       const relatedProductsResponses = await Promise.all(
