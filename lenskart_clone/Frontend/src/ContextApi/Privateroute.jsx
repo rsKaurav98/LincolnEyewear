@@ -1,14 +1,12 @@
-import React from "react";
-import { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import React, { useContext } from "react";
 import { AuthContext } from "../ContextApi/AuthContext";
 
 export const Privateroutes = ({ children }) => {
   const { isAuth } = useContext(AuthContext);
 
-  if (!isAuth) {
-    alert("Please login first");
-    return <Navigate to="/" />;
-  }
+  // Log the authentication status for debugging
+  console.log("User authentication status:", isAuth);
+
+  // Always return the children, whether the user is authenticated or not
   return children;
 };
