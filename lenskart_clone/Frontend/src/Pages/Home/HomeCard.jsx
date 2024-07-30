@@ -40,15 +40,16 @@ const HomeCard = ({ type }) => {
               bgColor="white"
               p="1"
               pb="2.5"
-              _hover={{ bg: "secondary", color: "white" }}
-              transition={"0.3s"}
+              _hover={{ bg: "secondary", color: "white", boxShadow: "2xl" }} // Adding shadow on hover
+              transition="0.3s"
               onClick={() => handleCategoryClick(i.slug)}
+              boxShadow="md" // Custom premium shadow
             >
               <Center>
                 <Image src={i.img} alt={i.name} w="" />
               </Center>
               <Center>
-                <Text fontSize="16px" fontWeight="500" p="1">
+                <Text fontSize={{base:"13px",md:"16px"}} fontWeight="500" p="1" overflowX="hidden">
                   {i.title}
                 </Text>
               </Center>

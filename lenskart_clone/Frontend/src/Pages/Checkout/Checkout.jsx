@@ -21,7 +21,10 @@ const Orders = () => {
   const { cart, coupon } = useSelector((state) => state.cartManager);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const customerData = JSON.parse(localStorage.getItem("customerData"));
 
+  const customerId = customerData?.id;
+console.log(customerId)
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.sale_price * item.quantity;
@@ -148,6 +151,18 @@ const Orders = () => {
             postcode: shippingDetails.pincode,
             country: shippingDetails.country
         },
+        power: {
+          sphRight: shippingDetails?.formData.sphRight,
+          sphLeft: shippingDetails?.formData.sphLeft,
+           cylRight: shippingDetails?.formData. cylRight,
+          cylLeft: shippingDetails?.formData.cylLeft,
+          axisRight: shippingDetails?.formData.axisRight,
+          axisLeft: shippingDetails?.formData.axisLeft,
+          addLeft: shippingDetails?.formData.addLeft,
+          pd: shippingDetails?.formData.pd,
+          pdRight: shippingDetails?.formData.pdRight,
+          pdLeft: shippingDetails?.formData.pdLeft
+      },
         products: [],
         customer_id: "",
         shipping_method: {
@@ -231,7 +246,19 @@ const Orders = () => {
             country: shippingDetails.country
         },
         products: [],
-        customer_id: "",
+        power: {
+          sphRight: shippingDetails?.formData.sphRight,
+          sphLeft: shippingDetails?.formData.sphLeft,
+           cylRight: shippingDetails?.formData. cylRight,
+          cylLeft: shippingDetails?.formData.cylLeft,
+          axisRight: shippingDetails?.formData.axisRight,
+          axisLeft: shippingDetails?.formData.axisLeft,
+          addLeft: shippingDetails?.formData.addLeft,
+          pd: shippingDetails?.formData.pd,
+          pdRight: shippingDetails?.formData.pdRight,
+          pdLeft: shippingDetails?.formData.pdLeft
+      },
+        customer_id: customerId,
         shipping_method: {
             title: "Free shipping",
             id: "free_shipping:1",

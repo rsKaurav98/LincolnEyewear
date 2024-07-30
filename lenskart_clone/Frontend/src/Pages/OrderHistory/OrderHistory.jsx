@@ -17,35 +17,35 @@ import Loadingimg from "../SingleProduct/loadingimg";
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isLogin , setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true);
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [error, setError] = useState(null);
 
 
   const customerData = JSON.parse(localStorage.getItem("customerData"));
-  
+
   const customerId = customerData?.id;
 
   useEffect(() => {
     if (!customerId) {
-      setError("Either login and Refresh OR Check Email for Order details .");
+      setError("Either Register and Refresh OR Check Email for Order details .");
       setLoading(false);
       return;
     }
 
     const fetchOrders = async () => {
       try {
-        const consumerKey = 'ck_a5217f627b385dde1c5d2392aae81f5244ce0af5';
-        const consumerSecret = 'cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca';
-    
+        const consumerKey = "ck_a5217f627b385dde1c5d2392aae81f5244ce0af5";
+        const consumerSecret = "cs_70ed7d3b65ccb71cf9cbf49f6bd064cd25402bca";
+
         const response = await fetch(
           `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/orders?customer=${customerId}&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`
         );
-    
+
         if (!response.ok) {
           throw new Error(`Error fetching orders: ${response.statusText}`);
         }
-    
+
         const data = await response.json();
         setOrders(data);
       } catch (err) {
@@ -54,7 +54,7 @@ const OrderHistory = () => {
         setLoading(false);
       }
     };
-    
+
 
     fetchOrders();
   }, [customerId]);
@@ -186,7 +186,7 @@ const OrderHistory = () => {
                                 ) : (
                                   <Text fontWeight="bold" fontSize="18px">
                                     {product.name}
-                                     (Lens)
+                                    (Lens)
                                   </Text>
                                 )}
                                 <Box>

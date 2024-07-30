@@ -8,28 +8,39 @@ import Footer from "../../Components/Footer/Footer";
 import {
   HomeDetails,
   HomeDetails1,
-  HomeDetails2,
-  HomeDetails4,
-  HomeDetails5,
-  HomeDetails6,
-  HomeDetails7,
-  HomeDetails8,
+
 } from "./HomeDetails";
 import { Image, Box } from "@chakra-ui/react";
 import Loadingimg from "../SingleProduct/loadingimg";
+import { fetchProductData } from "./HomeDetails";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [HomeDetails6, setHomeDetails6] = useState([]);
+  const [HomeDetails7, setHomeDetails7] = useState([]);
+  const [HomeDetails8, setHomeDetails8] = useState([]);
+
 
   useEffect(() => {
-    // Simulate a delay for loading
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // Adjust the delay as needed
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        let response6 = await fetchProductData(80);
+        setHomeDetails6(response6);
+        let response7 = await fetchProductData(53);
+        setHomeDetails7(response7);
+        let response8 = await fetchProductData(87);
+        setHomeDetails8(response8);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-    return () => clearTimeout(timer);
+    fetchData();
   }, []);
-
+    
   return (
     <Box>
       <Navbar />

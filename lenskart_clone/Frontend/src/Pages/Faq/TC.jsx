@@ -25,7 +25,7 @@ const TC = () => {
                             Agreement to Our Legal Terms
                         </Text>
                         <Text variant="body1" paragraph>
-                            We are LINCOLN VENTURES LLP, doing business as Lincoln Eyewear ("Company," "we," "us," "our"), a company registered in India at Lincoln Eyewear 3-H, Patel Industrial Estate, Pratap Nagar, Dabhoi Road, Vadodara, Vadodara, Gujarat 390004.
+                            We are LINCOLN VENTURES LLP, doing business as Lincoln Eyewear ("Company," "we," "us," "our"), a company registered in India at Lincoln Eyewear, 3-H, Patel Industrial Estate, Pratap Nagar, Dabhoi Road, Vadodara, Vadodara, Gujarat 390004.
                         </Text>
                         <Text variant="body1" paragraph>
                             We operate the website{' '}
@@ -35,7 +35,7 @@ const TC = () => {
                             (the "Site"), as well as any other related products and services that refer or link to these legal terms (the "Legal Terms") (collectively, the "Services").
                         </Text>
                         <Text variant="body1" paragraph>
-                            You can contact us by email at Info.lincolneyewear@gmail.com or by mail to Lincoln Eyewear 3-H, Patel Industrial Estate, Pratap Nagar, Dabhoi Road, Vadodara, Vadodara, Gujarat 390004, India.
+                            You can contact us by email at Info.lincolneyewear@gmail.com or by mail to Lincoln Eyewear, 3-H, Patel Industrial Estate, Pratap Nagar, Dabhoi Road, Vadodara, Vadodara, Gujarat 390004, India.
                         </Text>
                         <Text variant="body1" paragraph>
                             These Legal Terms constitute a legally binding agreement made between you, whether personally or on behalf of an entity ("you"), and LINCOLN VENTURES LLP, concerning your access to and use of the Services. You agree that by accessing the Services, you have read, understood, and agreed to be bound by all of these Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED FROM USING THE SERVICES AND YOU MUST DISCONTINUE USE IMMEDIATELY.
@@ -737,7 +737,7 @@ const TC = () => {
                                 <br />
                                 <Text variant="body1" color="gray">
                                     LINCOLN VENTURES LLP <br />
-                                    Lincoln Eyewear 3-H, patel Industrial estate, <br />
+                                    3-H, patel Industrial estate, <br />
                                     Pratap nagar, dabhoi road, vadodara <br />
                                     Vadodara, Gujrat 390004 <br />
                                     India

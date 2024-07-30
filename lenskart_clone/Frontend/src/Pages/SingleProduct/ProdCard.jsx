@@ -20,7 +20,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import SelectLens from "../Lenses/SelectLens";
 import VirtualTryOn from "../../Components/Tryon/tryOn";  // Adjust the import path as necessary
-
 const ProdCard = ({
   type,
   handleCart,

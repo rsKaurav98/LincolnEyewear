@@ -18,12 +18,14 @@ const ProductCard = ({ type }) => {
         const regularPrice = parseFloat(ele?.regular_price);
         const currentPrice = parseFloat(ele?.price);
         const salePrice = parseFloat(ele?.sale_price);
-        
+
         const discountPercentage = Math.round(((regularPrice - currentPrice) / regularPrice) * 100);
         const saleDiscountPercentage = salePrice
           ? Math.round(((regularPrice - salePrice) / regularPrice) * 100)
           : 0;
-
+          const issunglass = ele.categories.some(
+            (category) => category.id === 77
+          );
         return (
           <GridItem key={ele.id}>
             <Link to={`/products/${ele?.id}`}>
@@ -69,7 +71,7 @@ const ProductCard = ({ type }) => {
                         <Text>
                           {ele?.rating
                             ? ele?.rating
-                            : (Math.random() * (5 - 1) + 1).toFixed(1)}
+                            : (Math.random() * (5 - 2) + 2).toFixed(1)}
                         </Text>
                         <AiFillStar size="15px" color="#0fbd95" />
                         <Text>
@@ -144,7 +146,7 @@ const ProductCard = ({ type }) => {
                       >
                         ₹{ele?.regular_price}
                       </span>
-                      <span
+                      {/* <span
                         style={{
                           color: "#727297",
                           fontSize: "15px",
@@ -152,7 +154,7 @@ const ProductCard = ({ type }) => {
                         }}
                       >
                         (+tax)
-                      </span>
+                      </span> */}
                     </Text>
                   </Box>
                 </Box>
@@ -171,16 +173,28 @@ const ProductCard = ({ type }) => {
                 </Box>
 
                 {/* Additional info box */}
-                <Box
-                  fontSize="15px"
-                  color="#cbb881"
+                <Flex
+                  fontSize="13px"
+                  color="#ffffff"
                   w="100%"
-                  padding="2"
+                  padding="1"
                   fontWeight="bold"
-                  bgGradient="linear(to-r, #f8f2e0, yellow.50)"
+                  borderRadius="md"
+                  justifyContent="flex-start"
+                  alignItems="center"
                 >
-                  FREE LENS AVAILABLE
-                </Box>
+                  <Box
+                    bg="secondary"
+                    paddingX="2"
+                    paddingY="0.5"
+                    borderRadius="lg"
+                    marginRight="2"
+                    boxShadow="md"
+                  >
+                    {issunglass?"100% UV PROTECTION":"FREE LENS AVAILABLE"}
+                    
+                  </Box>
+                </Flex>
               </Box>
             </Link>
           </GridItem>

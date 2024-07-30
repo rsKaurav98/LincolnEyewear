@@ -22,6 +22,21 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
 
   const renderLensContent = (category) => (
     <Box mt="10px">
+      {category=="Bifocal/ Progressive"?
+      <Box
+      color="white"
+      bg="secondary"
+      rounded="lg"
+      alignItems="center"
+      justifyContent="center"
+      textAlign="center"
+      padding="20px"
+      boxShadow="lg"
+    >
+      <Text py="5px" fontSize={{base:"sm",md:"lg"}} fontWeight="bold">
+        Select your power and size of lens after filling shipping address
+      </Text>
+    </Box>:null}
       {data[category].map((item, idx) => (
         <Box
           key={idx}
@@ -37,7 +52,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
           transition="0.3s"
           boxShadow="md"
           cursor="pointer"
-          _hover={{ bg: "secondary", color: "white", transform: "scale(1.02)" }}
+          _hover={{ bg: "secondary", color: "white", transform: "scale(0.99)" }}
           onClick={() => handleLensClick(item)}
         >
           <Box w="80%">
@@ -90,8 +105,8 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
       >
         <Flex
           justify="center"
-          fontWeight="400"
-          fontSize={{ base: "6vw", md: "2.2vw" }}
+          fontWeight="500"
+          fontSize={{ base: "5.5vw", md: "2vw" }}
           color="#333"
           m="10px"
         >

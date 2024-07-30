@@ -5,7 +5,7 @@ import {
   AiOutlineInstagram,
   AiFillYoutube,
 } from "react-icons/ai";
-import { FaLinkedin, FaMapMarkerAlt, FaPhone, FaEnvelope,FaShieldAlt,FaScroll ,FaUndo,FaTimesCircle} from "react-icons/fa";
+import { FaLinkedin, FaMapMarkerAlt, FaPhone, FaEnvelope, FaShieldAlt, FaScroll, FaUndo, FaTimesCircle } from "react-icons/fa";
 import { services } from "./FooterDetails";
 import logo from "../../Images/logo.png";
 import map from "../../Images/map.png"
@@ -28,10 +28,10 @@ const Footer = () => {
         {/* Left Section */}
         <Flex flexDirection="column" alignItems="flex-start" flex="1">
           <a href="/">
-          <Image src={logo} alt="Lincoln" h="50px" mb="2" />
+            <Image src={logo} alt="Lincoln" style={{ filter: 'invert(1)' }} h="50px" mb="2" />
           </a>
-          <br/>
-          <Text fontSize="sm" mb="4" textAlign="justify">
+          <br />
+          <Text fontSize="sm" mb="4" mr="3" textAlign="justify">
             Discover The World Through Clarity And Style With Lincoln Eyewear.
             Elevate Your Vision With Our Meticulously Crafted Eyewear
             Collections, Where Design Meets Precision. Explore Timeless
@@ -71,7 +71,7 @@ const Footer = () => {
           </Flex>
         </Flex>
 
-        <hr/>
+        <hr />
         <Flex flexDirection="column" flex="1" ml={{ md: "4" }} mt="10">
           <Flex align="center" mb="2">
             <Icon as={FaPhone} mr="2" />
@@ -84,43 +84,57 @@ const Footer = () => {
           <Flex align="center" mb="2">
             <Icon as={FaMapMarkerAlt} mr="2" />
             <Text fontSize="sm">
-              LINCOLN VENTURES LLP, Lincoln Eyewear 3-H, Patel Industrial Estate,
+              LINCOLN VENTURES LLP, 3-H, Patel Industrial Estate,
               Pratap Nagar, Dabhoi Road, Vadodara, Gujarat 390004, India
             </Text>
           </Flex>
           <Flex flexDirection="column" flex="1" mt={{ base: "4", md: "0" }}>
-          {services.map((service, index) => (
-            <Link key={index} href={service.src} mb="2" display="flex" flexDirection="row">
-     <Icon as={index === 0 ? FaShieldAlt : (index === 1 ? (index === 2?FaTimesCircle: FaScroll) : FaUndo)} mr="2" />
-
-              <Text fontSize="sm">{service.labels}</Text>
+            {services.map((service, index) => (
+              <Link 
+              key={index} 
+              href={service.src} 
+              mb="2" 
+              display="flex" 
+              flexDirection="row"
+              _hover={{ textDecoration: 'none' }}
+            >
+              <Icon 
+                as={index === 0 ? FaShieldAlt : (index === 1 ? (index === 2 ? FaTimesCircle : FaScroll) : FaUndo)} 
+                mr="2" 
+              />
+              <Text 
+                fontSize="sm"
+                _hover={{ fontWeight: '600' }}
+              >
+                {service.labels}
+              </Text>
             </Link>
-          ))}
-        </Flex>
+            ))}
+          </Flex>
         </Flex>
         <Flex mt="10">
-        <Link
+          <Link
             href="https://www.google.com/maps/search/Lincoln+Eyewear+3-H,+patel+Industrial+estate,Pratap+nagar,+dabhoi+road,+Vadodara,+Gujarat+390004+,India/@22.2831522,73.2140548,15z?entry=ttu"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <img src={map} alt="map" width="350vw"></img>
+            <img src={map} alt="map" width="250vw"></img>
           </Link>
         </Flex>
       </Flex>
       <Flex
-            align="center"
-            justify="center"
-            mt="4"
-            bgColor="#485872"
-            p="2"
-            borderTopRadius="md"
-            width="-moz-fit-content"
-          >
-            <Text fontSize="sm" color="white">
-              &copy; 2024. POWERED BY TECHOFY INDIA
-            </Text>
-          </Flex>
+        align="center"
+        justify="center"
+        mt="4"
+        bgColor="#485872"
+        p="2"
+        borderTopRadius="md"
+        width="-moz-fit-content"
+      >
+        <Text fontSize="sm" color="white">
+          &copy; 2024. POWERED BY TECHOFY INDIA
+        </Text>
+      </Flex>
     </Box>
   );
 };

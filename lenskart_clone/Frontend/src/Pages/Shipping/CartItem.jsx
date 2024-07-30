@@ -1,20 +1,31 @@
 import { Box, Flex, Text, Image, Divider, Grid } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
-export default function ShippingPage() {
+const ShippingPage = ({ hasSpecialLens }) => {
   const { cart, coupon } = useSelector((state) => state.cartManager);
 
+  useEffect(() => {
+    const specialLensFound = cart.some(item =>
+      ["4612", "4613", "4616", "4614", "4615", "4617","4611"].includes(item.selectedLens?.id)
+    );
+    if (specialLensFound) {
+      hasSpecialLens(true);
+    }
+  }, [cart, hasSpecialLens]);
+  
   const getTotalPrice = () => {
     const totalPrice = cart.reduce((acc, item) => {
       let itemPrice = item.sale_price * item.quantity;
+      
       if (item.selectedLens) {
-        itemPrice += item.selectedLens.price==="Free"?0:item.selectedLens.price * item.quantity;
+        itemPrice += item.selectedLens.price === "Free" ? 0 : item.selectedLens.price * item.quantity;
       }
+
       return acc + itemPrice;
     }, 0);
     return totalPrice;
   };
-
   return (
     <>
       <Flex flexDirection="column" mt="10px">
@@ -100,7 +111,7 @@ export default function ShippingPage() {
                       textAlign={{ lg: "left", sm: "center", base: "center" }}
                     >
                       <Text color="#9999b3" fontWeight="500" fontSize="16px">
-                        <s>{"₹" + el.sale_price}</s>
+                        <s>{"₹" + el.regular_price}</s>
                       </Text>
                       <Text color="#000042" fontWeight="700">
                         {"₹" + el.sale_price}
@@ -186,3 +197,4 @@ export default function ShippingPage() {
     </>
   );
 }
+export default ShippingPage;

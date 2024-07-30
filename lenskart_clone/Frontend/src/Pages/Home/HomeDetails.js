@@ -13,12 +13,12 @@ const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 
 
-const fetchProductData = async (category) => {
+export const fetchProductData = async (category) => {
   const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=2&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
   try {
     const response = await axios.get(url);
     return response.data.map(product => ({
-      img: product.images[0]?.src || '',
+      img: product.images[1]?.src || '',
       caption: product.name,
       id: product.id,
     }));
@@ -51,7 +51,7 @@ export const HomeDetails = [
   {
     img: progressive,
     caption: "Slide 4",
-    title: "Progressive Lenses",
+    title: "Progressive Glasses",
     slug:"52"
   }
 ];
@@ -189,7 +189,4 @@ export const HomeDetails5 = [
   }
 ];
 
-export const HomeDetails6 = await fetchProductData(80);
-export const HomeDetails7 = await fetchProductData(53);
-export const HomeDetails8 = await fetchProductData(87);
 

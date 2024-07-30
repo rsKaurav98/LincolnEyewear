@@ -14,10 +14,10 @@ import Wishlist from "../Pages/Wishlist/Wishlist";
 import Productlist from "../Pages/Admin/Productlist";
 import ProductPost from "../Pages/Admin/ProductPost";
 import EditProduct from "../Pages/Admin/EditProduct";
-import PrivacyPolicy from "./Footer/PP";
-import TC from "./Footer/TC";
-import CR from "./Footer/CR";
-import SD from "./Footer/SD";
+import PrivacyPolicy from "../Pages/Faq/PP";
+import TC from "../Pages/Faq/TC";
+import CR from "../Pages/Faq/CR";
+import SD from "../Pages/Faq/SD";
 import Signup from "../Pages/Signup/Signup";
 
 const AllRoutes = () => {

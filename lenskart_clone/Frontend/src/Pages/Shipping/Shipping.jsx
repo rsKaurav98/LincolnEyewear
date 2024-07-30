@@ -1,10 +1,9 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { ShippingContext } from '../../Context/shippingContext';
-import { useCallback } from "react";
 import useRazorpay from "react-razorpay";
 import {
   Box,
@@ -15,9 +14,11 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  Flex
+  Flex,
+  useDisclosure
 } from "@chakra-ui/react";
 import "../../App.css";
+import EyePowerForm from "./Eyepower";
 
 function Shipping() {
   const { setShippingDetails } = useContext(ShippingContext);
@@ -46,7 +47,19 @@ function Shipping() {
   const [cities, setCities] = useState();
   const [countries, setCountries] = useState();
   const [statess, setStatess] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [SpecialLens, hasSpecialLens] = useState(false);
   const [Razorpay] = useRazorpay();
+  const [formData, setFormData] = useState({});
+
+  const handleFormChange = (data) => {
+    setFormData(data);
+  };
+  
+  const handleFormSubmit = () => {
+    handleShipping();
+    onClose();
+  };
 
   const Required = (props) => {
     return (
@@ -69,20 +82,20 @@ function Shipping() {
     switch (name) {
       case "first_name":
         setFirst(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
       case "last_name":
         setLast(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
       case "phone":
         setPh(
           value === "" ? (
-            <Required info="This is a required feild" />
+            <Required info="This is a required field" />
           ) : (
             <Required info="Please enter a valid mobile number (eg. 9987XXXXXX)" />
           )
@@ -92,7 +105,7 @@ function Shipping() {
       case "email":
         setMail(
           value === "" ? (
-            <Required info="This is a required feild" />
+            <Required info="This is a required field" />
           ) : (
             <Required info="Please enter a valid email address e.g. johndoe@domain.com." />
           )
@@ -101,35 +114,35 @@ function Shipping() {
 
       case "address":
         setAdd(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
       case "pincode":
         setPin(
           value === "" ? (
-            <Required info="This is a required feild" />
+            <Required info="This is a required field" />
           ) : (
-            <Required info="Pincode should be 6 digit (eg. 110001)" />
+            <Required info="Pincode should be 6 digits (eg. 110001)" />
           )
         );
         break;
 
       case "city":
         setCities(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
       case "country":
         setCountries(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
       case "state":
         setStatess(
-          value === "" ? <Required info="This is a required feild" /> : ""
+          value === "" ? <Required info="This is a required field" /> : ""
         );
         break;
 
@@ -137,16 +150,14 @@ function Shipping() {
         break;
     }
   };
-
+  const finalData={
+    ...userData,
+    formData
+  }
   const handleShipping = () => {
-    setShippingDetails(userData);
+    setShippingDetails(finalData);
     navigate('/checkout');
   };
-  const handleCheckout = useCallback(() =>{
-
-   
-  
-}, []);
 
   return (
     <>
@@ -253,7 +264,7 @@ function Shipping() {
                     onChange={handleChange}
                   />
                   <Box pl="6" mt="-4">
-                    {userData.phone.length === 10 ? "" : ph}
+                    {userData.phone && userData.phone.length === 10 ? "" : ph}
                   </Box>
                 </Box>
 
@@ -267,8 +278,7 @@ function Shipping() {
                     onChange={handleChange}
                   />
                   <Box pl="6" mt="-4">
-                    {userData.email.includes("@") &&
-                    userData.email.includes(".com")
+                    {userData.email && userData.email.includes("@") && userData.email.includes(".com")
                       ? ""
                       : mail}
                   </Box>
@@ -400,23 +410,22 @@ function Shipping() {
               userData.country.length >= 1 &&
               userData.state.length >= 1 ? (
                 <Button
-                   onClick={handleShipping}
-                  bg="secondary"
-                  p="25px 20px"
+                bg="secondary"
+                p="25px 20px"
                   color="#fff"
                   textAlign="center"
                   fontWeight="bold"
                   borderRadius="5px"
                   fontSize="18px"
                   ml={{ lg: "80%", md: "72%", sm: "60%", base: "40%" }}
-                  
-                  
+                  onClick={SpecialLens?onOpen:handleShipping}
+
                 >
                   CONTINUE
                 </Button>
               ) : (
                 <Button
-                 
+                
                   bg="lightgrey"
                   p="25px 20px"
                   color="#fff"
@@ -435,9 +444,11 @@ function Shipping() {
           </Box>
         </GridItem>
         <GridItem w={{ xl: "90%", lg: "80%", md: "80%", base: "80%" }} m="auto">
-          <CartItem />
+          <CartItem hasSpecialLens={hasSpecialLens}/>
         </GridItem>
       </Grid>
+      <EyePowerForm isOpen={isOpen} onClose={onClose}  onChange={handleFormChange}
+          onSubmit={handleFormSubmit}/>
       <br />
       <br />
       <Footer />
