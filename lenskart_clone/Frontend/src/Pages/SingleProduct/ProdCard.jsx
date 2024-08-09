@@ -223,13 +223,12 @@ const ProdCard = ({
           mb="5%"
           boxShadow="2xl"
           bg="transparent"
-          blur="50%"
           display="flex"
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
         >
-          <ModalBody padding="10%">
+          <ModalBody padding="5%">
             <VirtualTryOn isOpen={isTryOnOpen} onClose={handleTryOnClose} imageSrc={virtualTryOnImage} />
           </ModalBody>
           <ModalFooter />

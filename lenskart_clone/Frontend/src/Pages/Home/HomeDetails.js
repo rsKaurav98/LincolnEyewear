@@ -14,11 +14,11 @@ const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
 
 export const fetchProductData = async (category) => {
-  const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=2&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
+  const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=1&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
   try {
     const response = await axios.get(url);
     return response.data.map(product => ({
-      img: product.images[1]?.src || '',
+      img: product.images[0]?.src || '',
       caption: product.name,
       id: product.id,
     }));

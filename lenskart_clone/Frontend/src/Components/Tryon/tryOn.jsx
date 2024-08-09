@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import { Box, Center, Button, useMediaQuery } from '@chakra-ui/react';
+import { Box, Center, Button, useMediaQuery, Spinner, Text } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
 const VirtualTryOn = forwardRef((props, ref) => {
@@ -16,6 +16,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
   const [glassesMesh, setGlassesMesh] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isMobile] = useMediaQuery("(max-width: 768px)");
+  const [isFaceModelLoading, setIsFaceModelLoading] = useState(true);
 
   useImperativeHandle(ref, () => ({
     stopWebcam
@@ -78,19 +79,19 @@ const VirtualTryOn = forwardRef((props, ref) => {
 
       const faceEstimates = await model.estimateFaces({ input: video });
       if (faceEstimates.length > 0) {
-        setIsLoading(false);
+        setIsFaceModelLoading(false);
         const keypoints = faceEstimates[0].scaledMesh;
         const leftEye = keypoints[130];
         const rightEye = keypoints[359];
         const eyeCenter = keypoints[168];
 
         const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
-        const scaleMultiplier = isMobile ? eyeDistance / 340 : eyeDistance / 140; // Adjusted scale multiplier for mobile
+        const scaleMultiplier = isMobile ? eyeDistance / 340 : eyeDistance / 140;
 
         const scaleX = -0.01;
         const scaleY = -0.01;
-        const offsetX = isMobile ? 0.10 : 0.01; // Different horizontal offset for mobile
-        const offsetY = isMobile ? -0.10 : -0.01; // Different vertical offset for mobile
+        const offsetX = isMobile ? 0.10 : 0.01;
+        const offsetY = isMobile ? -0.10 : -0.01;
 
         glassesMesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
         glassesMesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
@@ -105,7 +106,7 @@ const VirtualTryOn = forwardRef((props, ref) => {
 
     const intervalId = setInterval(() => {
       detectAndPositionGlasses();
-    }, 120);
+    }, 100);
 
     return () => clearInterval(intervalId);
   }, [model, glassesMesh, isMobile]);
@@ -141,17 +142,25 @@ const VirtualTryOn = forwardRef((props, ref) => {
       >
         <Center position="relative" width="100%" height="100%">
           {isLoading && (
-            <Center position="absolute" top={0} left={0} width="100%" height="100%" bg="white" zIndex={2}>
-              <dotlottie-player
+            <Center position="absolute" top={0} left={0} width="100%" height="100%" bg="white" zIndex={2} flexDirection="column">
+              <Box
+                as="dotlottie-player"
                 src="https://lottie.host/7a2ca4c0-d3bd-4292-b02e-10f9c056aeef/D5ZpetxOX1.json"
                 background="primary"
                 speed="1"
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "80%", height: "60%" }}
                 loop
                 autoplay
-              ></dotlottie-player>
+              />
+              <Box mt={4} textAlign="center" color="gray.700" fontSize="lg" fontWeight="medium" lineHeight="1.5">
+                <Text>💡 Be in a well-lit area.</Text>
+                <Text>👀 Ensure your face is fully visible and centered.</Text>
+                <Text>🚫 Avoid shadows and glare.</Text>
+                <Text>📸 Click 'Allow' to access your camera.</Text>
+              </Box>
             </Center>
           )}
+
           <Box
             width="90%"
             height="90%"
@@ -162,6 +171,12 @@ const VirtualTryOn = forwardRef((props, ref) => {
             position="relative"
             bg="transparent"
           >
+            {!isLoading && isFaceModelLoading && (
+              <Center position="absolute" zIndex={2}>
+                <Spinner size="xl" color='white' />
+                <Text fontSize="xl" mt={4} color="white">Creating Face Model...</Text>
+              </Center>
+            )}
             <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
             <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
           </Box>
