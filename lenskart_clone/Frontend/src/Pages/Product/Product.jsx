@@ -9,7 +9,7 @@ import {
   DrawerBody, DrawerHeader, DrawerOverlay, DrawerContent,
   DrawerCloseButton, useDisclosure
 } from "@chakra-ui/react";
-import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, Switch } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { FaFilter } from "react-icons/fa";
 import { CategoryContext } from "../../Context/CategoryContext";
@@ -17,7 +17,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Footer from "../../Components/Footer/Footer";
 import { useSearch } from "../../Context/SearchContext";
 import { useSearchParams } from "react-router-dom";
-import base64 from 'base-64';
+import FaceCaptureModal from "./FaceCaptureModal";
 
 const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
 const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
@@ -35,6 +35,8 @@ const NewProduct = () => {
 
   const { selectedCategory, setSelectedCategory, findCategoryNameById } = useContext(CategoryContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isFirstTime, setIsFirstTime] = useState(true);
+  const [isFaceCaptureOpen, setFaceCaptureOpen] = useState(false);
 
   useEffect(() => {
     const categoryFromParams = searchParams.get("category");
@@ -46,8 +48,8 @@ const NewProduct = () => {
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
-      let categoryFilter = selectedCategory 
-        ? `&category=${selectedCategory}` 
+      let categoryFilter = selectedCategory
+        ? `&category=${selectedCategory}`
         : "&category=52";
 
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
@@ -107,6 +109,28 @@ const NewProduct = () => {
     setSelectedTag(value);
     setSearchValue("");
     setPage(1);
+  };
+
+  useEffect(() => {
+    const savedPhoto = localStorage?.getItem("userPhoto");
+    if (savedPhoto) {
+      setIsFirstTime(false);
+    }
+  }, []);
+
+  const handleSwitchChange = () => {
+    if (isFirstTime) {
+      setFaceCaptureOpen(true);
+    }
+  };
+
+  const closeFaceCaptureModal = () => {
+    setFaceCaptureOpen(false);
+  };
+
+  const handleSavePhoto = (photo) => {
+    // localStorage.setItem("userPhoto", photo);
+    setFaceCaptureOpen(false);
   };
 
   const categoryName = selectedCategory ? findCategoryNameById(selectedCategory) : "EYEGLASSES & SUNGLASSES";
@@ -189,6 +213,15 @@ const NewProduct = () => {
                   {categoryName}
                 </Text>
                 <Flex alignItems="center">
+                  <Text fontWeight="bold" mr="5px" color="green" fontSize="15px">
+                    VIEW FRAMES
+                  </Text>
+                  <Switch colorScheme="green" size="lg" isChecked={isFaceCaptureOpen} onChange={handleSwitchChange} />
+                  <Text ml="5px" fontSize="15px">
+                    VIEW 3D TRY ON
+                  </Text>
+                </Flex>
+                <Flex alignItems="center">
                   <TbArrowsUpDown color="green" fontWeight="bold" />
                   <Text fontWeight="bold" color="green" fontSize="15px" ml="5px" mr="5px">
                     SortBy
@@ -219,7 +252,7 @@ const NewProduct = () => {
                 fontSize={{ base: "30px", md: "26px" }}
                 bg=""
                 ml={{ base: "0", md: "8px" }}
-                display={{base:"inherit",xl:"none"}}
+                display={{ base: "inherit", xl: "none" }}
               />
             </Flex>
 
@@ -253,6 +286,13 @@ const NewProduct = () => {
         <Pagination current={page} totalPages={totalPages} onChange={(value) => setPage(value)} />
       </Box>
       <Footer />
+      {isFaceCaptureOpen && (
+        <FaceCaptureModal
+          isOpen={isFaceCaptureOpen}
+          onClose={closeFaceCaptureModal}
+          onSave={handleSavePhoto}
+        />
+      )}
     </>
   );
 };
