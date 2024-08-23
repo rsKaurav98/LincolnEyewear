@@ -5,13 +5,22 @@ import { useEffect } from "react";
 const ShippingPage = ({ hasSpecialLens }) => {
   const { cart, coupon } = useSelector((state) => state.cartManager);
 
+  // useEffect(() => {
+  //   const specialLensFound = cart.some(item =>
+  //     ["4621","4622","4623","4624"].notincludes(item.selectedLens?.id)
+  //   );
+  //   if (specialLensFound) {
+  //     hasSpecialLens(true);
+  //   }
+  // }, [cart, hasSpecialLens]);
+
+
   useEffect(() => {
     const specialLensFound = cart.some(item =>
-      ["4612", "4613", "4616", "4614", "4615", "4617","4611"].includes(item.selectedLens?.id)
+      item.selectedLens && !["4621", "4622", "4623", "4624"].includes(item.selectedLens?.id)
     );
-    if (specialLensFound) {
-      hasSpecialLens(true);
-    }
+
+    hasSpecialLens(specialLensFound);
   }, [cart, hasSpecialLens]);
   
   const getTotalPrice = () => {

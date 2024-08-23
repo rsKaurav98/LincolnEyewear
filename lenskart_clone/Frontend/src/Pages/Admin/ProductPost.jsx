@@ -36,6 +36,8 @@ const ProductPost = () => {
   const [productType, setProductType] = useState("");
   const [colors, setColors] = useState("");
   const [loading, setLoading] = useState(false);
+  const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
+const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
 
   const handleImageChange = (e) => {
     const files = e.target.files;
@@ -109,7 +111,7 @@ const ProductPost = () => {
         formData.append("quantity", 0);
 
         const response = await fetch(
-          "http://localhost:4000/product",
+          `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`,
           {
             method: "POST",
             body: formData,

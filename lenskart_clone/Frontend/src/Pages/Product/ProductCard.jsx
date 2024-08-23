@@ -23,9 +23,9 @@ const ProductCard = ({ type }) => {
         const saleDiscountPercentage = salePrice
           ? Math.round(((regularPrice - salePrice) / regularPrice) * 100)
           : 0;
-          const issunglass = ele.categories.some(
-            (category) => category.id === 77
-          );
+        const issunglass = ele.categories.some(
+          (category) => category.id === 77
+        );
         return (
           <GridItem key={ele.id}>
             <Link to={`/products/${ele?.id}`}>
@@ -172,29 +172,45 @@ const ProductCard = ({ type }) => {
                   SALE PRICE: ₹{ele?.sale_price}
                 </Box>
 
-                {/* Additional info box */}
                 <Flex
-                  fontSize="13px"
+                  fontSize="14px"
                   color="#ffffff"
                   w="100%"
-                  padding="1"
+                  p="2"
                   fontWeight="bold"
-                  borderRadius="md"
+                  borderRadius="lg"
                   justifyContent="flex-start"
                   alignItems="center"
+                  wrap="wrap"
+                  gap="1.25"
                 >
                   <Box
-                    bg="secondary"
-                    paddingX="2"
-                    paddingY="0.5"
-                    borderRadius="lg"
-                    marginRight="2"
-                    boxShadow="md"
+                    bg="linear-gradient(135deg, #ff7e5f, #feb47b)" 
+                    px="3"
+                    py="1"
+                    borderRadius="full" 
+                    mr="3"
+                    boxShadow="lg"
+                    textAlign="center"
                   >
-                    {issunglass?"100% UV PROTECTION":"FREE LENS AVAILABLE"}
-                    
+                    {issunglass ? "POLARIZED LENSES" : "FREE LENS AVAILABLE"}
                   </Box>
+
+                  {issunglass && (
+                    <Box
+                      bg="linear-gradient(135deg, #6A82FB, #FC5C7D)" 
+                      px="3"
+                      py="1"
+                      borderRadius="full" 
+                      mr="3"
+                      boxShadow="lg"
+                      textAlign="center"
+                    >
+                      {"100% UV400 PROTECTION"}
+                    </Box>
+                  )}
                 </Flex>
+
               </Box>
             </Link>
           </GridItem>

@@ -5,7 +5,7 @@ import * as tf from '@tensorflow/tfjs-core';
 import '@tensorflow/tfjs-converter';
 import '@tensorflow/tfjs-backend-webgl';
 import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import { Box, Center, Button, useMediaQuery, Spinner, Text } from '@chakra-ui/react';
+import { Box, Center, Button, useMediaQuery, Spinner, Text, IconButton } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
 const VirtualTryOn = forwardRef((props, ref) => {
@@ -19,8 +19,26 @@ const VirtualTryOn = forwardRef((props, ref) => {
   const [isFaceModelLoading, setIsFaceModelLoading] = useState(true);
 
   useImperativeHandle(ref, () => ({
-    stopWebcam
+    stopWebcam,
   }));
+
+  // Preload face landmarks model asynchronously
+  useEffect(() => {
+    const loadModel = async () => {
+      try {
+        await tf.setBackend('webgl');
+        const loadedModel = await faceLandmarksDetection.load(
+          faceLandmarksDetection.SupportedPackages.mediapipeFacemesh,
+          { shouldLoadIrisModel: true, maxFaces: 1 }
+        );
+        setModel(loadedModel);
+      } catch (error) {
+        console.error("Error loading face landmarks model:", error);
+      }
+    };
+
+    loadModel();
+  }, []);
 
   useEffect(() => {
     const loadResources = async () => {
@@ -29,13 +47,6 @@ const VirtualTryOn = forwardRef((props, ref) => {
         if (webcamRef.current) {
           webcamRef.current.srcObject = stream;
         }
-
-        await tf.setBackend('webgl');
-        const loadedModel = await faceLandmarksDetection.load(
-          faceLandmarksDetection.SupportedPackages.mediapipeFacemesh,
-          { shouldLoadIrisModel: true, maxFaces: 1 }
-        );
-        setModel(loadedModel);
 
         const width = canvasRef.current.clientWidth;
         const height = canvasRef.current.clientHeight;
@@ -69,9 +80,11 @@ const VirtualTryOn = forwardRef((props, ref) => {
     }
 
     return () => stopWebcam();
-  }, [isOpen]);
+  }, [isOpen, imageSrc]);
 
+  // Debounce face detection to improve performance
   useEffect(() => {
+    let animationFrameId;
     const detectAndPositionGlasses = async () => {
       if (!webcamRef.current || !model || !glassesMesh) return;
       const video = webcamRef.current.video;
@@ -86,12 +99,12 @@ const VirtualTryOn = forwardRef((props, ref) => {
         const eyeCenter = keypoints[168];
 
         const eyeDistance = Math.sqrt(Math.pow(rightEye[0] - leftEye[0], 2) + Math.pow(rightEye[1] - leftEye[1], 2));
-        const scaleMultiplier = isMobile ? eyeDistance / 340 : eyeDistance / 140;
+        const scaleMultiplier = eyeDistance / 140;
 
         const scaleX = -0.01;
         const scaleY = -0.01;
-        const offsetX = isMobile ? 0.10 : 0.01;
-        const offsetY = isMobile ? -0.10 : -0.01;
+        const offsetX = 0.00;
+        const offsetY = -0.01;
 
         glassesMesh.position.x = (eyeCenter[0] - video.videoWidth / 2) * scaleX + offsetX;
         glassesMesh.position.y = (eyeCenter[1] - video.videoHeight / 2) * scaleY + offsetY;
@@ -102,21 +115,24 @@ const VirtualTryOn = forwardRef((props, ref) => {
         const rotationZ = Math.atan2(eyeLine.y, eyeLine.x);
         glassesMesh.rotation.z = rotationZ;
       }
+
+      // Schedule next detection
+      animationFrameId = requestAnimationFrame(detectAndPositionGlasses);
     };
 
-    const intervalId = setInterval(() => {
+    if (model && glassesMesh) {
       detectAndPositionGlasses();
-    }, 100);
+    }
 
-    return () => clearInterval(intervalId);
-  }, [model, glassesMesh, isMobile]);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [model, glassesMesh]);
 
   const stopWebcam = () => {
     if (webcamRef.current && webcamRef.current.srcObject) {
       const stream = webcamRef.current.srcObject;
       const tracks = stream.getTracks();
 
-      tracks.forEach(track => track.stop());
+      tracks.forEach((track) => track.stop());
       webcamRef.current.srcObject = null;
     }
   };
@@ -142,7 +158,25 @@ const VirtualTryOn = forwardRef((props, ref) => {
       >
         <Center position="relative" width="100%" height="100%">
           {isLoading && (
-            <Center position="absolute" top={0} left={0} width="100%" height="100%" bg="white" zIndex={2} flexDirection="column">
+            <Center
+              position="absolute"
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              bg="white"
+              zIndex={2}
+              flexDirection="column"
+            >
+              <IconButton
+                icon={<CloseIcon />}
+                position="absolute"
+                top="20px"
+                right="20px"
+                variant="ghost"
+                onClick={onClose}
+                zIndex={3}
+              />
               <Box
                 as="dotlottie-player"
                 src="https://lottie.host/7a2ca4c0-d3bd-4292-b02e-10f9c056aeef/D5ZpetxOX1.json"
@@ -173,20 +207,32 @@ const VirtualTryOn = forwardRef((props, ref) => {
           >
             {!isLoading && isFaceModelLoading && (
               <Center position="absolute" zIndex={2}>
-                <Spinner size="xl" color='white' />
-                <Text fontSize="xl" mt={4} color="white">Creating Face Model...</Text>
+                <Spinner size="xl" color="white" />
+                <Text fontSize="xl" mt={4} color="white">
+                  Creating Face Model...
+                </Text>
               </Center>
             )}
             <Webcam ref={webcamRef} autoPlay playsInline style={{ width: '100%', height: '100%' }} mirrored={true} />
             <Box as="canvas" ref={canvasRef} position="absolute" top={0} left={0} width="100%" height="100%" />
           </Box>
         </Center>
-        <Button onClick={() => { onClose(); stopWebcam(); }} position="absolute" top="20px" right="20px" variant="ghost">
-          <CloseIcon />
-        </Button>
+        {!isLoading && (
+          <Button
+            onClick={() => { onClose(); stopWebcam(); }}
+            position="absolute"
+            top="20px"
+            right="20px"
+            variant="ghost"
+            zIndex={3}
+          >
+            <CloseIcon />
+          </Button>
+        )}
       </Box>
     </Center>
   );
 });
 
 export default VirtualTryOn;
+
