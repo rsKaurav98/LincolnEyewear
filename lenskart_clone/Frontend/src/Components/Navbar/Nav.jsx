@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import logotop from '../../Images/logotop.png'
 import { Accordion } from "@chakra-ui/react";
@@ -32,10 +32,11 @@ function Nav() {
   const firstField = React.useRef();
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation(); 
   const { setSearchValue, searchValue } = useSearch();
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && location.pathname !== '/products') { 
       navigate(`/products?search=${searchValue}`);
     }
   }

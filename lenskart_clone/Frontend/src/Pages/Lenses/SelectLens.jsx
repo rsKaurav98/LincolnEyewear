@@ -22,7 +22,7 @@ const SelectLens = ({ isOpen, onClose, handleLensCart }) => {
 
   const renderLensContent = (category) => (
     <Box mt="10px">
-      {category=="Bifocal/ Progressive"?
+      {category!="Sunglasses Polarised"?
       <Box
       color="white"
       bg="secondary"

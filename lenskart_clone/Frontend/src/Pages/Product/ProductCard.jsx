@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Box, Flex, Grid, GridItem, Text, Image } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Text, Image, useInterval } from "@chakra-ui/react";
 import { AiFillStar } from "react-icons/ai";
 
 const ProductCard = ({ type }) => {
@@ -18,6 +18,7 @@ const ProductCard = ({ type }) => {
         const regularPrice = parseFloat(ele?.regular_price);
         const currentPrice = parseFloat(ele?.price);
         const salePrice = parseFloat(ele?.sale_price);
+
 
         const discountPercentage = Math.round(((regularPrice - currentPrice) / regularPrice) * 100);
         const saleDiscountPercentage = salePrice
@@ -51,7 +52,6 @@ const ProductCard = ({ type }) => {
                     _hover={{ transform: "scale(1.1)" }}
                     transition="0.25s"
                     borderRadius="3%"
-                    loading="lazy"
                   />
                   <br />
 

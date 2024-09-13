@@ -25,11 +25,7 @@ const HomeCard6 = ({ type, heading }) => {
     >
       <Link
         to={
-          heading === "SUNGLASSES"
-            ? heading === "TR EYEGLASSES"
-              ? "/products?category=87"
-              : "/products?category=53"
-            : "/products?category=80"
+          heading === "SUNGLASSES" ? "/products?category=53" :(heading === "ACETATE EYEGLASSES" ? "/products?category=80" :(heading === "TR EYEGLASSES"?"/products?category=87": "/products?category=79" ))
         }
       >
         <Text

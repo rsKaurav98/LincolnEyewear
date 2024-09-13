@@ -194,7 +194,6 @@ const SingleProduct = () => {
                               boxShadow="md"
                               bg="white"
                               onClick={() => handleImageClick(index)}
-                              loading="lazy"
                             />
                           </Zoom>
                         ))}

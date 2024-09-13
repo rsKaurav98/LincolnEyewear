@@ -278,7 +278,7 @@ function Shipping() {
                     onChange={handleChange}
                   />
                   <Box pl="6" mt="-4">
-                    {userData.email && userData.email.includes("@") && userData.email.includes(".com")
+                    {userData.email && userData.email.includes("@") && userData.email.includes(".")
                       ? ""
                       : mail}
                   </Box>
@@ -403,7 +403,7 @@ function Shipping() {
               userData.last_name.length >= 1 &&
               userData.phone.length === 10 &&
               userData.email.includes("@") &&
-              userData.email.includes(".com") &&
+              userData.email.includes(".") &&
               userData.address.length >= 1 &&
               userData.pincode.length === 6 &&
               userData.city.length >= 1 &&

@@ -8,13 +8,22 @@ import computer from "../../Images/computer.png"
 import eyeglass from "../../Images/eyeglass.png"
 import axios from 'axios';
 
-const consumerKey = process.env.REACT_APP_CONSUMER_KEY;
-const consumerSecret = process.env.REACT_APP_CONSUMER_SECRET;
-
-
-
 export const fetchProductData = async (category) => {
-  const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=1&consumer_key=${consumerKey}&consumer_secret=${consumerSecret}`;
+  const sortQueries = [
+    "&orderby=price&order=asc",
+    "&orderby=price&order=desc",
+    "&orderby=date&order=desc",
+    "&orderby=date&order=asc",
+    "&orderby=title&order=asc",
+    "&orderby=popularity",
+  ];
+
+  // Select a random sort query
+  const randomIndex = Math.floor(Math.random() * sortQueries.length);
+  const sortQuery = sortQueries[randomIndex];
+
+  const url = `${process.env.REACT_APP_API_ENDPOINT}/wp-json/wc/v3/products?category=${category}&per_page=10&page=1${sortQuery}&consumer_key=${process.env.REACT_APP_CONSUMER_KEY}&consumer_secret=${process.env.REACT_APP_CONSUMER_SECRET}`;
+
   try {
     const response = await axios.get(url);
     return response.data.map(product => ({

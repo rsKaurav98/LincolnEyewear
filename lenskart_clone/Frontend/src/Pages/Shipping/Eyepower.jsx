@@ -13,6 +13,7 @@ import {
   Box,
   Heading,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 
 const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
@@ -24,11 +25,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
     return options;
   };
 
-  const SPHOptions = generateOptions(-12.00, 12.00, 0.25);
-  const CYLOptions = generateOptions(-3.00, 3.00, 0.25);
-  const ADDOptions = generateOptions(0.00, 4.00, 0.25);
-  const PDOptions = generateOptions(40.0, 80.0, 0.50);
-  const smallPDOptions = generateOptions(20.00, 40.00, 0.50);
+  const SPHOptions = generateOptions(-12.0, 12.0, 0.25);
+  const CYLOptions = generateOptions(-3.0, 3.0, 0.25);
+  const ADDOptions = generateOptions(0.0, 4.0, 0.25);
+  const PDOptions = generateOptions(40.0, 80.0, 0.5);
+  const smallPDOptions = generateOptions(20.0, 40.0, 0.5);
   const AXISOptions = Array.from({ length: 181 }, (_, i) => i.toString());
 
   const [isDualPD, setIsDualPD] = useState(false);
@@ -61,7 +62,6 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formdata",formData)
     onSubmit();
   };
 
@@ -71,32 +71,52 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
-        rounded="md"
+        rounded="xl"
         maxWidth={{ base: '95%', md: '50%' }}
         maxHeight={{ base: '95vh', md: '80vh' }}
-        overflowY="hidden"
+        overflowY="auto"
         boxShadow="2xl"
-        bg="white"
-        py="4"
-        px="6"
+        bg="gray.50"
+        py="6"
+        px="8"
+        css={{
+          '&::-webkit-scrollbar': { display: 'none' },
+        }}
       >
-        <ModalHeader textAlign="center" fontSize="2xl" fontWeight="bold">
+        <ModalHeader textAlign="center" fontSize="2xl" fontWeight="bold" color="blue.700">
           Enter Your Eye Power
         </ModalHeader>
-        <ModalCloseButton borderRadius="50%" bg="white" color="#333" boxShadow="md" />
+        <ModalCloseButton
+          borderRadius="50%"
+          bg="white"
+          color="blue.700"
+          boxShadow="md"
+        />
         <ModalBody>
           <form onSubmit={handleSubmit}>
             <Flex direction="column" gap="6" align="center">
-              <Flex direction={{ base: 'column', md: 'row' }} gap="6" width="100%">
+              <Flex
+                direction={{ base: 'column', md: 'row' }}
+                gap="6"
+                width="100%"
+              >
                 <Box flex="1">
-                  <Heading size="sm" mb="4" textAlign="center">
+                  <Heading
+                    size="sm"
+                    mb="4"
+                    textAlign="center"
+                    display={{ base: 'block', md: 'none' }}
+                    color="blue.600"
+                  >
                     Right Eye (O.D)
                   </Heading>
                   <Flex direction="column" gap="4">
                     <Flex align="center" justify="space-between">
-                      <FormLabel htmlFor="sphRight" mb="0">
-                        SPH
-                      </FormLabel>
+                      <Tooltip label="Spherical Power (SPH)" aria-label="SPH Tooltip">
+                        <FormLabel htmlFor="sphRight" mb="0" _hover={{ color: 'blue.500' }}>
+                          SPH
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="sphRight"
                         name="sphRight"
@@ -113,9 +133,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
-                      <FormLabel htmlFor="cylRight" mb="0">
-                        CYL
-                      </FormLabel>
+                      <Tooltip label="Cylinder (CYL)" aria-label="CYL Tooltip">
+                        <FormLabel htmlFor="cylRight" mb="0" _hover={{ color: 'blue.500' }}>
+                          CYL
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="cylRight"
                         name="cylRight"
@@ -132,9 +154,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
-                      <FormLabel htmlFor="axisRight" mb="0">
-                        AXIS
-                      </FormLabel>
+                      <Tooltip label="Axis (AXIS)" aria-label="AXIS Tooltip">
+                        <FormLabel htmlFor="axisRight" mb="0" _hover={{ color: 'blue.500' }}>
+                          AXIS
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="axisRight"
                         name="axisRight"
@@ -151,9 +175,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
-                      <FormLabel htmlFor="addRight" mb="0">
-                        ADD
-                      </FormLabel>
+                      <Tooltip label="Addition (ADD)" aria-label="ADD Tooltip">
+                        <FormLabel htmlFor="addRight" mb="0" _hover={{ color: 'blue.500' }}>
+                          ADD
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="addRight"
                         name="addRight"
@@ -171,12 +197,24 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                     </Flex>
                   </Flex>
                 </Box>
+
                 <Box flex="1">
-                  <Heading size="sm" mb="4" textAlign="center">
+                  <Heading
+                    size="sm"
+                    mb="4"
+                    textAlign="center"
+                    display={{ base: 'block', md: 'none' }}
+                    color="blue.600"
+                  >
                     Left Eye (O.S)
                   </Heading>
                   <Flex direction="column" gap="4">
                     <Flex align="center" justify="space-between">
+                      <Tooltip label="Spherical Power (SPH)" aria-label="SPH Tooltip">
+                        <FormLabel htmlFor="sphLeft" mb="0" _hover={{ color: 'blue.500' }}>
+                          SPH
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="sphLeft"
                         name="sphLeft"
@@ -193,7 +231,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
-
+                      <Tooltip label="Cylinder (CYL)" aria-label="CYL Tooltip">
+                        <FormLabel htmlFor="cylLeft" mb="0" _hover={{ color: 'blue.500' }}>
+                          CYL
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="cylLeft"
                         name="cylLeft"
@@ -210,7 +252,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
-
+                      <Tooltip label="Axis (AXIS)" aria-label="AXIS Tooltip">
+                        <FormLabel htmlFor="axisLeft" mb="0" _hover={{ color: 'blue.500' }}>
+                          AXIS
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="axisLeft"
                         name="axisLeft"
@@ -227,6 +273,11 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                       </Select>
                     </Flex>
                     <Flex align="center" justify="space-between">
+                      <Tooltip label="Addition (ADD)" aria-label="ADD Tooltip">
+                        <FormLabel htmlFor="addLeft" mb="0" _hover={{ color: 'blue.500' }}>
+                          ADD
+                        </FormLabel>
+                      </Tooltip>
                       <Select
                         id="addLeft"
                         name="addLeft"
@@ -245,69 +296,100 @@ const EyePowerForm = ({ isOpen, onClose, onChange, onSubmit }) => {
                   </Flex>
                 </Box>
               </Flex>
-              <Box width="100%" display="flex">
-                <FormLabel htmlFor="pd">PD</FormLabel>
-                {isDualPD ? (
-                  <Flex gap="4" width="100%">
+
+              {/* PD Section */}
+              <Box width="100%">
+                <Flex align="center" justify="space-between">
+                  <Tooltip label="Pupillary Distance (PD)" aria-label="PD Tooltip">
+                    <FormLabel mb="0" _hover={{ color: 'blue.500' }}>
+                      PD
+                    </FormLabel>
+                  </Tooltip>
+                  {isDualPD ? (
+                    <>
+                      <Flex flex="1" direction="column" gap="4">
+                        <Flex align="center" justify="space-between">
+                          <FormLabel htmlFor="pdRight" mb="0">
+                            PD Right
+                          </FormLabel>
+                          <Select
+                            id="pdRight"
+                            name="pdRight"
+                            value={formData.pdRight}
+                            onChange={handleInputChange}
+                            bgGradient="linear(to-b, white, gray.100)"
+                            _hover={{ bg: 'white' }}
+                          >
+                            {smallPDOptions.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </Select>
+                        </Flex>
+                        <Flex align="center" justify="space-between">
+                          <FormLabel htmlFor="pdLeft" mb="0">
+                            PD Left
+                          </FormLabel>
+                          <Select
+                            id="pdLeft"
+                            name="pdLeft"
+                            value={formData.pdLeft}
+                            onChange={handleInputChange}
+                            bgGradient="linear(to-b, white, gray.100)"
+                            _hover={{ bg: 'white' }}
+                          >
+                            {smallPDOptions.map((option) => (
+                              <option key={option} value={option}>
+                                {option}
+                              </option>
+                            ))}
+                          </Select>
+                        </Flex>
+                      </Flex>
+                    </>
+                  ) : (
                     <Select
-                      name="pdRight"
-                      value={formData.pdRight}
+                      id="pd"
+                      name="pd"
+                      value={formData.pd}
                       onChange={handleInputChange}
                       bgGradient="linear(to-b, white, gray.100)"
                       _hover={{ bg: 'white' }}
                     >
-                      {smallPDOptions.map((option) => (
+                      {PDOptions.map((option) => (
                         <option key={option} value={option}>
                           {option}
                         </option>
                       ))}
                     </Select>
-                    <Select
-                      name="pdLeft"
-                      value={formData.pdLeft}
-                      onChange={handleInputChange}
-                      bgGradient="linear(to-b, white, gray.100)"
-                      _hover={{ bg: 'white' }}
-                    >
-                      {smallPDOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </Select>
-                  </Flex>
-                ) : (
-                  <Select
-                    name="pd"
-                    value={formData.pd}
-                    onChange={handleInputChange}
-                    bgGradient="linear(to-b, white, gray.100)"
-                    _hover={{ bg: 'white' }}
-                  >
-                    {PDOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </Select>
-                )}
+                  )}
+                </Flex>
+                <Text
+                  mt="2"
+                  color="blue.600"
+                  textAlign="right"
+                  fontSize="sm"
+                  onClick={togglePDType}
+                  cursor="pointer"
+                  _hover={{ textDecoration: 'underline' }}
+                >
+                  {isDualPD ? 'Use Single PD' : 'Use Dual PD'}
+                </Text>
               </Box>
 
-            </Flex>
-            <Box display="flex" justifyContent="space-between" width="100%">
-              <Text
-                onClick={togglePDType}
-                cursor="pointer"
-                _hover={{ textDecoration: 'underline' }}
-                color="blue.500"
+              <Button
+                type="submit"
+                colorScheme="blue"
+                size="lg"
+                width="100%"
+                mt="4"
+                boxShadow="lg"
+                _hover={{ boxShadow: 'xl' }}
               >
-                {isDualPD ? 'I have one PD value' : 'I have two PD values'}
-              </Text>
-              <Button type="submit" bg="secondary" color="white" _hover={{ color: "black",bg:"gray.200" }} mt="4">
                 Submit
               </Button>
-            </Box>
-            
+            </Flex>
           </form>
         </ModalBody>
       </ModalContent>

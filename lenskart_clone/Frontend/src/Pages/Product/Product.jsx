@@ -30,7 +30,7 @@ const NewProduct = () => {
   const [selectedTag, setSelectedTag] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [totalProducts, setTotalProducts] = useState(0);
-  const { searchValue, setSearchValue } = useSearch();
+  const {searchValue, setSearchValue } = useSearch();
   const [searchParams] = useSearchParams();
 
   const { selectedCategory, setSelectedCategory, findCategoryNameById } = useContext(CategoryContext);
@@ -46,17 +46,31 @@ const NewProduct = () => {
   const fetchProduct = async () => {
     setIsLoaded(true);
     try {
-      let categoryFilter = selectedCategory 
-        ? `&category=${selectedCategory}` 
-        : "&category=52";
-
+      let categoryFilter = selectedCategory ? `&category=${selectedCategory}` : "&category=52";
       let tagFilter = selectedTag ? `&tag=${selectedTag}` : "";
       let sortQuery = "";
 
-      if (sort === "lowtohigh") {
-        sortQuery = "&orderby=price&order=asc";
-      } else if (sort === "hightolow") {
-        sortQuery = "&orderby=price&order=desc";
+      switch (sort) {
+        case "lowtohigh":
+          sortQuery = "&orderby=price&order=asc";
+          break;
+        case "hightolow":
+          sortQuery = "&orderby=price&order=desc";
+          break;
+        case "mostrecent":
+          sortQuery = "&orderby=date&order=desc";
+          break;
+          case "oldest":
+            sortQuery = "&orderby=date&order=asc";
+            break;
+        case "name":
+          sortQuery = "&orderby=title&order=asc";
+          break;
+        case "popularity":
+          sortQuery = "&orderby=popularity";
+          break;
+        default:
+          sortQuery = "";
       }
 
       if (searchValue) {
@@ -87,6 +101,7 @@ const NewProduct = () => {
       setIsLoaded(false);
     }
   };
+
 
   useEffect(() => {
     fetchProduct();
@@ -202,14 +217,28 @@ const NewProduct = () => {
                       bg=""
                       textAlign="left"
                     >
-                      {sort ? (sort === "lowtohigh" ? "Price: low to high" : "Price: high to low") : "Select"}
+                      {sort ? (
+                        sort === "lowtohigh" ? "Price: low to high" :
+                          sort === "hightolow" ? "Price: high to low" :
+                            sort === "mostrecent" ? "Most Recent" :
+                            sort === "oldest" ? "Oldest" :
+                              sort === "name" ? "Name" :
+                                sort === "popularity" ? "Popularity" :
+                                  sort === "rating" ? "Rating" :
+                                    "Select"
+                      ) : "Select"}
                     </MenuButton>
                     <MenuList placement="bottom" zIndex="10">
                       <MenuItem onClick={() => handleSortChange("")}>Select</MenuItem>
                       <MenuItem onClick={() => handleSortChange("lowtohigh")}>Price: low to high</MenuItem>
-                      <MenuItem onClick={() => handleSortChange("hightolow")}>Price: high to low</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("hightolow")}>Price: high to low</MenuItem>  
+                      <MenuItem onClick={() => handleSortChange("mostrecent")}>Most Recent</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("oldest")}>Oldest</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("name")}>Name</MenuItem>
+                      <MenuItem onClick={() => handleSortChange("popularity")}>Popularity</MenuItem>
                     </MenuList>
                   </Menu>
+
                 </Flex>
               </Flex>
               <IconButton
@@ -219,7 +248,7 @@ const NewProduct = () => {
                 fontSize={{ base: "30px", md: "26px" }}
                 bg=""
                 ml={{ base: "0", md: "8px" }}
-                display={{base:"inherit",xl:"none"}}
+                display={{ base: "inherit", xl: "none" }}
               />
             </Flex>
 
