@@ -38,7 +38,7 @@ const Productlist = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:4000/product?sort=${sort}&productRefLink=${productref}&gender=${gender}&productType=${filter}&shape=${shape}&style=${style}&page=${page}`
+        `http://localhost:8000/product?sort=${sort}&productRefLink=${productref}&gender=${gender}&productType=${filter}&shape=${shape}&style=${style}&page=${page}`
       );
       const postData = await response.json();
       setData(postData);
@@ -117,8 +117,8 @@ const Productlist = () => {
             bg="whiteAlpha.900"
           >
             <option value="">All Glasses</option>
-            <option value="sunglasses">Sun Glasses</option>
-            <option value="eyeglasses">Eye Glasses</option>
+            <option value="sunglasses">SunGlasses</option>
+            <option value="eyeglasses">EyeGlasses</option>
           </Select>
         </GridItem>
         <GridItem>
@@ -276,7 +276,7 @@ const Productlist = () => {
                       {el.productType}
                     </Td>
                     <Td fontSize="15px">₹ {el.mPrice}</Td>
-                    <Td fontSize="15px">₹ {el.price}</Td>
+                    <Td fontSize="15px">₹ {el.sale_price}</Td>
                     <Td fontSize="15px">{el.rating}</Td>
                     <Td fontSize="15px">{el.imageTsrc}</Td>
                   </Tr>

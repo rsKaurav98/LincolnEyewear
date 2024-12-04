@@ -1,35 +1,28 @@
 export const services = [
   {
-    labels: "Store Locator",
+    labels: "Privacy Policy",
+    src:"/PP"
   },
   {
-    labels: "Enter My Power",
+    labels: "Terms & Condition",
+    src:"/TC"
   },
   {
-    labels: "Buying Guide",
+    labels: "Cancellation & Return",
+    src:"/CR"
   },
   {
-    labels: "Frame Size",
+    labels: "Shipping & Delivery",
+    src:"/SD"
   },
 ];
 
 export const about = [
   {
-    labels: "We Are Hiring",
+    labels: "Phone : +91 95102 24663",
   },
   {
-    labels: "Refer & Earn",
-  },
-  {
-    labels: "About Us",
-  },
-  {
-    labels: "Lenskart Coupons",
+    labels: "E-Mail: Info@Lincolneyewear.Com",
   },
 ];
 
-export const helps = [
-  {
-    labels: "FAQ's",
-  },
-];

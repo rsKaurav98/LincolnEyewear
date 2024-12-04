@@ -1,11 +1,12 @@
 import React from "react";
 import { Box, Text, Image, Grid } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import ReactPlayer from "react-player";
 
 export const HomeCard5 = () => {
   return (
     <Box w="85%" m="auto">
-      <Text fontSize="30px" pb="7" fontWeight="500" textAlign="center">
+      <Text fontSize={{ base: "20px", md: "24px", lg: "30px" }}  p="7" fontWeight="500" textAlign="center">
         FIND THE PERFECT FIT
       </Text>
       <Grid
@@ -18,33 +19,43 @@ export const HomeCard5 = () => {
         }}
       >
         <Box>
+          <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/eye-square10.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=53">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/power-sun-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
         </Box>
         <Box>
+        <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/ce-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=53">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Aug21/Desktop/sun-square.jpg"
             alt="img"
             p="2"
           />
+          </Link>
+          <Link to="/products?category=52">
           <Image
             src="https://static1.lenskart.com/media/desktop/img/Nov20/25-Nov/Banner03_TileDesktop.jpg"
             alt="img"
             p="2"
           />
+          </Link>
         </Box>
       </Grid>
     </Box>
@@ -103,37 +114,37 @@ export const HomeCard5b = ({ type, heading }) => {
   );
 };
 
-export const HomeCard5c = ({ type, heading }) => {
-  return (
-    <Box bgColor="#fff092" pb="5%" pt="2%">
-      <Box w="90%" m="auto">
-        <Text
-          fontSize="30px"
-          pb="7"
-          fontWeight="500"
-          textAlign="center"
-          font-family="futurastd-medium"
-        >
-          {heading}
-        </Text>
-        <Grid
-          templateColumns={{
-            base: "repeat(1,1fr)",
-            md: "repeat(1,1fr)",
-            lg: "repeat(2,1fr)",
-            xl: "repeat(3,1fr)",
-            "2xl": "repeat(3,1fr)"
-          }}
-          gap={6}
-          w="100%"
-        >
-          {type.map((i) => (
-            <Box key={i}>
-              <ReactPlayer url={i.img} width="100%" height="300px" />
-            </Box>
-          ))}
-        </Grid>
-      </Box>
-    </Box>
-  );
-};
+// export const HomeCard5c = ({ type, heading }) => {
+//   return (
+//     <Box bgColor="#fff092" pb="5%" pt="2%">
+//       <Box w="90%" m="auto">
+//         <Text
+//           fontSize="30px"
+//           pb="7"
+//           fontWeight="500"
+//           textAlign="center"
+//           font-family="futurastd-medium"
+//         >
+//           {heading}
+//         </Text>
+//         <Grid
+//           templateColumns={{
+//             base: "repeat(1,1fr)",
+//             md: "repeat(1,1fr)",
+//             lg: "repeat(2,1fr)",
+//             xl: "repeat(3,1fr)",
+//             "2xl": "repeat(3,1fr)"
+//           }}
+//           gap={6}
+//           w="100%"
+//         >
+//           {type.map((i) => (
+//             <Box key={i}>
+//               <ReactPlayer url={i.img} width="100%" height="300px" />
+//             </Box>
+//           ))}
+//         </Grid>
+//       </Box>
+//     </Box>
+//   );
+// };

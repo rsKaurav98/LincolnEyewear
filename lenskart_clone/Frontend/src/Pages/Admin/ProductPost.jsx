@@ -303,8 +303,8 @@ const ProductPost = () => {
               h="40px"
               bg="whiteAlpha.900"
             >
-              <option value="sunglasses">Sun Glass</option>
-              <option value="eyeglasses">Eye Glass</option>
+              <option value="sunglasses">SunGlass</option>
+              <option value="eyeglasses">EyeGlass</option>
             </Select>
           </FormControl>
           <br />

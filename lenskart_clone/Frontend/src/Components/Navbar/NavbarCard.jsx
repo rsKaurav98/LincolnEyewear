@@ -2,21 +2,19 @@ import React, { useState } from "react";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
 import NavbarCard5 from "./NavbarCard5";
-import { NavbarDetail1 } from "./NavbarDetail";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../ContextApi/AuthContext";
-import { useNavigate } from "react-router-dom";
 import { FiPhoneCall } from "react-icons/fi";
 import { CiHeart } from "react-icons/ci";
 import { CgShoppingCart } from "react-icons/cg";
 import { TriangleDownIcon } from "@chakra-ui/icons";
-import logo from '../../Images/logo.png'
+import logo from '../../Images/logo.png';
+import logotop from '../../Images/logotop.png'
 import {
   Box,
   Text,
   Flex,
-  Spacer,
   Image,
   Input,
   Button,
@@ -26,21 +24,35 @@ import {
   PopoverContent,
   PopoverBody
 } from "@chakra-ui/react";
+import { useSearch } from '../../Context/SearchContext';
 
-export const NavbarCard1 = () => {
+// Reusable Button Component with consistent styling
+const StyledButton = ({
+  children,
+  onClick,
+  leftIcon,
+  rightIcon,
+  ...rest
+}) => {
   return (
-    <Box cursor="pointer">
-      <Flex gap={2} pl={5} pt={2}>
-        {NavbarDetail1.map((i, index) => (
-          <Box key={index}>
-            <Text fontSize="12px" _hover={{ textDecoration: "underline" }}>
-              {i.labels}
-            </Text>
-            <Spacer />
-          </Box>
-        ))}
-      </Flex>
-    </Box>
+    <Button
+      width="fit-content"
+      h="45px"
+      px="20px"
+      bg="whiteAlpha.900"
+      fontSize="15px"
+      fontWeight="600"
+      border={`1px solid`}
+      borderColor={"secondary"}
+      _hover={{ bg: "secondary", color: "white" }}
+      transition={"0.3s"}
+      onClick={onClick}
+      {...rest}
+    >
+      {leftIcon && leftIcon}
+      {children}
+      {rightIcon && rightIcon}
+    </Button>
   );
 };
 
@@ -48,59 +60,88 @@ export const NavbarCard2 = () => {
   const { isAuth, setisAuth, Authdata } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
+  const { setSearchValue, searchValue } = useSearch();
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      navigate(`/products?search=${searchValue}`);
+    }
+  }
+
+  // Function to get initials from name
+  const getInitials = (name) => {
+    const words = name.split(' ');
+    if (words.length === 1) {
+      return name; // return the name as is if there's only one word
+    }
+    return words.map(word => word.charAt(0).toUpperCase()).join('');
+  }
 
   return (
     <Box cursor="pointer">
       <HStack m="auto">
         <Box w="20%">
           <Link to="/">
-            <Image src={logo} alt="logo" w="75%" />
+            <Image src={logotop} alt="logo" width="200px"/>
           </Link>
         </Box>
-        <HStack w="85%" m="auto">
-          <Box w="15%">
+        <HStack w="80%" m="auto" display="flex" justify="space-between">
+          {/* <Box w="15%">
             <HStack fontSize="18px" fontWeight="bold">
               <FiPhoneCall />
               <Text>1800-111-111</Text>
             </HStack>
-          </Box>
-          <Box w="55%">
-            <Input
-              placeholder="What are you looking for"
-              border="1px solid black"
-              w="95%"
-              fontSize="17px"
-              h="45px"
+          </Box> */}
+          <Box w="50%">
+            <input
+              type="text"
+              placeholder="Search for Eyeglasses, Sunglasses and more.."
+              style={{
+                borderWidth: "1px",
+                borderColor: "secondary", // Use theme-based secondary color
+                width: "95%",
+                backgroundColor: "white",
+                fontSize: "17px",
+                height: "45px",
+                paddingLeft: "4px",
+                borderRadius: "7px",
+                outline:"none"
+              }}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </Box>
-          <HStack w="35%">
-            <Button
-              size="lg"
-              bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+          <Box w="20%"></Box>
+          <HStack w="45%">
+            <StyledButton
               onClick={() => navigate("/orderhistory")}
             >
               Track Order
-            </Button>
+            </StyledButton>
             {isAuth === true ? (
               <Popover trigger="hover">
                 <PopoverTrigger>
-                  <Box
+                  <Button
                     fontWeight={"600"}
-                    fontSize="15px"
-                    m="auto"
-                    mt="-2px"
-                    w="90px"
+                    fontSize="16px"
+                    width="fit-content"
+                    h="45px"
+                    px="20px"
+                    w="auto"
                     textAlign="center"
+                    bg="white"
+                    border="1px solid black"
+                    borderColor={"secondary"}
+                    _hover={{ bg: "secondary", color: "white" }}
                   >
-                    {Authdata[0].name}
+                    {getInitials(Authdata.user_display_name)}
                     <TriangleDownIcon
                       ml="2px"
                       fontSize={"9px"}
                       _hover={{ transform: "rotate(180deg)" }}
                     />
-                  </Box>
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent
                   w="120px"
@@ -116,9 +157,13 @@ export const NavbarCard2 = () => {
                       color="#333368"
                       onClick={() => {
                         setisAuth(false);
-                        localStorage.removeItem("res")
-                        return <Navigate to="/" />;
+                        localStorage.removeItem("user");
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("customerData", decoded.data.user);
+                        navigate("/");
                       }}
+                      _hover={{ fontWeight: "bold" }}
+                      transition={"0.3s"}
                     >
                       Sign Out
                     </Box>
@@ -127,30 +172,22 @@ export const NavbarCard2 = () => {
               </Popover>
             ) : (
               <Box display={"flex"}>
-                <Login  isSignUpOpen={isOpen}/>
-                <Signup setIsSignUpOpen={setIsOpen}/>
+                <Login />
+                <Signup />
               </Box>
             )}
-            <Button
-              leftIcon={<CiHeart />}
-              size="lg"
-              bg="whiteAlpha.900"
-              fontSize="14px"
-              fontWeight="400"
+            <StyledButton
+              leftIcon={<CiHeart size={25} />}
               onClick={() => navigate("/wishlist")}
             >
               Wishlist
-            </Button>
+            </StyledButton>
             <Link to="/cart">
-              <Button
-                leftIcon={<CgShoppingCart />}
-                size="lg"
-                bg="whiteAlpha.900"
-                fontSize="14px"
-                fontWeight="400"
+              <StyledButton
+                leftIcon={<CgShoppingCart size={25} />}
               >
                 Cart
-              </Button>
+              </StyledButton>
             </Link>
           </HStack>
         </HStack>
@@ -161,29 +198,9 @@ export const NavbarCard2 = () => {
 
 export const NavbarCard4 = () => {
   return (
-    <Box cursor="pointer" bg="#fbf9f7" p={2.5}>
-      <Flex gap={4} pl={5} pt={2} justifyContent="space-between">
+    <Box cursor="pointer" marginTop="1rem" bg="secondary" borderRadius="8" display="flex" justifyContent="center">
+      <Flex py={2} px={5}>
         <NavbarCard5 />
-        <HStack w="20%" ml="5%" justifyContent="right">
-          <Image
-            src="https://static1.lenskart.com/media/desktop/img/May22/3dtryon1.png"
-            alt="img1"
-            w="70px"
-            borderRadius="base"
-          />
-          <Image
-            src="https://static1.lenskart.com/media/desktop/img/Mar22/13-Mar/blulogo.png"
-            alt="img1"
-            w="70px"
-            borderRadius="base"
-          />
-          <Image
-            src="https://static.lenskart.com/media/desktop/img/Feb22/18-Feb/goldlogo.jpg"
-            alt="img1"
-            w="70px"
-            borderRadius="base"
-          />
-        </HStack>
       </Flex>
     </Box>
   );

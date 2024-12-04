@@ -12,22 +12,32 @@ import Footer from "../../Components/Footer/Footer";
 import { Flex, Text, Button } from "@chakra-ui/react";
 
 const CartPage = () => {
-  const { cart } = useSelector((state) => state.CartReducer);
+  const { cart } = useSelector((state) => state.cartManager);
   const navigate = useNavigate();
 
   const getTotalPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.mPrice * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.sale_price * item.quantity;
+      if (item.selectedLens && item.selectedLens.price !== "Free" ? item.selectedLens.price : 0) {
+        itemPrice += item.selectedLens.price * item.quantity;
+        
+      }
+      console.log(acc , itemPrice)
+      return acc + itemPrice;
+    }, 0);
+    console.log(totalPrice)
     return totalPrice;
   };
+  
 
   const getdiscountPrice = () => {
-    const totalPrice = cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
+    const totalPrice = cart.reduce((acc, item) => {
+      let itemPrice = item.sale_price * item.quantity;
+      if (item.selectedLens && item.selectedLens?.id!="sv1") {
+        itemPrice += item.selectedLens.price * item.quantity;
+      }
+      return acc + itemPrice;
+    }, 0);
     return totalPrice;
   };
 
@@ -92,9 +102,9 @@ const CartPage = () => {
               totalPrice={getTotalPrice()}
               discountPrice={getdiscountPrice()}
             />
-            <SaleBox />
+            {/* <SaleBox /> */}
 
-            <CouponBox />
+            {/* <CouponBox /> */}
             <Button
               backgroundColor={"#12daac"}
               color="#091e52"

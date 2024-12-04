@@ -14,6 +14,11 @@ import Wishlist from "../Pages/Wishlist/Wishlist";
 import Productlist from "../Pages/Admin/Productlist";
 import ProductPost from "../Pages/Admin/ProductPost";
 import EditProduct from "../Pages/Admin/EditProduct";
+import PrivacyPolicy from "./Footer/PP";
+import TC from "./Footer/TC";
+import CR from "./Footer/CR";
+import SD from "./Footer/SD";
+import Signup from "../Pages/Signup/Signup";
 
 const AllRoutes = () => {
   const location = useLocation();
@@ -21,8 +26,14 @@ const AllRoutes = () => {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
   return (
     <Routes>
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/PP" element={<PrivacyPolicy />} />
+      <Route path="/TC" element={<TC />} />
+      <Route path="/CR" element={<CR />} />
+      <Route path="/SD" element={<SD />} />
       <Route path="/" element={<Home />} />
       <Route path="/products" element={<Product />} />
       <Route path="/products/:id" element={<SingleProduct />} />
@@ -79,6 +90,14 @@ const AllRoutes = () => {
         element={
           <Privateroutes>
             <Wishlist />
+          </Privateroutes>
+        }
+      />
+      <Route
+        path="/ordersuccess"
+        element={
+          <Privateroutes>
+            <Confirm />
           </Privateroutes>
         }
       />
